@@ -1,6 +1,6 @@
 package top.xiaotian.dataStructures.stack;
 
-import java.util.Arrays;
+import top.xiaotian.dataStructures.array.Array;
 
 /**
  * 顺序栈
@@ -9,67 +9,75 @@ import java.util.Arrays;
  * @time
  * @Description: 描述:
  */
-public class ArrayStack {
-    private Object[] item;
-
-    private int size;
-
-    private int capacity;
+public class ArrayStack<E> implements Stack<E> {
+    private final Array<E> array;
 
     public ArrayStack(int capacity) {
-        this.capacity = capacity;
-        this.item = new Object[capacity];
-        this.size = 0;
+        array = new Array<>(capacity);
     }
 
-    public boolean push(Object obj) {
-        if (size == capacity) {
-//            return false;
-            // 扩容
-            Object[] newItem = new Object[capacity * 2];
-            System.arraycopy(item, 0, newItem, 0, capacity);
-            item = newItem;
-        }
-        item[size] = obj;
-        size++;
-        return true;
+    public ArrayStack() {
+        array = new Array<>();
     }
 
-    public Object pop() {
-        if (size == 0) {
-            return null;
-        }
-        Object tmp = item[size - 1];
-        size--;
-        return tmp;
+    @Override
+    public int getSize() {
+        return array.getSize();
     }
 
-    public void printAll() {
-//        System.out.println(Arrays.toString(item));
-        System.out.print("[");
-        for (int i = 0; i < size; i++) {
-            System.out.print(item[i] + " ");
+    public int getCapacity() {
+        return array.getCapacity();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return array.isEmpty();
+    }
+
+    @Override
+    public void push(E e) {
+        array.addLast(e);
+    }
+
+    @Override
+    public E pop() {
+        return array.removeLast();
+    }
+
+    @Override
+    public E peek() {
+        return array.getFirst();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Stack: [");
+        for (int i = 0; i < array.getSize(); i++) {
+            sb.append(array.get(i));
+            if (i != array.getSize() - 1) {
+                sb.append(", ");
+            }
         }
-        System.out.println("]");
+        sb.append("] top");
+        return sb.toString();
     }
 
     public static void main(String[] args) {
-        ArrayStack arrayStack = new ArrayStack(4);
-        arrayStack.push(1);
-        arrayStack.push(2);
-        arrayStack.push(3);
-        arrayStack.push(4);
-        arrayStack.printAll();
+        ArrayStack<Integer> arrayStack = new ArrayStack<>(4);
+        System.out.println("empty: " + arrayStack.isEmpty());
+        for (int i = 1; i <= 4; i++) {
+            arrayStack.push(i);
+            System.out.println(arrayStack);
+        }
 
-        boolean flag1 = arrayStack.push(8);
-        System.out.println(flag1);
-        arrayStack.printAll();
+        arrayStack.push(8);
+        System.out.println(arrayStack);
 
-        Object pop = arrayStack.pop();
-        System.out.println(pop);
-        arrayStack.printAll();
+        System.out.println(arrayStack.pop());
+        System.out.println(arrayStack);
 
         arrayStack.push(9);
-        arrayStack.printAll();
+        System.out.println(arrayStack);
     }
 }
