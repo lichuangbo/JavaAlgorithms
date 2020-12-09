@@ -1,4 +1,4 @@
-package top.xiaotian.dataStructures.linkedNode;
+package top.xiaotian.dataStructures.linkedlist.practice;
 
 /**
  * @author lichuangbo

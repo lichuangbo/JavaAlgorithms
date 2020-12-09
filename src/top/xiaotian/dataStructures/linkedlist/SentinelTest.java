@@ -1,4 +1,4 @@
-package top.xiaotian.dataStructures.linkedNode;
+package top.xiaotian.dataStructures.linkedlist;
 
 /**
  * 这只是为了举例说明哨兵的作用，你写代码的时候千万不要写第二段那样的代码，因为可读性太差了。    2333

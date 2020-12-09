@@ -1,6 +1,4 @@
-package top.xiaotian.dataStructures.linkedNode.practice;
-
-import top.xiaotian.dataStructures.linkedNode.Node;
+package top.xiaotian.dataStructures.linkedlist.practice;
 
 /**
  * 单链表翻转

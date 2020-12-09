@@ -1,6 +1,4 @@
-package top.xiaotian.dataStructures.linkedNode.practice;
-
-import top.xiaotian.dataStructures.linkedNode.Node;
+package top.xiaotian.dataStructures.linkedlist.practice;
 
 /**
  * 删除链表的倒数第N个节点

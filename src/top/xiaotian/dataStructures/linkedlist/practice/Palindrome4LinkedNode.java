@@ -1,6 +1,4 @@
-package top.xiaotian.dataStructures.linkedNode.practice;
-
-import top.xiaotian.dataStructures.linkedNode.Node;
+package top.xiaotian.dataStructures.linkedlist.practice;
 
 /**
  * 判断一个字符串是否是回文字符串(其中字符串使用链表存储)

@@ -1,6 +1,4 @@
-package top.xiaotian.dataStructures.linkedNode.practice;
-
-import top.xiaotian.dataStructures.linkedNode.Node;
+package top.xiaotian.dataStructures.linkedlist.practice;
 
 /**
  * 环形链表的判断（快慢指针经典用法）

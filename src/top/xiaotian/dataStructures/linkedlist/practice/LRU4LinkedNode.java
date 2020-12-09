@@ -1,6 +1,4 @@
-package top.xiaotian.dataStructures.linkedNode.practice;
-
-import top.xiaotian.dataStructures.linkedNode.Node;
+package top.xiaotian.dataStructures.linkedlist.practice;
 
 /**
  * 使用单链表实现LRU缓存淘汰算法
