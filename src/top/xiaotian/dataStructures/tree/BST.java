@@ -111,6 +111,23 @@ public class BST<E extends Comparable<E>> {
         inOrder(root);
     }
 
+    public void inOrderNR() {
+        Stack<Node> stack = new Stack<>();
+        Node curr = root;
+        while (!stack.isEmpty() || curr != null) {
+            // 寻找以当前节点为根的最左节点
+            while (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
+            }
+            Node tmp = stack.pop();
+            System.out.print(tmp.e + " ");
+            // 变更curr，下一轮开始遍历右子树
+            curr = tmp.right;
+        }
+        System.out.println();
+    }
+
     // 中序遍历以node为根的二分搜索树
     private void inOrder(Node node) {
         if(node == null) {
@@ -124,6 +141,28 @@ public class BST<E extends Comparable<E>> {
 
     public void postOrder() {
         postOrder(root);
+    }
+
+    public void postOrderNR1() {
+        Stack<Node> stack1 = new Stack<>();
+        Stack<Node> stack2 = new Stack<>();
+        stack1.push(root);
+        while (!stack1.isEmpty()) {
+            Node tmp = stack1.pop();
+            if (tmp.left != null) {
+                stack1.push(tmp.left);
+            }
+            if (tmp.right != null) {
+                stack1.push(tmp.right);
+            }
+
+            stack2.push(tmp);
+        }
+        while(!stack2.isEmpty()) {
+            Node tmp = stack2.pop();
+            System.out.print(tmp.e + " ");
+        }
+        System.out.println();
     }
 
     // 后序遍历以node为根的二分搜索树
@@ -304,10 +343,12 @@ public class BST<E extends Comparable<E>> {
         System.out.println("inOrder: ");
         bst.inOrder();
         System.out.println();
+        bst.inOrderNR();
 
         System.out.println("postOrder: ");
         bst.postOrder();
         System.out.println();
+        bst.postOrderNR1();
 
         System.out.println("levelOrder: ");
         bst.levelOrder();

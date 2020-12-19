@@ -69,7 +69,7 @@ public class RemoveElements {
         }
         // 基于递归宏观语义处理子问题，拿到了基于子问题的一个头结点
         Node res = removeElements3(head.next, val);
-        // 片段头结点和val是否相等，处理连接关系
+        // 判断头结点和val是否相等，处理连接关系
         if (head.value.equals(val)) {
             return res;
         } else {

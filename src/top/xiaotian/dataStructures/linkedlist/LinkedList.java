@@ -55,20 +55,34 @@ public class LinkedList<E> {
             prev = prev.next;
         }
 
-//            Node node = new Node(e);
-//            node.next = prev.next;
-//            prev.next = node;
         prev.next = new Node(e, prev.next);
-
         size++;
     }
 
+    // 递归写法
+    public void addR(int index, E e) {
+        if (index < 0 || index > size)
+            throw new IllegalArgumentException("Add failed");
+
+        addR(dummyHead, index, e);
+    }
+
+    private void addR(Node curr, int index, E e) {
+        if (index == 0) {
+            curr.next = new Node(e, curr.next);
+            size++;
+            return;
+        }
+
+        addR(curr.next, index - 1, e);
+    }
+
     public void addFirst(E e) {
-        add(0, e);
+        addR(0, e);
     }
 
     public void addLast(E e) {
-        add(size, e);
+        addR(size, e);
     }
 
     public E get(int index) {
@@ -81,22 +95,39 @@ public class LinkedList<E> {
         return curr.e;
     }
 
+    public E getR(int index) {
+        if (index < 0 || index > size)
+            throw new IllegalArgumentException("Get failed");
+
+        return getR(dummyHead.next, index).e;
+    }
+
+    public Node getR(Node curr, int index) {
+        if (index == 0) {
+            return curr;
+        }
+
+        return getR(curr.next, index - 1);
+    }
+
     public E getFirst() {
-        return get(0);
+        return getR(0);
     }
 
     public E getLast() {
-        return get(size - 1);
+        return getR(size - 1);
     }
 
     public void set(int index, E e) {
         if (index < 0 || index >= size)
             throw new IllegalArgumentException("Set failed");
-        Node curr = dummyHead.next;
-        for (int i = 0; i < index; i++) {
-            curr = curr.next;
-        }
-        curr.e = e;
+//        Node curr = dummyHead.next;
+//        for (int i = 0; i < index; i++) {
+//            curr = curr.next;
+//        }
+//        curr.e = e;
+
+        getR(dummyHead.next, index).e = e;
     }
 
     public boolean contains(E e) {
