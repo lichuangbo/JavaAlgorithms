@@ -24,6 +24,13 @@ public class Array<E> {
         size = 0;
     }
 
+    @SuppressWarnings("unchecked")
+    public Array(E[] arr) {
+        data = (E[]) new Object[arr.length];
+        System.arraycopy(arr, 0, data, 0, arr.length);
+        size = arr.length;
+    }
+
     /***
      * 无参构造，默认容量为10
      */
@@ -219,6 +226,15 @@ public class Array<E> {
         if (index != -1) {
             remove(index);
         }
+    }
+
+    public void swap(int i, int j) {
+        if (i < 0 || i >= size || j < 0 || j >= size) {
+            throw new IllegalArgumentException("index is illegal");
+        }
+        E tmp = data[i];
+        data[i] = data[j];
+        data[j] = tmp;
     }
 
     @Override
