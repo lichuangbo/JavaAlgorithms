@@ -1,6 +1,11 @@
 package top.xiaotian.dataStructures.set.practice;
 
-import java.util.Set;
+import top.xiaotian.dataStructures.set.BSTSet;
+import top.xiaotian.dataStructures.set.LinkedListSet;
+import top.xiaotian.dataStructures.set.Set;
+import top.xiaotian.dataStructures.tree.BST;
+
+
 import java.util.TreeSet;
 
 /**
@@ -22,7 +27,7 @@ public class UniqueMorseRepresentations {
     public int uniqueMorseRepresentations(String[] words) {
         String[] codes = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
 
-        Set<String> set = new TreeSet<>();
+        Set<String> set = new LinkedListSet<>();
         for (String word : words) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < word.length(); i++) {
@@ -30,7 +35,7 @@ public class UniqueMorseRepresentations {
             }
             set.add(sb.toString());
         }
-        return set.size();
+        return set.getSize();
     }
 
     public static void main(String[] args) {

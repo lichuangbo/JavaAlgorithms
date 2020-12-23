@@ -66,7 +66,7 @@ public class BST<E extends Comparable<E>> {
 
     // 看以node为根的二分搜索树中是否包含元素e
     private boolean contains(Node node, E e) {
-        if (root == null) {
+        if (node == null) {
             return false;
         }
 
@@ -268,10 +268,10 @@ public class BST<E extends Comparable<E>> {
             return null;
         }
 
-        if (node.e.compareTo(e) < 0) {
+        if (e.compareTo(node.e) < 0) {
             node.left = remove(node.left, e);
             return node;
-        } else if (node.e.compareTo(e) > 0) {
+        } else if (e.compareTo(node.e) > 0) {
             node.right = remove(node.right, e);
             return node;
         } else {
@@ -285,7 +285,7 @@ public class BST<E extends Comparable<E>> {
 
             // 待删除节点右子树为空
             if (node.right == null) {
-                Node leftNode = node.right;
+                Node leftNode = node.left;
                 node.left = null;
                 size--;
                 return leftNode;
@@ -334,6 +334,15 @@ public class BST<E extends Comparable<E>> {
         for (int num : nums) {
             bst.add(num);
         }
+        /***
+         *     5
+         *   /   \
+         *  3     6
+         * / \     \
+         *2  4      8
+         */
+        bst.remove(3);
+        bst.remove(6);
 
         System.out.println("preOrder: ");
         bst.preOrder();
