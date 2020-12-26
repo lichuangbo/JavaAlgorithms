@@ -15,28 +15,12 @@ import java.util.*;
  * @Description: 描述:
  */
 public class TopKFrequent {
-    static class Freq implements Comparable<Freq> {
-        public int e;
-        public int freq;
-
-        public Freq(int e, int freq) {
-            this.e = e;
-            this.freq = freq;
-        }
-
-        @Override
-        public int compareTo(Freq ano) {
-            // 频次越低优先级越高
-            if (this.freq > ano.freq) {
-                return -1;
-            } else if (this.freq < ano.freq) {
-                return 1;
-            } else {
-                return 0;
-            }
-        }
-    }
-
+    /**
+     * 时间： map遍历计数O(n) + 遍历计数map,维护堆，O(nlogk)
+     * @param nums
+     * @param k
+     * @return
+     */
     public int[] topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int num : nums) {
@@ -47,14 +31,13 @@ public class TopKFrequent {
             }
         }
 
-        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o1[1] - o2[1];
-            }
-        });
+        // Java中默认的优先队列是最小堆
+        PriorityQueue<int[]> pq = new PriorityQueue<>(
+                (o1, o2) -> o1[1] - o2[1]
+        );
         for(Map.Entry<Integer, Integer> tmpMap : map.entrySet()) {
             Integer m = tmpMap.getKey(), n = tmpMap.getValue();
+            // 维护一个大小为K的小顶堆; 如果新添加元素比堆顶元素大，我们就把堆顶元素删除，并且将这个元素插入到堆中
             if (pq.size() < k) {
                 pq.offer(new int[]{m, n});
             } else if (pq.peek() != null && n > pq.peek()[1]) {
