@@ -7,13 +7,13 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- * 快速排序
+ * 快速排序II-两路快排
  * @author lichuangbo
  * @email lichuangbo@smtp.telek.com.cn
  * @time
  * @Description: 描述:
  */
-public class QuickSort {
+public class QuickSort2 {
 
     private Random random;
 
@@ -38,29 +38,35 @@ public class QuickSort {
         quickSort(arr, pivot + 1, r);
     }
 
-    // 对数组[l...r]区间进行partition操作：使得arr[l...p-1] < arr[p] && arr[p+1...r} > arr[p]
+    // 对数组[l...r]区间进行partition操作
     private int partition(int[] arr, int l, int r) {
         SwapUtil.swap(arr, l, random.nextInt(r) % (r - l + 1) + l);
         int pivot = arr[l];
 
-        // 使arr[l+1...j] < pivot  arr[j+1...i) > pivot
-        int j = l;// j记录两分区的分界点; l是选中的分区点
-        for (int i = l + 1; i <= r; i++) {
-            // arr[i] > pivot不操作，属于区间2；< pivot，属于区间1，要进行交换操作（和区间2的第一个元素交换，而后j后移，保证j仍位于分区分界点上）
-            if (arr[i] < pivot) {
-                SwapUtil.swap(arr, i, j + 1);
-                j++;
+        // 使arr[l+1...i) <= pivot  arr(j...r] >= pivot      这里都包含了=，是不想让两个区间元素因为相等元素极度不均衡
+        int i = l + 1, j = r;
+        while (true) {
+            while (i <= r && arr[i] < pivot) {
+                i++;
             }
+            while (j >= l + 1 && arr[j] > pivot) {
+                j--;
+            }
+
+            if (i > j) {
+                break;
+            }
+            SwapUtil.swap(arr, i, j);
+            i++; j--;
         }
-        // 将pivot放置到中间位置--交换就可以达到目的
         SwapUtil.swap(arr, l, j);
         return j;
     }
 
     public static void main(String[] args) {
-        int[] arr = RandomUtil.randomInt(1000, 1, 1000);
+        int[] arr = RandomUtil.randomInt(100000, 1, 10);
 
-        new QuickSort().quickSort(arr);
+        new QuickSort2().quickSort(arr);
         System.out.println(Arrays.toString(arr));
     }
 }
