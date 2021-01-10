@@ -29,6 +29,63 @@ import java.util.List;
  */
 public class FindAnagrams {
     public List<Integer> findAnagrams(String s, String p) {
-        return new ArrayList<>();
+        List<Integer> resList = new ArrayList<>();
+        if (s.length() < p.length()) {
+            return resList;
+        }
+
+        // 统计p出现的频率
+        int[] freq = new int[26];
+        char[] pArr = p.toCharArray();
+        for (int i = 0; i < pArr.length; i++) {
+            freq[pArr[i] - 'a']++;
+        }
+
+//        int l = 0, r = -1;// 滑动区间：[l...r]
+//        while (l < s.length()) {
+//            if (r + 1 < s.length() && r - l + 1 < p.length()) {
+//                r++;
+//            } else {
+//                l++;
+//            }
+//
+//            if (r - l + 1 == p.length() && isAnagrams(s.substring(l, r + 1), freq)) {
+//                resList.add(l);
+//            }
+//        }
+
+        // 滑动窗口大小固定，耗时变长了
+        int l = 0, r = p.length() - 1;// 滑动区间：[l...r]
+        while (r < s.length()) {
+            if (isAnagrams(s.substring(l, r + 1), freq)) {
+                resList.add(l);
+            }
+            l++;
+            r++;
+        }
+
+        return resList;
+    }
+
+    // 判断两个字符串是否为互为字母异位词
+    private boolean isAnagrams(String a, int[] freq) {
+        char[] aArr = a.toCharArray();
+        int[] tmp = new int[26];
+        for (int i = 0; i < aArr.length; i++) {
+            tmp[aArr[i] - 'a']++;
+        }
+
+        for (int i = 0; i < freq.length; i++) {
+            if (freq[i] != tmp[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        String s = "cbaebabacd", p = "abc";
+        List<Integer> anagrams = new FindAnagrams().findAnagrams(s, p);
+        System.out.println(anagrams);
     }
 }
