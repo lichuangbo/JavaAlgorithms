@@ -20,7 +20,7 @@ import java.util.Map;
 public class ThreeSumClosest {
     /**
      * 时间：排序O(nlogn) + 对撞指针O(n2)
-     * 三数之和的思路
+     * 三数之和的思路（查找表思想）
      * @param nums
      * @param target
      * @return
