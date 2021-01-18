@@ -32,11 +32,12 @@ public class InsertionSort {
 
     // 效率高, 在近乎有序的序列中性能更好
     public void insertSort2(int []arr) {
+        // 首元素假设为有序的
         for (int i = 1; i < arr.length; i++) {
-            int unSort = arr[i];
+            int unSort = arr[i];// 待插入元素
             int j; // 保存未排序元素应该插入的位置
-            for (j = i; j > 0; j--) {
-                if (unSort < arr[j - 1]) {
+            for (j = i; j > 0; j--) {// 有序集合从后向前遍历
+                if (unSort < arr[j - 1]) {// 如果未排序元素比有序集合元素小，移动
                     arr[j] = arr[j - 1];
                 } else {
                     break;

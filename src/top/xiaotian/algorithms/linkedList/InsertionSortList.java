@@ -24,41 +24,19 @@ package top.xiaotian.algorithms.linkedList;
  * @Description: 描述:
  */
 public class InsertionSortList {
+    /**
+     * 时间：O(n2)
+     * @param head
+     * @return
+     */
     public ListNode insertionSortList(ListNode head) {
         if (head == null || head.next == null) {
             return head;
         }
 
-        ListNode res = new ListNode(head.val);// 初始化一个有序链表
-        ListNode curr = head.next;
-        while (curr != null) {
-            if (curr.val < res.val) {// 追加到有序链表中
-                ListNode tmp = new ListNode(curr.val);
-                tmp.next = res;
-                res = tmp;
-            } else {// 和有序链表比较
-                ListNode tCurr = res, prev = res;
-                while (tCurr != null) {
-                    if (tCurr.val < curr.val) {
-                        prev = tCurr;
-                        tCurr = tCurr.next;
-                    } else {
-                        ListNode tmp = new ListNode(curr.val);
-                        prev.next = tmp;
-                        tmp.next = tCurr;
-                    }
-                }
-            }
-            curr = curr.next;
-        }
-        return res;
-    }
-
-    public ListNode insertionSortList2(ListNode head) {
         ListNode dummyHead = new ListNode(-1);
         dummyHead.next = head;
-
-        ListNode curr = dummyHead;
+        ListNode curr = dummyHead.next;
         while (curr.next != null) {
             // 有序直接跳过
             if (curr.val < curr.next.val) {
@@ -66,12 +44,18 @@ public class InsertionSortList {
                 continue;
             }
 
-            ListNode prev = dummyHead.next;// 有序链表起点
-            while (prev.val < curr.next.val) {
+            ListNode tmpNode = curr.next;// 暂存节点
+            curr.next = curr.next.next;// 删除tmpNode
+
+            // 寻找插入位置
+            ListNode prev = dummyHead;// 有序链表起点
+            while (prev.next.val < tmpNode.val) {
                 prev = prev.next;
             }
 
-
+            // 连接链表
+            tmpNode.next = prev.next;
+            prev.next = tmpNode;
         }
         return dummyHead.next;
     }
