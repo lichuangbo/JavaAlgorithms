@@ -7,9 +7,9 @@ package top.xiaotian.algorithms.linkedList;
  * @Description: 描述:
  */
 public class ListNode {
-    int val;
-    ListNode next;
-    ListNode(int x) { val = x; }
+    public int val;
+    public ListNode next;
+    public ListNode(int x) { val = x; }
 
     public ListNode(int[] arr) {
         if (arr == null || arr.length == 0)

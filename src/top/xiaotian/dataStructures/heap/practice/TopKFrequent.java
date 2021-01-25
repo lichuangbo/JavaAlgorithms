@@ -3,7 +3,7 @@ package top.xiaotian.dataStructures.heap.practice;
 import java.util.*;
 
 /**
- * 前 K 个高频元素
+ * 347. 前 K 个高频元素
  * 给定一个非空的整数数组，返回其中出现频率前 k 高的元素。
  *
  *  示例 1:
@@ -24,14 +24,16 @@ public class TopKFrequent {
     public int[] topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int num : nums) {
-            if (map.containsKey(num)) {
-                map.put(num, map.get(num) + 1);
-            } else {
-                map.put(num, 1);
-            }
+//            if (map.containsKey(num)) {
+//                map.put(num, map.get(num) + 1);
+//            } else {
+//                map.put(num, 1);
+//            }
+            map.compute(num, (k1, v1) -> v1 == null ? 1 : v1 + 1);
         }
 
         // Java中默认的优先队列是最小堆
+        // 求解前k大问题，使用最小堆；求解前k小问题，使用最大堆
         PriorityQueue<int[]> pq = new PriorityQueue<>(
                 (o1, o2) -> o1[1] - o2[1]
         );
@@ -46,6 +48,7 @@ public class TopKFrequent {
             }
         }
 
+        // 组装结果
         int[] res = new int[k];
         int i = 0;
         while (!pq.isEmpty()) {
