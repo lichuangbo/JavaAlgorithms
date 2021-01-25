@@ -1,7 +1,7 @@
 package top.xiaotian.dataStructures.heap.practice;
 
 
-import top.xiaotian.algorithms.linkedList.ListNode;
+import top.xiaotian.util.ListNode;
 
 import java.util.PriorityQueue;
 

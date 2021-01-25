@@ -1,5 +1,7 @@
 package top.xiaotian.algorithms.linkedList;
 
+import top.xiaotian.util.ListNode;
+
 /**
  * 86. 分隔链表
  * 给你一个链表和一个特定值 x ，请你对链表进行分隔，使得所有小于 x 的节点都出现在大于或等于 x 的节点之前。

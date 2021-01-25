@@ -1,4 +1,4 @@
-package top.xiaotian.dataStructures.queue.practice;
+package top.xiaotian.util;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -10,10 +10,11 @@ import java.util.Queue;
  * @Description: 描述:
  */
 public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode(int x) { val = x; }
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
+
+    public TreeNode(int x) { val = x; }
 
     public TreeNode(String[] nums) {
         if (nums == null || nums.length == 0) {

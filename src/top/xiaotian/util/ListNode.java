@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.linkedList;
+package top.xiaotian.util;
 
 /**
  * @author lichuangbo

@@ -1,6 +1,8 @@
 package top.xiaotian.algorithms.linkedList;
 
 
+import top.xiaotian.util.ListNode;
+
 import java.util.Stack;
 
 /**

@@ -1,5 +1,7 @@
 package top.xiaotian.algorithms.linkedList;
 
+import top.xiaotian.util.ListNode;
+
 /**
  * 143. 重排链表
  * 给定一个单链表 L：L0→L1→…→Ln-1→Ln ，

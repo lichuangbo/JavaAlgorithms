@@ -1,5 +1,7 @@
 package top.xiaotian.algorithms.linkedList;
 
+import top.xiaotian.util.ListNode;
+
 /**
  * 147. 对链表进行插入排序
  * 对链表进行插入排序。

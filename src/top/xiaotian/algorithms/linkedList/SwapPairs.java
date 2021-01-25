@@ -1,5 +1,7 @@
 package top.xiaotian.algorithms.linkedList;
 
+import top.xiaotian.util.ListNode;
+
 /**
  * 24. 两两交换链表中的节点
  * 给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
