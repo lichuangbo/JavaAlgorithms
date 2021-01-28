@@ -248,7 +248,7 @@ public class BST<E extends Comparable<E>> {
     // 删除以node为根的二分搜索树中的最大节点，并返回删除节点后新的二分搜索树的根
     private Node removeMax(Node node) {
         if (node.right == null) {
-            Node leftNode = node.right;
+            Node leftNode = node.left;
             node.left = null;
             size--;
             return leftNode;
