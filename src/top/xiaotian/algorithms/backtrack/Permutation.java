@@ -1,6 +1,7 @@
 package top.xiaotian.algorithms.backtrack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -63,9 +64,50 @@ public class Permutation {
         }
     }
 
+    // 47. 全排列 II
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        res = new ArrayList<>();
+        visited = new boolean[nums.length];
+        if (nums == null || nums.length == 0) {
+            return res;
+        }
+
+        Arrays.sort(nums);
+        generatePermutationII(nums, 0, new LinkedList<>());
+        return res;
+    }
+
+    private void generatePermutationII(int[] nums, int index, LinkedList<Integer> curr) {
+        if (index == nums.length) {
+            res.add(new ArrayList<>(curr));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            /**
+             * 剪枝条件： 当前值与前一个值相同,并且前一个值没有访问过，就跳过
+             * 观察到 在回溯遍历过程中，如果紧挨着的两个相等元素，第一个元素对应的分支正常进行，第二个元素对应分支是重复的，
+             * 在处理第二个元素时，他将第一个元素撤销选择，在向下递归时会再次选中第一个元素，这就导致了重复排列的产生
+             */
+            if (i != 0 && nums[i] == nums[i - 1] && !visited[i - 1])
+                continue;
+
+            if (!visited[i]) {
+                curr.addLast(nums[i]);
+                visited[i] = true;
+                generatePermutationII(nums, index + 1, curr);
+                curr.removeLast();
+                visited[i] = false;
+            }
+        }
+    }
+
     public static void main(String[] args) {
-        int[] nums = {1, 2, 3};
-        List<List<Integer>> permute = new Permutation().permute(nums);
+//        int[] nums = {1, 2, 3};
+        int[] nums = {1, 1, 2};
+        Permutation permutation = new Permutation();
+//        List<List<Integer>> permute = permutation.permute(nums);
+        List<List<Integer>> permute = permutation.permuteUnique(nums);
         System.out.println(permute);
     }
 }
