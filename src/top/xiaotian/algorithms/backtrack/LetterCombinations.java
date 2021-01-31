@@ -34,7 +34,7 @@ public class LetterCombinations {
 
     private List<String> res;
 
-    // 回溯，时间O(3^n)
+    // 回溯，时间O(3^rows)
     public List<String> letterCombinations(String digits) {
         res = new ArrayList<>();
         if (digits == null || digits.length() == 0) {

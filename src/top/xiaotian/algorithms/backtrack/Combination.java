@@ -7,11 +7,11 @@ import java.util.List;
 
 /**
  * 77. 组合
- * 给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
+ * 给定两个整数 rows 和 k，返回 1 ... rows 中所有可能的 k 个数的组合。
  *
  * 示例:
  *
- * 输入: n = 4, k = 2
+ * 输入: rows = 4, k = 2
  * 输出:
  * [
  *   [2,4],
@@ -39,7 +39,7 @@ public class Combination {
         return res;
     }
 
-    // 求解C(n, k), 当前已经找到的组合存储在curr中，需要从start开始搜索新的元素
+    // 求解C(rows, k), 当前已经找到的组合存储在curr中，需要从start开始搜索新的元素
     private void generateCombinations(int n, int k, int start, LinkedList<Integer> curr) {
         if (curr.size() == k) {
             res.add(new ArrayList<>(curr));
@@ -47,10 +47,10 @@ public class Combination {
         }
 
         /**
-         * 剪枝：现在i遍历区间[start...n]，但是当i=n时，在循环里继续递归还会+1，此时已经没有空位可选了
-         * curr中存储着已经找到的元素，说明还有k-curr.size()个空位可以排列，i取多少，可以确保[i...n]区间中至少有k-curr.size个元素
+         * 剪枝：现在i遍历区间[start...rows]，但是当i=n时，在循环里继续递归还会+1，此时已经没有空位可选了
+         * curr中存储着已经找到的元素，说明还有k-curr.size()个空位可以排列，i取多少，可以确保[i...rows]区间中至少有k-curr.size个元素
          * 2个空位：k-curr.size=2,i应该取n-1       1个空位：k-curr.size=1,i应该取n
-         * 观察：i最多取 n - (k - curr.size) + 1
+         * 观察：i最多取 rows - (k - curr.size) + 1
          */
         for (int i = start; i <= n - (k - curr.size()) + 1; i++) {
             curr.addLast(i);
@@ -147,7 +147,7 @@ public class Combination {
 
     /**
      * 216. 组合总和 III
-     * 找出所有相加之和为 n 的 k 个数的组合。组合中只允许含有 1 - 9 的正整数，并且每种组合中不存在重复的数字。
+     * 找出所有相加之和为 rows 的 k 个数的组合。组合中只允许含有 1 - 9 的正整数，并且每种组合中不存在重复的数字。
      *
      * 说明：
      *
@@ -155,7 +155,7 @@ public class Combination {
      * 解集不能包含重复的组合。
      * 示例 1:
      *
-     * 输入: k = 3, n = 7
+     * 输入: k = 3, rows = 7
      * 输出: [[1,2,4]]
      * @param k
      * @param n
