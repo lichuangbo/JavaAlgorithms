@@ -36,6 +36,7 @@ public class BinaryWatch {
         return res;
     }
 
+    // 递归语义：求解num个灯时，可能表示的时间
     public void backTrack(int num, int start, int hour, int minute) {
         // 灯用完了，说明得到一组解，将它加入结果集
         if (num == 0) {
@@ -55,13 +56,15 @@ public class BinaryWatch {
             return;
         }
 
+        // 从小时到分钟开始遍历灯泡表示的所有可能结果
         for (int i = start; i < times.length; i++) {
-            if (i < 4)//小时
+            // 前四个灯泡表示小时，后6个灯泡表示分钟
+            if (i < 4)
                 hour += times[i];
             else
                 minute += times[i];
             backTrack(num - 1, i + 1, hour, minute);
-            if (i < 4)//小时
+            if (i < 4)
                 hour -= times[i];
             else
                 minute -= times[i];

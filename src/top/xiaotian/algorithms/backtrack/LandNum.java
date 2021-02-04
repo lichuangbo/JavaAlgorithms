@@ -46,6 +46,7 @@ public class LandNum {
         if (i < 0 || i >= rows || j < 0 || j >= cols) {
             return;
         }
+        // 渲染过地图 或者 地图区域是水域 就返回
         if (visited[i][j] || grid[i][j] == '0') {
             return;
         }

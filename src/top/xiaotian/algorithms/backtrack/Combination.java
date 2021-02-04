@@ -41,6 +41,7 @@ public class Combination {
 
     // 求解C(rows, k), 当前已经找到的组合存储在curr中，需要从start开始搜索新的元素
     private void generateCombinations(int n, int k, int start, LinkedList<Integer> curr) {
+        // 已经凑齐k个数，说明找到了一组解
         if (curr.size() == k) {
             res.add(new ArrayList<>(curr));
             return;
@@ -135,6 +136,11 @@ public class Combination {
                 break;
             }
             // 基于39的剪枝去重：当减去的是同一个数时，会产生重复，应该跳过
+            /*
+            在一个for循环中，所有被遍历到的数都是属于一个层级的。我们要让一个层级中，
+            必须出现且只出现一个2，那么就放过第一个出现重复的2，但不放过后面出现的2。
+            第一个出现的2的特点就是 cur == begin. 第二个出现的2 特点是cur > begin.
+             */
             if (i > start && candidates[i] == candidates[i - 1]) {
                 continue;
             }
@@ -190,9 +196,9 @@ public class Combination {
     public static void main(String[] args) {
         int[] candidates = {10, 1, 2, 7, 6, 1, 5};
         Combination combination = new Combination();
-//        List<List<Integer>> res = combination.combinationSum2(candidates, 8);
+        List<List<Integer>> res = combination.combinationSum2(candidates, 8);
 
-        List<List<Integer>> res = combination.combinationSum3(3, 7);
+//        List<List<Integer>> res = combination.combinationSum3(3, 7);
         System.out.println(res);
     }
 }
