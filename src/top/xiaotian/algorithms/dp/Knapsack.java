@@ -45,7 +45,66 @@ public class Knapsack {
          *  1   0   6  10  16  16  16       第二行表示考虑0,1两个物品 对应第二列表示：容量为1只能放入编号1物品，背包最大价值还为6  对应第三列表示：容量为2时不放编号0物品放入编号1物品，背包价值为10
          *  2   0   6  10  16  18  22
          */
-        return 0;
+        int n = w.length;
+        int[][] dp = new int[n][C + 1];
+        // 基础问题解决
+        for (int j = 0; j <= C; j++) {
+            dp[0][j] = j >= w[0] ? v[0] : 0;
+        }
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j <= C; j++) {
+                // 不考虑当前物品
+                int res = dp[i - 1][j];
+                // 考虑当前物品
+                if (j >= w[i]) {
+                    res = Math.max(res, v[i] + dp[i - 1][j - w[i]]);
+                }
+                dp[i][j] = res;
+            }
+        }
+        return dp[n - 1][C];
+    }
+    /**
+     * 空间上优化,使用两行空间
+     * 初始化第一行，第一行值推到得到第二行   第三行，覆盖掉第一行，复用
+     */
+    public int knapsack01_dp2(int[] w, int[] v, int C) {
+        int n = w.length;
+        int[][] dp = new int[2][C + 1];
+        // 基础问题解决
+        for (int j = 0; j <= C; j++) {
+            dp[0][j] = j >= w[0] ? v[0] : 0;
+        }
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j <= C; j++) {
+                // 不考虑当前物品
+                int res = dp[(i - 1) % 2][j];
+                // 考虑当前物品
+                if (j >= w[i]) {
+                    res = Math.max(res, v[i] + dp[(i - 1) % 2][j - w[i]]);
+                }
+                dp[i % 2][j] = res;
+            }
+        }
+        return dp[(n - 1) % 2][C];
+    }
+    /**
+     * 空间上优化，使用一行空间
+     * 每一行从后向前填充表格
+     */
+    public int knapsack01_dp3(int[] w, int[] v, int C) {
+        int n = w.length;
+        int[] dp = new int[C + 1];
+        // 基础问题解决
+        for (int j = 0; j <= C; j++) {
+            dp[j] = j >= w[0] ? v[0] : 0;
+        }
+        for (int i = 1; i < n; i++) {
+            for (int j = C; j >= w[i]; j--) {
+                dp[j] = Math.max(dp[j], v[i] + dp[j - w[i]]);
+            }
+        }
+        return dp[C];
     }
 
     public static void main(String[] args) {
@@ -53,7 +112,7 @@ public class Knapsack {
         int[] v = {6, 10, 12};
         int C = 5;
         Knapsack knapsack = new Knapsack();
-        int res = knapsack.knapsack01(w, v, C);
+        int res = knapsack.knapsack01_dp3(w, v, C);
         System.out.println(res);// 22
     }
 }
