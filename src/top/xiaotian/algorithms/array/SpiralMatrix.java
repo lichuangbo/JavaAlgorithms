@@ -84,6 +84,7 @@ public class SpiralMatrix {
         boolean[][] visited = new boolean[rows][cols];
         int total = rows * cols;
         int row = 0, col = 0;
+        // 方向理解：(0,1)表示x位置不动（纵坐标不变），y位置+1（横坐标+1），即右移
         int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
         int directionIndex = 0;// 记录当前方向，0-右，1-下，2-左，3-上， 循环使用
         for (int i = 0; i < total; i++) {
