@@ -1,6 +1,7 @@
 package top.xiaotian.algorithms.dp;
 
 /**
+ * 背包问题
  * @author lichuangbo
  * @email lichuangbo@smtp.telek.com.cn
  * @time 2021/2/9 16:35
