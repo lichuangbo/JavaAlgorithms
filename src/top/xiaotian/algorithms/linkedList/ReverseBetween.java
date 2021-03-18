@@ -28,31 +28,32 @@ public class ReverseBetween {
      * @return
      */
     public ListNode reverseBetween(ListNode head, int m, int n) {
-        ListNode dummyHead = new ListNode(-1);
-        dummyHead.next = head;
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
 
-        // prev记录待反转的前一个节点（m-1位置）
-        ListNode prev = dummyHead;
-        for (int i = 0; i < m - 1; i++) {
-            prev = prev.next;
+        ListNode curr = dummy;// 寻找翻转起点
+        for (int i = 1; i < m; i++) {
+            curr = curr.next;
         }
+        ListNode prevTail = curr;// 前半段尾结点指向
+        ListNode tCurr = curr.next;// 翻转段头节点
+        ListNode reverseTail = tCurr;// 翻转段（翻转后）尾结点
+        ListNode tPrev = null;// 翻转段辅助前置节点
+        ListNode nextHead = null;// 后半段头节点指向
+        for (int i = m; i <= n; i++) {
+            ListNode next = tCurr.next;
+            tCurr.next = tPrev;
+            tPrev = tCurr;
+            tCurr = next;
 
-        // 翻转m-n之间的链表：tPrev记录[m...n]之间反转后的头节点， next记录代反转链表后一个节点（n+1位置）
-        ListNode tPrev = prev.next;
-        ListNode curr = tPrev.next;
-        ListNode next = curr;
-        for (int i = m; i < n; i++) {
-            next = curr.next;
-
-            curr.next = tPrev;
-            tPrev = curr;
-            curr = next;
+            if (i == n) {
+                nextHead = tCurr;
+            }
         }
-
-        // 关键节点位置都已记录，开始连接
-        prev.next.next = next;
-        prev.next = tPrev;
-        return dummyHead.next;
+        // 连接前半段、翻转段、后半段
+        prevTail.next = tPrev;
+        reverseTail.next = nextHead;
+        return dummy.next;
     }
 
 
@@ -83,7 +84,7 @@ public class ReverseBetween {
 
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5};
-        ListNode listNode = new ReverseBetween().reverseBetween2(new ListNode(arr), 2, 4);
+        ListNode listNode = new ReverseBetween().reverseBetween(new ListNode(arr), 2, 4);
         System.out.println(listNode);
     }
 }
