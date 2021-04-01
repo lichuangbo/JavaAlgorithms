@@ -35,29 +35,31 @@ public class EvalRPN {
         if (tokens == null || tokens.length == 0) {
             return 0;
         }
-        Stack<String> stack = new Stack<>();
-        for (String token : tokens) {
-            if (("+-*/").contains(token)) {
-                String popB = stack.pop();
-                String popA = stack.pop();
+
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < tokens.length; i++) {
+            String token = tokens[i];
+            if ("+-*/".contains(token)) {
+                Integer pop2 = stack.pop();
+                Integer pop1 = stack.pop();
                 switch (token) {
                     case "+":
-                        stack.push(String.valueOf(Integer.parseInt(popA) + Integer.parseInt(popB)));
+                        stack.push(pop1 + pop2);
                         break;
                     case "-":
-                        stack.push(String.valueOf(Integer.parseInt(popA) - Integer.parseInt(popB)));
+                        stack.push(pop1 - pop2);
                         break;
                     case "*":
-                        stack.push(String.valueOf(Integer.parseInt(popA) * Integer.parseInt(popB)));
+                        stack.push(pop1 * pop2);
                         break;
                     case "/":
-                        stack.push(String.valueOf(Integer.parseInt(popA) / Integer.parseInt(popB)));
+                        stack.push(pop1 / pop2);
                         break;
                 }
             } else {
-                stack.push(token);
+                stack.push(Integer.parseInt(token));
             }
         }
-        return Integer.parseInt(stack.pop());
+        return stack.pop();
     }
 }
