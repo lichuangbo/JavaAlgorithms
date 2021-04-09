@@ -90,6 +90,55 @@ public class RotatedSortedArray {
         return false;
     }
 
+    // 153. 寻找旋转排序数组中的最小值
+    public int findMin(int[] nums) {
+        /**
+         *    例： 1 2 3 4 5
+         * 旋转1： 1 2 3 4 5   左 < 中 < 右
+         * 旋转2: 3 4 5 1 2   左 < 中 > 右
+         * 旋转3: 4 5 1 2 3   左 > 中 < 右
+         * 注意：旋转点会到达首位，旋转点前一个会到达末尾，而原数组递增，那么就表明首位一定大于末尾
+         *
+         * 中 < 右，最小值在左，收缩右边界
+         * 中 > 右，最小值在右，收缩左边界
+         *
+         * m 更接近左，它采用floor除法，奇数个时位于偏左，偶数个时位于正中间
+         * 所以存在 l <= m, m < r 的关系
+         *
+         * 一个元素输入，直接返回
+         * 两个以上元素输入，最终结果都只会是 num[l]==nums[m]  nums[r],  l==m==r-1
+         *
+         * nums[l]==nums[m]>nums[r],说明左大右小，执行l=m+1后，l和r重叠，l和r下标中都保存了最小值
+         * nums[l]==nums[m]<nums[r]，说明左小右大，执行r=m后，l和r重叠，l和r下标中都保存了最小值
+         */
+        int l = 0, r = nums.length - 1;
+        while (l < r) {
+            int m = l + (r - l) / 2;
+            if (nums[m] > nums[r]) {
+                l = m + 1;// 中值>右值，中值肯定不是最小，可以放心跳过
+            } else {// nums[m] < nums[r], 不会出现等于的情况
+                r = m;// 中值<右值，有可能中值就是最小值，不可以跳过当前值
+            }
+        }
+        return nums[l];
+    }
+
+    // 154. 寻找旋转排序数组中的最小值 II(原升序数组有重复元素)
+    public int findMinII(int[] nums) {
+        int l = 0, r = nums.length - 1;
+        while (l < r) {
+            int m = l + (r - l) / 2;
+            if (nums[m] > nums[r]) {
+                l = m + 1;// 中值>右值，中值肯定不是最小，可以放心跳过
+            } else if (nums[m] < nums[r]) {
+                r = m;// 中值<右值，有可能中值就是最小值，不可以跳过当前值
+            } else {
+                r--;// 因为原数组存在重复，中值=右值时，r左移并不会将最小值漏掉   同时也不会越界的风险（r>l>=0）
+            }
+        }
+        return nums[l];
+    }
+
     public static void main(String[] args) {
         int[] nums = {2,5,6,0,0,1,2};
         boolean res = new RotatedSortedArray().searchII(nums, 3);
