@@ -64,12 +64,12 @@ public class Array<E> {
 
     /***
      * 向数组指定索引处添加元素
-     * @param index 索引位置
+     * @param index 索引位置（索引从0开始）
      * @param e 元素
      */
     public void add(int index, E e) {
         if (index < 0 || index > size) {
-            throw new IllegalArgumentException("Add Failed. Require index >= 0 and index <= size");
+            throw new IllegalArgumentException("Add Failed. Require index >= 0 and index < size");
         }
         if (size == data.length) {
 //            throw new IllegalArgumentException("Add Failed. Array is Full");
@@ -77,6 +77,11 @@ public class Array<E> {
             resize(2 * data.length);
         }
         // 数据挨个往后移动
+        /*
+         * 1 2 3 4 5 6  size=6,index=2,e=0
+         *     3 3 4 5 6
+         * 1 2 0 3 4 5 6
+         */
         for (int i = size - 1; i >= index; i--) {
             data[i + 1] = data[i];
         }
@@ -100,6 +105,7 @@ public class Array<E> {
      * @param e 待插入元素
      */
     public void addLast(E e) {
+        // size对应index，不会进入for循环（搬移数据），直接data[index]=e
         add(size, e);
     }
 
@@ -182,13 +188,19 @@ public class Array<E> {
     /***
      * 删除指定索引位置的元素并返回
      * @param index 索引位置
-     * @return
+     * @return 该索引对应的元素
      */
     public E remove(int index) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Remove Failed. Require index >= 0 and index < size");
         }
+        // 记录该索引对应元素
         E res = data[index];
+        // 从右向左搬移数据
+        /*
+         * 1 2 3 4 5 6  index=2
+         *     4 5 6
+         */
         for (int i = index; i < size - 1; i++) {
             data[i] = data[i + 1];
         }

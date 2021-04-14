@@ -1,7 +1,7 @@
 package top.xiaotian.dataStructures.queue;
 
 /**
- * 顺序队列
+ * 队列通用接口
  * @author lichuangbo
  * @email lichuangbo@smtp.telek.com.cn
  * @time
