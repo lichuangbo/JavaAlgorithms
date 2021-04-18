@@ -50,20 +50,44 @@ public class RemoveDuplicates {
      * @return
      */
     public int removeDuplicates2(int[] nums) {
-        int k = 0;
-        for(int i = 1; i < nums.length; i++){
-            if(nums[k] != nums[i]){
-                k++;
-                nums[k] = nums[i];
+        int n = nums.length;
+        if (n == 0) {
+            return 0;
+        }
+        int fast = 1, slow = 1;
+        while (fast < n) {
+            if (nums[fast] != nums[fast - 1]) {
+                nums[slow] = nums[fast];
+                slow++;
+            }
+            fast++;
+        }
+        return slow;
+    }
+
+    // 时间O(n2)
+    public int removeDuplicates3(int[] nums) {
+        int len = nums.length;
+        for (int i = 0; i < len - 1;) {
+            if (nums[i] == nums[i + 1]) {
+                // 遇到相同元素即开始搬移数据
+                for (int j = i + 1; j < nums.length - 1; j++) {
+                    nums[j] = nums[j + 1];
+                }
+                // 遇见相同元素，长度减一
+                len--;
+            } else {
+                // 不相同再更新i，避免遗漏 [1, 1, 1]
+                i++;
             }
         }
-        return k + 1;
+        return len;
     }
 
     public static void main(String[] args) {
         int[] arr = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
         RemoveDuplicates test = new RemoveDuplicates();
-        int res = test.removeDuplicates2(arr);
+        int res = test.removeDuplicates3(arr);
         System.out.println(res + ", " + Arrays.toString(arr));
     }
 }
