@@ -65,6 +65,47 @@ public class RemoveDuplicates {
         return slow;
     }
 
+    // 27. 移除元素（移除所有等于val的元素，返回移除后数组个数）
+    public int removeElement(int[] nums, int val) {
+        int j = nums.length - 1;
+        // 前半段有效，后半段无效，进行交换操作
+        for (int i = 0; i <= j; i++) {
+            if (nums[i] == val) {
+                swap(nums, i--, j--);
+            }
+        }
+        return j + 1;
+
+//        int len = nums.length;
+//        for (int i = 0; i < len;) {
+//            if (nums[i] == val) {
+//                for (int j = i; j < nums.length - 1; j++) {
+//                    nums[j] = nums[j + 1];
+//                }
+//                len--;
+//            } else {
+//                i++;
+//            }
+//            System.out.println(len);
+//        }
+//        return len;
+
+//        int fast = 0, slow = 0;
+//        while (fast < nums.length) {
+//            if (nums[fast] != val) {
+//                nums[slow] = nums[fast];
+//                slow++;
+//            }
+//            fast++;
+//        }
+//        return slow;
+    }
+    void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+
     // 时间O(n2)
     public int removeDuplicates3(int[] nums) {
         int len = nums.length;
