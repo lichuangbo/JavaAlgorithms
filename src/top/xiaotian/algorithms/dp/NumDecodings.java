@@ -27,31 +27,73 @@ package top.xiaotian.algorithms.dp;
  */
 public class NumDecodings {
     public int numDecodings(String s) {
-        if (s == null || s.length() == 0) {
+        // 226
+        // 解码为6，继续解码22的解法   +   解码为26，继续解码2的解法
+        if (s.startsWith("0")) {
             return 0;
         }
-        if (s.charAt(0) == '0') {
-            return 0;
+        int[] mono = new int[s.length()];
+        return help(s, s.length() - 1, mono);
+    }
+
+    private int help(String s, int index, int[] mono) {
+        if (index <= 0) {
+            return 1;
         }
 
-        // dp[i]表示走到第i个字符位置可以有多少种解法，如果是该步是单独解码dp[i-1]，如果该步是复合解码(和前一个字符组合起来)dp[i-2],两个之和就是走到当前位置的解法个数
-        int[] dp = new int[s.length() + 1];
-        dp[0] = 1; dp[1] = 1;
-        for (int i = 1; i < s.length(); i++) {
-            if (s.charAt(i) == '0') {// 如果当前字符为0，那么只有前一个字符为1或2时，才是有效的。并且是唯一解法，他的值等于1或2前边那个字符的解
-                if (s.charAt(i - 1) == '1' || s.charAt(i - 1) == '2') {
-                    dp[i + 1] = dp[i - 1];
-                } else {
-                    return 0;
-                }
-            } else {
-                if (s.charAt(i - 1) == '1' || (s.charAt(i - 1) == '2' && s.charAt(i) >= '1' && s.charAt(i) <= '6')) {// 可单独解，可复合解的两种情况（前一个字符是1-无条件有解， 前一个字符和当前字符是有效的组合）
-                    dp[i + 1] = dp[i] + dp[i - 1];
-                } else {
-                    dp[i + 1] = dp[i];
-                }
+        if (mono[index] != 0) {
+            return mono[index];
+        }
+
+        char prev = s.charAt(index - 1), curr = s.charAt(index);
+        int count1 = 0, count2 = 0;
+        // 单个解码时（将10,20情况放入复合解码计算）
+        /**
+         * 为什么要放到复合解码逻辑中？
+         * 以210为例，从后向前看当前元素为0，而前边是1，不能拆分，应解码为10再加上继续解码2的可能，总共为1
+         */
+        if (curr > '0') {
+            count1 = help(s, index - 1, mono);
+        }
+        // 复合解码时
+        if (prev == '1' || (prev == '2' && curr <= '6')) {// [11...19] [21...26]可以组成复合解码   +    [10,20]的处理
+            count2 = help(s, index - 2, mono);
+        }
+        mono[index] = count1 + count2;
+        return count1 + count2;
+    }
+
+    public int numDecodings2(String s) {
+        if (s.startsWith("0")) {
+            return 0;
+        }
+        if (s.length() == 1) {
+            return 1;
+        }
+
+        int[] dp = new int[s.length()];
+        dp[0] = 1;
+        if ((s.charAt(0) == '1' && s.charAt(1) > '0') || (s.charAt(0) == '2'&& s.charAt(1) > '0' && s.charAt(1) <= '6' )) {// [11...19]  [21...26]
+            dp[1] = 2;
+        } else if (s.charAt(0) > '2' && s.charAt(1) == '0') {// 30,40等不可解码
+            dp[1] = 0;
+        } else {
+            dp[1] = 1;
+        }
+        for (int i = 2; i < s.length(); i++) {
+            if (s.charAt(i) > '0') { //（将10,20情况放入复合解码计算）
+                dp[i] += dp[i - 1];
+            }
+            if (s.charAt(i - 1) == '1' || (s.charAt(i - 1) == '2' && s.charAt(i) <= '6')) {
+                dp[i] += dp[i - 2];
             }
         }
-        return dp[s.length()];
+        return dp[s.length() - 1];
+    }
+
+
+    public static void main(String[] args) {
+        int res = new NumDecodings().numDecodings("210");
+        System.out.println(res);
     }
 }
