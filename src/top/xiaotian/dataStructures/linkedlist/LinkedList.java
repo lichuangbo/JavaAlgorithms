@@ -51,6 +51,11 @@ public class LinkedList<E> {
         if (index < 0 || index > size)
             throw new IllegalArgumentException("Add failed");
         Node prev = dummyHead;
+        /*
+         * dummy -> 1 -> 2 -> 3 -> nil    index=1,e=0,size=3
+         *         prev
+         *          1 -> 0 -> 2 -> 3 -> nil
+         */
         for (int i = 0; i < index; i++) {
             prev = prev.next;
         }
@@ -64,24 +69,26 @@ public class LinkedList<E> {
         if (index < 0 || index > size)
             throw new IllegalArgumentException("Add failed");
 
-        addR(dummyHead, index, e);
+        addR(dummyHead, 0, index, e);
     }
 
-    private void addR(Node curr, int index, E e) {
-        if (index == 0) {
+    private void addR(Node curr, int currIndex, int index, E e) {
+        if (currIndex == index) {
             curr.next = new Node(e, curr.next);
             size++;
             return;
         }
 
-        addR(curr.next, index - 1, e);
+        addR(curr.next, currIndex + 1, index, e);
     }
 
     public void addFirst(E e) {
+        // dummy -> nil    =>   dummy -> e -> nil
         addR(0, e);
     }
 
     public void addLast(E e) {
+        // size对应index，prev指针(注意：prev最初指向的是dummy)会指向到最后一个元素，之后连接一个新节点
         addR(size, e);
     }
 
@@ -99,15 +106,15 @@ public class LinkedList<E> {
         if (index < 0 || index > size)
             throw new IllegalArgumentException("Get failed");
 
-        return getR(dummyHead.next, index).e;
+        return getR(dummyHead.next, 0, index).e;
     }
 
-    public Node getR(Node curr, int index) {
-        if (index == 0) {
+    public Node getR(Node curr, int currIndex, int index) {
+        if (currIndex == index) {
             return curr;
         }
 
-        return getR(curr.next, index - 1);
+        return getR(curr.next, currIndex + 1, index);
     }
 
     public E getFirst() {
@@ -119,7 +126,7 @@ public class LinkedList<E> {
     }
 
     public void set(int index, E e) {
-        if (index < 0 || index >= size)
+        if (index < 0 || index > size)
             throw new IllegalArgumentException("Set failed");
 //        Node curr = dummyHead.next;
 //        for (int i = 0; i < index; i++) {
@@ -127,7 +134,7 @@ public class LinkedList<E> {
 //        }
 //        curr.e = e;
 
-        getR(dummyHead.next, index).e = e;
+        getR(dummyHead.next, 0, index).e = e;
     }
 
     public boolean contains(E e) {
@@ -142,12 +149,13 @@ public class LinkedList<E> {
     }
 
     public E remove(int index) {
-        if (index < 0 || index >= size)
+        if (index < 0 || index > size)
             throw new IllegalArgumentException("Remove failed");
         Node prev = dummyHead;
         for (int i = 0; i < index; i++) {
             prev = prev.next;
         }
+        // 记录待删除元素节点
         Node retNode = prev.next;
         prev.next = retNode.next;
         retNode.next = null;
@@ -161,6 +169,7 @@ public class LinkedList<E> {
     }
 
     public E removeLast() {
+        // prev指针指向倒数第二个节点
         return remove(size - 1);
     }
 

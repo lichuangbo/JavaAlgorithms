@@ -29,6 +29,7 @@ public class Trie {
     private int size;
 
     public Trie() {
+        // trie根节点不存储任何元素
         root = new Node();
         size = 0;
     }
@@ -41,11 +42,11 @@ public class Trie {
         Node curr = root;
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
-            // next指向为空，创建新的节点
+            // 以curr节点为根的 所有子节点中（map的键值）不包含 c字符，就插入一个子节点（以c为键，新节点为值）
             if (curr.next.get(c) == null) {
                 curr.next.put(c, new Node());
             }
-            // 不为空，向下走
+            // 更新curr（不管是新创建的还是原来就有，都更新），好去处理下一个字符
             curr = curr.next.get(c);
         }
         if (!curr.isWord) {// 这里的判断是为了维护size字段（只有他是新的单词结尾，才自增）
@@ -133,5 +134,11 @@ public class Trie {
             return false;
         }
         return isPrefixR(node.next.get(c), prefix, index + 1);
+    }
+
+    public static void main(String[] args) {
+        Trie trie = new Trie();
+        trie.add("panda");
+        trie.add("pan");
     }
 }
