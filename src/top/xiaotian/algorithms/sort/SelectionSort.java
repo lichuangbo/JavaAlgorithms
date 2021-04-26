@@ -20,12 +20,13 @@ public class SelectionSort {
      */
     public void selectionSort(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
-            int minIndex = i;
+            int minIndex = i;// 记录数组中最小值对应的下标
             for (int j = i + 1; j < arr.length; j++) {
                 if (arr[j] < arr[minIndex]) {
                     minIndex = j;
                 }
             }
+            // 找到最小值，即交换位置
             SwapUtil.swap(arr, i, minIndex);
         }
     }
