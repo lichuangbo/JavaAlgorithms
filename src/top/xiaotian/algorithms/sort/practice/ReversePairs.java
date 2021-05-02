@@ -1,7 +1,7 @@
 package top.xiaotian.algorithms.sort.practice;
 
 /**
- * 数组中的逆序对
+ * 剑指 Offer 51. 数组中的逆序对
  * 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。
  * 输入一个数组，求出这个数组中的逆序对的总数。
  * 示例 1:
@@ -33,27 +33,25 @@ public class ReversePairs {
     }
 
     private void countPair(int[] nums, int l, int mid, int r) {
+        int i = l, j = mid + 1, k = 0;
         int[] tmp = new int[r - l + 1];
-        System.arraycopy(nums, l, tmp, 0, r - l + 1);
-
-        // 两个区间i->[l...mid]  j->[mid+1...r]
-        int i = l, j = mid + 1;
-        for (int k = l; k <= r; k++) {
-            if (i > mid) {
-                nums[k] = tmp[j - l];
-                j++;
-            } else if (j > r) {
-                nums[k] = tmp[i - l];
-                i++;
-            } else if (tmp[i - l] <= tmp[j - l]) {
-                nums[k] = tmp[i - l];
-                i++;
+        while (i <= mid && j <= r) {
+            if (nums[i] <= nums[j]) {// 注意：这里是小于等于，因为相同元素不构成逆序对
+                tmp[k++] = nums[i++];
             } else {
-                // 左区间大于右区间，说明是逆序对；同时两区间是排好序的，可以将左区间剩下元素相加
-                nums[k] = tmp[j - l];
-                count += mid - i + 1;
-                j++;
+                // 右侧元素 比 左侧元素小，那么右侧元素肯定比左侧元素之后的都小，可以直接记为逆序对
+                count += (mid - i + 1);
+                tmp[k++] = nums[j++];
             }
         }
+        int start = i, end = mid;
+        if (j <= r) {
+            start = j;
+            end = r;
+        }
+        while (start <= end) {
+            tmp[k++] = nums[start++];
+        }
+        System.arraycopy(tmp, 0, nums, l, r - l + 1);
     }
 }

@@ -5,7 +5,7 @@ import top.xiaotian.util.SwapUtil;
 import java.util.Random;
 
 /**
- * 数组中的第K个最大元素
+ * 215 数组中的第K个最大元素
  * 在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
  *
  * 示例 1:
@@ -33,12 +33,17 @@ public class FindNth {
     }
 
     private int findNth(int[] nums, int l, int r, int k) {
+        /**
+         * [3, 2, 1, 5, 6, 4]
+         * [3, 2, 1, 4, 6, 5]
+         * pivot=4，p=3，及表示4是数组中从小到大排列，他排第四，也就是第三大元素
+         * 如果我们要找的第k大元素，k>3,只需要继续partition右区间即可
+         *                     k<3,                 左区间
+         */
         int p = partition(nums, l, r);
-        if (k - p > 0) {
-            // k-p>0, 只需要在右区间中继续partition，寻找第n-p大的（这里数组传入的还是nums[l...r],不是nums[p+1...r],所以还传n）
+        if (k > p) {
             return findNth(nums, p + 1, r, k);
-        } else if (k - p < 0){
-            // k-p<0，只需要在左区间中继续partition，去寻找第n大的
+        } else if (k < p){
             return findNth(nums, l, p - 1, k);
         } else {
             return nums[p];
@@ -46,10 +51,9 @@ public class FindNth {
     }
 
     private int partition(int[] nums, int l, int r) {
-        SwapUtil.swap(nums, l, random.nextInt(r - l + 1) + l);
+        SwapUtil.swap(nums, l, random.nextInt(r) % (r - l + 1) + l);
         int pivot = nums[l];
 
-        // nums[l+1...j] < pivot  nums[j+1...i) > pivot
         int j = l;
         for (int i = l + 1; i <= r; i++) {
             if (nums[i] < pivot) {
@@ -62,8 +66,8 @@ public class FindNth {
     }
 
     public static void main(String[] args) {
-        int[] nums = {1};
-        int res = new FindNth().findKthLargest(nums, 1);
+        int[] nums = {3,2,1,5,6,4};
+        int res = new FindNth().findKthLargest(nums, 2);
         System.out.println(res);
     }
 }
