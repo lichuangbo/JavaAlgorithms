@@ -79,6 +79,8 @@ public class BST<E extends Comparable<E>> {
         }
     }
 
+    //================以下是二叉树遍历================
+
     public void preOrder() {
         preOrder(root);
     }
@@ -144,23 +146,47 @@ public class BST<E extends Comparable<E>> {
     }
 
     public void postOrderNR1() {
-        Stack<Node> stack1 = new Stack<>();
-        Stack<Node> stack2 = new Stack<>();
-        stack1.push(root);
-        while (!stack1.isEmpty()) {
-            Node tmp = stack1.pop();
+        Stack<Node> tmpStack = new Stack<>();
+        Stack<Node> resStack = new Stack<>();
+        // 借用前序遍历结果，前序：根-左-右，如果采用根-右-左的顺序放入栈中，在出栈时候顺序就变为了左-右-根
+        tmpStack.push(root);
+        while (!tmpStack.isEmpty()) {
+            Node tmp = tmpStack.pop();
             if (tmp.left != null) {
-                stack1.push(tmp.left);
+                tmpStack.push(tmp.left);
             }
             if (tmp.right != null) {
-                stack1.push(tmp.right);
+                tmpStack.push(tmp.right);
             }
 
-            stack2.push(tmp);
+            resStack.push(tmp);
         }
-        while(!stack2.isEmpty()) {
-            Node tmp = stack2.pop();
+        while(!resStack.isEmpty()) {
+            Node tmp = resStack.pop();
             System.out.print(tmp.e + " ");
+        }
+        System.out.println();
+    }
+
+    public void postOrderNR2() {
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        // prev：最近一次弹栈的节点  top：当前栈顶节点
+        Node prev = root, top = root;
+        while (!stack.isEmpty()) {
+            top = stack.peek();
+            // top节点有左孩子 并且 最近一次弹栈的节点不是其左右孩子
+            if (top.left != null && prev != top.left && prev != top.right) {
+                stack.push(top.left);
+            // top节点有右孩子 并且 最近一次弹栈的节点不是其右孩子
+            } else if (top.right != null && prev != top.right) {
+                stack.push(top.right);
+            // top节点没有孩子节点 或者 孩子节点已经被弹出
+            } else {
+                Node tmp = stack.pop();
+                System.out.print(tmp.e + " ");
+                prev = top;
+            }
         }
         System.out.println();
     }
@@ -191,6 +217,23 @@ public class BST<E extends Comparable<E>> {
             }
         }
     }
+
+    public void levelOrder2() {
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                Node tmp = queue.poll();
+                System.out.print(tmp.e + " ");
+                if (tmp.left != null) queue.add(tmp.left);
+                if (tmp.right != null) queue.add(tmp.right);
+            }
+        }
+        System.out.println();
+    }
+
+    //================二叉树遍历结束================
 
     public E minimum() {
         if (size == 0) {
@@ -227,14 +270,23 @@ public class BST<E extends Comparable<E>> {
 
     // 删除以node为根的二分搜索树中的最小节点，并返回删除节点后新的二分搜索树的根
     private Node removeMin(Node node) {
+        /**
+         *      41
+         *    /    \
+         *   33     58
+         *    \    /
+         *     37 50
+         */
         if (node.left == null) {
             Node rightNode = node.right;
             node.right = null;
             size--;
+            // 递归语义中，node已经为根节点（可以仅考虑33-37子树），此时新的的根节点就应该为node.right
             return rightNode;
         }
 
-        node.left = removeMin(node.left);
+        // 如果当前根节点还有左子树，就去删除以 其左节点 为根的二分搜索树最小节点
+        node.left = removeMin(node.left);// 用node.left接收(可以仅考虑41-33-37子树)，形成挂接关系
         return node;
     }
 
@@ -358,10 +410,12 @@ public class BST<E extends Comparable<E>> {
         bst.postOrder();
         System.out.println();
         bst.postOrderNR1();
+        bst.postOrderNR2();
 
         System.out.println("levelOrder: ");
         bst.levelOrder();
         System.out.println();
+        bst.levelOrder2();
 
 
 
