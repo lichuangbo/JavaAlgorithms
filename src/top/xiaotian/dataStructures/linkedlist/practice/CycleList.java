@@ -1,5 +1,7 @@
 package top.xiaotian.dataStructures.linkedlist.practice;
 
+import top.xiaotian.util.ListNode;
+
 /**
  * 环形链表的判断（快慢指针经典用法）
  * @author lichuangbo
@@ -8,42 +10,65 @@ package top.xiaotian.dataStructures.linkedlist.practice;
  */
 public class CycleList {
     /**
-     * （n为链表长度）
+     * 141. 环形链表
+     * 时间：
+     * 假设head到入环节点长度为a,环长度为b,总节点长度n=a+b
      * 无环情况下：fast走n步，slow走n/2步，总的来说是3n/2步，根据大O表示法应为O(n)
-     * 有环情况下：假设环的入口距离起点是x，那么当慢指针走到入口，也就是走了x步的时候，快指针走了2x步，二者最大距离是(n - x)
-     * 那么最多再迭代(n - x)次二者会相遇，所以时间复杂度是x + 2x + (n - x) + 2 * (n - x) =3∗n，根据大O表示法应为O(n)
-     * 注：最大距离这个画图会清晰点；并且由于有环的存在，每一次迭代，快慢距离会缩短1
-     * @param head
-     * @return
+     * 有环情况下：那么当慢指针走到入口(a步)，快指针走了2a步，二者最大距离是b
+     * 那么最多再迭代b次二者会相遇，所以时间复杂度是(a + 2a) + (b + 2b) =3n，根据大O表示法应为O(n)
      */
-    public boolean hasCycle(Node head) {
-        if (head == null || head.next == null) {
-            return false;
-        }
-
-        Node fast = head;
-        Node slow = head;
+    public boolean hasCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
         while (true) {
+            // 非环情况，及时返回
+            if (fast == null || fast.next == null) {
+                return false;
+            }
             fast = fast.next.next;
             slow = slow.next;
             // 快慢指针相遇，即说明遇见了环
             if (fast == slow) {
                 return true;
             }
-            // 非环情况，及时返回
-            if (fast == null || fast.next == null) {
-                return false;
-            }
         }
     }
 
-    public static void main(String[] args) {
-        Node node2 = new Node("2", null);
-        node2.next = new Node("0", new Node("-4", node2));
-        Node head1 = new Node("3", node2);
-
-        Node head2 = new Node("1", new Node("2", new Node("2", new Node("1", null))));
-
-        System.out.println(new CycleList().hasCycle(head2));
+    /**
+     * 142. 环形链表 II
+     * 给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
+     *
+     * 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。注意，pos 仅仅是用于标识环的情况，并不会作为参数传递到函数中。
+     *
+     * 说明：不允许修改给定的链表。
+     *
+     * 原题解：https://leetcode-cn.com/problems/linked-list-cycle-ii/solution/linked-list-cycle-ii-kuai-man-zhi-zhen-shuang-zhi-/
+     * 1. fast走的步数为slow步数的两倍    f = 2 * s           =>   f = 2 * nb， 即fast走的步数是2n个环长度，slow走的步数是n个环长度
+     * 2. fast比slow多走了n个环的长度    f = s + nb          =>   s = nb
+     * 3. 不管是fast还是slow走到环入口的步数为 k = a + nb
+     * 问题：当fast/slow相遇时，slow走了nb步，他还要走a步才能到达环入口位置（a未知！）
+     * 解决：重新找一个指针，从head开始向后移动，他到达环入口刚好要走a步，那么只需要和slow保持速率同步，相遇时节点就是环入口
+     *
+     * 时间：
+     * 在快慢指针相遇复杂度基础上，各要走a步，3n+a+a,根据大O表示法还是O(n)
+     */
+    public ListNode detectCycle(ListNode head) {
+        ListNode fast = head, slow = head;
+        while (true) {
+            if (fast == null || fast.next == null) {
+                return null;
+            }
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                break;
+            }
+        }
+        fast = head;
+        while (fast != slow) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return fast;
     }
 }
