@@ -72,43 +72,6 @@ public class SameTree {
     }
 
     /**
-     * 226. 翻转二叉树
-     * 翻转一棵二叉树。
-     * 示例：
-     * 输入：
-     *      4
-     *    /   \
-     *   2     7
-     *  / \   / \
-     * 1   3 6   9
-     * 输出：
-     *      4
-     *    /   \
-     *   7     2
-     *  / \   / \
-     * 9   6 3   1
-     * @param root
-     * @return
-     */
-    public TreeNode invertTree(TreeNode root) {
-        if (root == null) {
-            return null;
-        }
-
-//        TreeNode copyRoot = new TreeNode(root.val);
-//        copyRoot.left = invertTree(root.right);
-//        copyRoot.right = invertTree(root.left);
-//        return copyRoot;
-
-        invertTree(root.right);
-        invertTree(root.left);
-        TreeNode tmp = root.left;
-        root.left = root.right;
-        root.right = tmp;
-        return root;
-    }
-
-    /**
      * 110. 平衡二叉树
      * 给定一个二叉树，判断它是否是高度平衡的二叉树。
      * 本题中，一棵高度平衡二叉树定义为：
