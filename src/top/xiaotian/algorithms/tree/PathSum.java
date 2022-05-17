@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.recursion;
+package top.xiaotian.algorithms.tree;
 
 
 import java.util.ArrayList;
@@ -22,6 +22,23 @@ public class PathSum {
      * 时间：O(n),n为节点个数
      * 空间：O(logn),递归树的高度
      */
+    public boolean hasPathSum0(TreeNode root, int targetSum) {
+        /**
+         * 反例：
+         *     5
+         *       \
+         *        12, targetSum = 5
+         * 递归终止条件需要识别出节点的上一级是叶子节点才行
+         */
+        if (root == null) {
+            return targetSum == 0;
+        }
+
+        // 递归的从左右子树开始寻找剩余值
+        return hasPathSum0(root.left, targetSum - root.val) ||
+                hasPathSum0(root.right, targetSum - root.val);
+    }
+    // 方法语义：判断以root为根节点的二叉树，是否存在一条（从根到叶子的）路径是等于targetSum的
     public boolean hasPathSum(TreeNode root, int targetSum) {
         if (root == null) {
             return false;
