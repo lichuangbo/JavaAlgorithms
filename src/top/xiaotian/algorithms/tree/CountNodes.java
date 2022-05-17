@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.recursion;
+package top.xiaotian.algorithms.tree;
 
 import top.xiaotian.util.TreeNode;
 
@@ -21,13 +21,22 @@ import java.util.Queue;
  * @Description: 描述:
  */
 public class CountNodes {
+
+    public int countNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        return countNodes(root.left) + countNodes(root.right) + 1;
+    }
+
     /**
      * 时间O(n)
      * 层序遍历统计
      * @param root
      * @return
      */
-    public int countNodes(TreeNode root) {
+    public int countNodes1(TreeNode root) {
         int count = 0;
         if (root == null) {
             return count;
@@ -53,11 +62,20 @@ public class CountNodes {
     /**
      * 时间O(logn * logn)
      * 分别统计左子树和右子树的高度，left和right
-     * 如果left==right，说明左子树是满二叉树(倒数第一层)，此时只要套用公式2^left - 1 + 1 + 右子树节点个数
-     * 如果left!=right, 说明右子树是满二叉树(倒数第二层)，此时只要套用公式2^right - 1 + 1 + 左子树节点个数
+     *       1
+     *     /  \
+     *    2    3
+     * 如果left==right，说明左子树是满二叉树(倒数第一层)，此时只要套用公式(2^left - 1) + 1 + 右子树节点个数
+     *       1
+     *     /   \
+     *    2     3
+     *   /
+     *  4
+     * 如果left!=right, 说明右子树是满二叉树(倒数第二层)，此时只要套用公式(2^right - 1) + 1 + 左子树节点个数
      * @param root
      * @return
      */
+    // 方法语义：返回以root为根节点的二叉树的节点个数
     public int countNodes2(TreeNode root) {
         if (root == null) {
             return 0;
@@ -70,7 +88,7 @@ public class CountNodes {
             return countNodes2(root.left) + (1 << right);
         }
     }
-    // 统计树的高度
+    // 统计树的层数:因为已经声明了完全二叉树，最后一层节点居左，所以最深的左节点的深度就是树的层数
     private int countLevel(TreeNode root) {
         int level = 0;
         while (root != null) {
