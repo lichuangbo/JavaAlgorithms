@@ -62,6 +62,7 @@ public class PathSum {
      * 输入：root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22
      * 输出：[[5,4,11,2],[5,8,4,5]]
      *
+     * 回溯
      * 时间：O(n2),路径n，每一个节点还要添加进结果n
      * 空间：O(n)
      */
@@ -81,6 +82,21 @@ public class PathSum {
         // 将找到的路径加入结果集
         if (targetSum == root.val && root.left == null && root.right == null) {
             resList.add(new ArrayList<>(currList));
+            /**
+             *        5
+             *      /   \
+             *     4     8
+             *    /
+             *   11
+             *  /  \
+             * 7    2
+             * 不能return的原因：
+             * 当拿到第一个结果集[5,4,11,2]时，直接return会导致回退路径和目标节点不匹配
+             * return后，root回退到11节点，此时currList[5,4,11]
+             * root继续回退4节点，4节点的右子树为空，再回退，此时currList[5,4]
+             * 此时root节点位于5，添加8节点，此时currList[5,4,8]，,路径还没有回退完但是已经在处理右侧节点了
+             */
+//            return;
         }
 
         // 递归遍历左右子树中符合的路径
@@ -172,5 +188,11 @@ public class PathSum {
         // 4.回到本层，恢复状态，去除当前节点的前缀和数量
         prefixSumCount.put(currSum, prefixSumCount.get(currSum) - 1);
         return res;
+    }
+
+    public static void main(String[] args) {
+        TreeNode treeNode = new TreeNode(new String[]{"5", "4", "8", "11", "null", "13", "4", "7", "2", "null", "null", "5", "1"});
+        List<List<Integer>> res = new PathSum().pathSumII(treeNode, 22);
+        System.out.println(res);
     }
 }
