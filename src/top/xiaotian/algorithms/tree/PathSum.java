@@ -126,6 +126,7 @@ public class PathSum {
      * 2.  5 -> 2 -> 1
      * 3.  -3 -> 11
      */
+    // 方法语义：在以root为根节点的二叉树中，寻找和为sum的路径，返回所有的路径个数
     public int pathSumIII(TreeNode root, int sum) {
         if (root == null) {
             return 0;
@@ -140,12 +141,14 @@ public class PathSum {
 
     // 以root为根节点的二叉树，寻找和为sum的路径（其中路径一定会包含root），返回符合条件的个数
     private int findPath(TreeNode root, int sum) {
+        // 没有要求必须是到达叶子结点，可以一直搜索到空
         if (root == null) {
             return 0;
         }
 
         int res = 0;
         if (root.val == sum) {
+            // 不能直接return，因为可能存在另外的路径也满足条件，所以需要继续计算
             res += 1;
         }
         res += findPath(root.left, sum - root.val);
@@ -153,46 +156,43 @@ public class PathSum {
         return res;
     }
 
+    // 前缀和  https://leetcode.cn/problems/path-sum-iii/solution/dui-qian-zhui-he-jie-fa-de-yi-dian-jie-s-dey6/
+    /**
+     * 优化切入点为「路径只能往下」，因此如果我们转换一下，统计以每个节点为「路径结尾」的合法数量的话，配合原本就是「从上往下」进行的数的遍历
+     * （最完整的路径必然是从原始根节点到当前节点的唯一路径），相当于只需要在完整路径中找到有多少个节点到当前节点的路径总和为 targetSum
+     * 转化为一维前缀和问题：
+     * 求解从原始起点（根节点）到当前节点 b 的路径中，有多少节点 a 满足 sum[a...b] = targetSum
+     */
     public int pathSumIII2(TreeNode root, int sum) {
         // key是前缀和, value是大小为key的前缀和出现的次数
         Map<Integer, Integer> prefixSumCount = new HashMap<>();
         // 前缀和为0的一条路径
         prefixSumCount.put(0, 1);
-        // 前缀和的递归回溯思路
-        return recursionPathSum(root, prefixSumCount, sum, 0);
+
+        return recursionPathSum(root, sum, prefixSumCount, 0);
     }
 
-    private int recursionPathSum(TreeNode node, Map<Integer, Integer> prefixSumCount, int target, int currSum) {
-        // 1.递归终止条件
-        if (node == null) {
+    private int recursionPathSum(TreeNode root, int sum, Map<Integer, Integer> prefixSumCount,  int currSum) {
+        if (root == null) {
             return 0;
         }
-        // 2.本层要做的事情
-        int res = 0;
-        // 当前路径上的和
-        currSum += node.val;
 
-        //---核心代码
+        // 当前路径上的和
+        currSum += root.val;
+
         // 看看root到当前节点这条路上是否存在节点前缀和加target为currSum的路径
-        // 当前节点->root节点反推，有且仅有一条路径，如果此前有和为currSum-target,而当前的和又为currSum,两者的差就肯定为target了
-        // currSum-target相当于找路径的起点，起点的sum+target=currSum，当前点到起点的距离就是target
-        res += prefixSumCount.getOrDefault(currSum - target, 0);
+        // 当前节点->root节点反推，有且仅有一条路径，如果此前有和为currSum-sum,而当前的和又为currSum,两者的差就肯定为target了
+        // currSum-target相当于找路径的起点，起点的sum+sum=currSum，当前点到起点的距离就是target
+        int res = prefixSumCount.getOrDefault(currSum - sum, 0);
         // 更新路径上当前节点前缀和的个数
         prefixSumCount.put(currSum, prefixSumCount.getOrDefault(currSum, 0) + 1);
-        //---核心代码
 
         // 3.进入下一层
-        res += recursionPathSum(node.left, prefixSumCount, target, currSum);
-        res += recursionPathSum(node.right, prefixSumCount, target, currSum);
+        res += recursionPathSum(root.left, sum, prefixSumCount, currSum);
+        res += recursionPathSum(root.right, sum, prefixSumCount, currSum);
 
         // 4.回到本层，恢复状态，去除当前节点的前缀和数量
         prefixSumCount.put(currSum, prefixSumCount.get(currSum) - 1);
         return res;
-    }
-
-    public static void main(String[] args) {
-        TreeNode treeNode = new TreeNode(new String[]{"5", "4", "8", "11", "null", "13", "4", "7", "2", "null", "null", "5", "1"});
-        List<List<Integer>> res = new PathSum().pathSumII(treeNode, 22);
-        System.out.println(res);
     }
 }
