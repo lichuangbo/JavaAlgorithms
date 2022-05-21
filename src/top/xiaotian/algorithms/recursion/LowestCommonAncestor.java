@@ -6,63 +6,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 
-/**
- * 235. 二叉搜索树的最近公共祖先
- * 给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
- *
- * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
- *
- * 例如，给定如下二叉搜索树:  root = [6,2,8,0,4,7,9,null,null,3,5]
- * @author lichuangbo
- * @email lichuangbo@smtp.telek.com.cn
- * @time 2021/1/27 11:21
- * @Description: 描述:
- */
 public class LowestCommonAncestor {
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null) {
-            return null;
-        }
-
-        if (p.val < root.val && q.val < root.val) {// p、q节点都位于根的左子树，在左子树中寻找
-            return lowestCommonAncestor(root.left, p, q);
-        }
-        if (p.val > root.val && q.val > root.val) {// p、q节点都位于根的右子树，在右子树中寻找
-            return lowestCommonAncestor(root.right, p, q);
-        }
-        /**
-         *     2
-         *    / \
-         *   1   3
-         * [2, 1, 3] 类型二叉搜索树，p=1&&q=3  p=1&&q==2  p==2&&q==1 都是直接返回根节点即可
-         */
-        return root;
-    }
-
-    // 236. 二叉树的最近公共祖先  ****
-    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
-        // 遍历到叶子节点说明没有找到，返回null
-        if (root == null) {
-            return null;
-        }
-        // 遍历到p节点或者q节点，向上层返回
-        if (root == p || root == q) {
-            return root;
-        }
-        // 递归处理左子树和右子树
-        TreeNode left = lowestCommonAncestor2(root.left, p, q);
-        TreeNode right = lowestCommonAncestor2(root.right, p, q);
-        // 1.p, q其中有一个在root的右子树中，此时返回的right指向q或q    2.p, q两节点都在root的右子树中，此时返回的right就是一个最近公共祖先
-        if (left == null) {
-            return right;
-        }
-        // 同上
-        if (right == null) {
-            return left;
-        }
-        // p和q分布于root的两侧，说明root就是p, q的最近公共祖先
-        return root;
-    }
 
     // 98. 验证二叉搜索树
     public boolean isValidBST(TreeNode root) {
