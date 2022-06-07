@@ -1,7 +1,9 @@
 package top.xiaotian.algorithms.map;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 1. 两数之和
@@ -40,5 +42,41 @@ public class TwoSum {
             map.put(nums[i], i);
         }
         return null;
+    }
+
+    /**
+     * 剑指 Offer 57. 和为s的两个数字
+     * 输入一个递增排序的数组和一个数字s，在数组中查找两个数，使得它们的和正好是s。如果有多对数字的和等于s，则输出任意一对即可。
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] twoSumII(int[] nums, int target) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            if (set.contains(target - num)) {
+                return new int[]{num, target - num};
+            } else {
+                set.add(num);
+            }
+        }
+        return new int[0];
+    }
+
+    // 在剑指Offer57题中，nums数组是递增数组，所以可以使用对撞指针解决
+    public int[] twoSumII2(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        int[] res = new int[2];
+        while (left < right) {
+            int sum = nums[left] + nums[right];
+            if (sum < target) {
+                left++;
+            } else if (sum > target) {
+                right--;
+            } else {
+                return new int[]{nums[left], nums[right]};
+            }
+        }
+        return res;
     }
 }
