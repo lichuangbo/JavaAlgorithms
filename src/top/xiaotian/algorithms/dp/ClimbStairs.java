@@ -2,6 +2,7 @@ package top.xiaotian.algorithms.dp;
 
 /**
  * 70. 爬楼梯
+ * 剑指 Offer 10- II
  * 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
  *
  * 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
@@ -60,5 +61,19 @@ public class ClimbStairs {
             memo[i] = memo[i - 1] + memo[i - 2];
         }
         return memo[n];
+    }
+
+    // 状态压缩：只需要最近的两次计算结果，其他不需要保存
+    public int climbStairs4(int n) {
+        if (n == 0) {
+            return 1;
+        }
+        int a = 1, b = 1, sum = n;
+        for (int i = 2; i <= n; i++) {
+            sum = (a + b) % 1000000007;
+            a = b;
+            b = sum;
+        }
+        return sum;
     }
 }
