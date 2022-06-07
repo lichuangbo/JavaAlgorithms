@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.string;
+package top.xiaotian.algorithms.twoPointer.fastSlowPointer;
 
 /**
  * 剑指 Offer 58 - I. 翻转单词顺序
