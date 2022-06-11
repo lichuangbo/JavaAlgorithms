@@ -23,6 +23,7 @@ public class MergeSort {
 
     // 对[l...r]区间内的数组进行递归排序
     private void mergeSort(int[] arr, int l, int r) {
+        // 当l>=r时，[l...r]区间最多表示一个元素，递归终止
         if (l >= r) {
             return;
         }
@@ -30,39 +31,17 @@ public class MergeSort {
         int mid = l + (r - l) / 2;
         mergeSort(arr, l, mid);
         mergeSort(arr, mid + 1, r);
-        if (arr[mid] > arr[mid + 1]) {// 面对近乎有效的数据时，可以得到优化
-            merge2(arr, l, mid, r);
+        if (arr[mid] > arr[mid + 1]) {// 面对近乎有序的数据时，可以得到优化
+            merge(arr, l, mid, r);
         }
     }
 
     // 对[l...mid]和[mid+1...r]两段区间合并成有序序列
     private void merge(int[] arr, int l, int mid, int r) {
-        int i = l, j = mid + 1, k = 0;
         int[] aux = new int[r - l + 1];
-        while (i <= mid && j <= r) {
-            if (arr[i] < arr[j]) {
-                aux[k++] = arr[i++];
-            } else {
-                aux[k++] = arr[j++];
-            }
-        }
-
-        // 处理剩余区间的有序数组元素
-        int start = i, end = mid;
-        if (j <= r) {
-            start = j;
-            end = r;
-        }
-        while (start <= end) {
-            aux[k++] = arr[start++];
-        }
-        // 拷贝回原数组
-        System.arraycopy(aux, 0, arr, l, r - l + 1);
-    }
-
-    // 对[l...mid]和[mid+1...r]两段区间合并成有序序列
-    private void merge2(int[] arr, int l, int mid, int r) {
-        int[] aux = new int[r - l + 1];
+//        for (int i = l; i <= r; i++) {
+//            aux[i - l] = arr[i];
+//        }
         System.arraycopy(arr, l, aux, 0, r - l + 1);
 
         int i = l, j = mid + 1;
