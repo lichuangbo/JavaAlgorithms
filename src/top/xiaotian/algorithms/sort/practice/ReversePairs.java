@@ -33,25 +33,25 @@ public class ReversePairs {
     }
 
     private void countPair(int[] nums, int l, int mid, int r) {
-        int i = l, j = mid + 1, k = 0;
-        int[] tmp = new int[r - l + 1];
-        while (i <= mid && j <= r) {
-            if (nums[i] <= nums[j]) {// 注意：这里是小于等于，因为相同元素不构成逆序对
-                tmp[k++] = nums[i++];
+        int[] aux = new int[r - l + 1];
+        System.arraycopy(nums, l, aux, 0, r - l + 1);
+
+        int i = l, j = mid + 1;
+        for (int k = l; k <= r; k++) {
+            if (i > mid) {
+                nums[k] = aux[j - l];
+                j++;
+            } else if (j > r) {
+                nums[k] = aux[i - l];
+                i++;
+            } else if (aux[i - l] <= aux[j - l]) {// 注意：小于等于，因为两者相等时不构成逆序对
+                nums[k] = aux[i - l];
+                i++;
             } else {
-                // 右侧元素 比 左侧元素小，那么右侧元素肯定比左侧元素之后的都小，可以直接记为逆序对
                 count += (mid - i + 1);
-                tmp[k++] = nums[j++];
+                nums[k] = aux[j - l];
+                j++;
             }
         }
-        int start = i, end = mid;
-        if (j <= r) {
-            start = j;
-            end = r;
-        }
-        while (start <= end) {
-            tmp[k++] = nums[start++];
-        }
-        System.arraycopy(tmp, 0, nums, l, r - l + 1);
     }
 }
