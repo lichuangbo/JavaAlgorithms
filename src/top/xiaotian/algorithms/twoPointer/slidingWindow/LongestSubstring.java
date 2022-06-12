@@ -1,6 +1,10 @@
 package top.xiaotian.algorithms.twoPointer.slidingWindow;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
+ * 剑指 Offer 48. 最长不含重复字符的子字符串
  * 3. 无重复字符的最长子串
  * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。(s由英文字母、数字、符号和空格组成)
  *
@@ -15,7 +19,7 @@ package top.xiaotian.algorithms.twoPointer.slidingWindow;
  */
 public class LongestSubstring {
     /**
-     * 滑动窗口
+     * 滑动窗口: 滑动窗口走一遍，同时用变量存储最大窗口值
      * 时间O(n)
      * @param s
      * @return
@@ -38,5 +42,25 @@ public class LongestSubstring {
             res = Math.max(res, r - l + 1);
         }
         return res;
+    }
+
+    public int lengthOfLongestSubstring2(String s) {
+        // 划定当前窗口的坐标为(start,i],左开右闭
+        int max = 0, start = -1;
+        // 使用哈希表map统计各字符最后一次出现的索引位置
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            char tmp = s.charAt(i);
+
+            // 当字符在map中已经存储时，需要判断其索引值index和当前窗口start的大小以确定是否需要对start进行更新:
+            // 当index>start时，start更新为当前的index,否则保持不变
+            if (map.containsKey(tmp)) {
+                start = Math.max(start, map.get(tmp));
+            }
+            map.put(tmp, i);
+
+            max = Math.max(max, i - start);
+        }
+        return max;
     }
 }
