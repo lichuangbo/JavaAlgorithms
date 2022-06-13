@@ -1,6 +1,8 @@
-package top.xiaotian.dataStructures.heap.practice;
+package top.xiaotian.algorithms.heap;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.PriorityQueue;
 
 /**
  * 347. 前 K 个高频元素
@@ -24,16 +26,11 @@ public class TopKFrequent {
     public int[] topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int num : nums) {
-//            if (map.containsKey(num)) {
-//                map.put(num, map.get(num) + 1);
-//            } else {
-//                map.put(num, 1);
-//            }
             map.compute(num, (k1, v1) -> v1 == null ? 1 : v1 + 1);
         }
 
         // Java中默认的优先队列是最小堆
-        // 求解前k大问题，使用最小堆；求解前k小问题，使用最大堆
+        // 求解前k大问题，使用小顶堆（小顶堆容易得知最小的元素是堆顶，相当于知道了区间的下界，之后不断在调整下界）；求解前k小问题，使用最大堆
         PriorityQueue<int[]> pq = new PriorityQueue<>(
                 (o1, o2) -> o1[1] - o2[1]
         );
@@ -55,11 +52,5 @@ public class TopKFrequent {
             res[i++] = pq.poll()[0];
         }
         return res;
-    }
-
-    public static void main(String[] args) {
-        int[] nums = {4, 1, -1, 2, -1, 2, 3};
-        int[] res = new TopKFrequent().topKFrequent(nums, 2);
-        System.out.println(Arrays.toString(res));
     }
 }
