@@ -35,19 +35,19 @@ import java.util.Queue;
  * 最多会对 addNum、findMedian 进行 50000 次调用。
  */
 public class MedianFinder {
-  // 大顶堆存储较大的那部分数据，小顶堆存储较小的那部分数据，中位数位于大顶堆和小顶堆的堆顶
-  // 细化：当总数为偶数时，各自存储n/2；当总数为奇数时，大顶堆存储(n+1)/2,小顶堆存储(n-1)/2
-  private Queue<Integer> bigHeap, smallHeap;
+  // 小顶堆存储较大的那部分数据，大顶堆存储较小的那部分数据，中位数位于大顶堆和小顶堆的堆顶
+  // 细化：当总数为偶数时，各自存储n/2；当总数为奇数时，小顶堆存储(n+1)/2,大顶堆存储(n-1)/2
+  private Queue<Integer> smallHeap, bigHeap;
 
   /** initialize your data structure here. */
   public MedianFinder() {
-    bigHeap = new PriorityQueue<>((o1, o2) -> o2 - o1);
     smallHeap = new PriorityQueue<>();
+    bigHeap = new PriorityQueue<>((o1, o2) -> o2 - o1);
   }
 
   public void addNum(int num) {
-    // 为了确保大顶堆存储的是较大的数据，即使两个堆大小相等，新数据应该放大顶堆，也要先加入小顶堆（过一遍），再从小顶堆中拿出最大值放入大顶堆
-    if (bigHeap.size() == smallHeap.size()) {
+    // 为了确保小顶堆存储的是较大的数据，即使两个堆大小相等，新数据应该放小顶堆，也要先加入大顶堆（过一遍），再从大顶堆中拿出最大值放入小顶堆
+    if (smallHeap.size() != bigHeap.size()) {
       smallHeap.add(num);
       bigHeap.add(smallHeap.poll());
     } else {
@@ -57,10 +57,10 @@ public class MedianFinder {
   }
 
   public double findMedian() {
-    if (bigHeap.size() != smallHeap.size()) {
-      return bigHeap.peek();
+    if (smallHeap.size() != bigHeap.size()) {
+      return smallHeap.peek();
     } else {
-      return (bigHeap.peek() + smallHeap.peek()) / 2;
+      return (smallHeap.peek() + bigHeap.peek()) / 2.0;
     }
   }
 }
