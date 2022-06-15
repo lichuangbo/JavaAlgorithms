@@ -26,6 +26,7 @@ class MinStack {
 
   private Stack<Integer> stack;
   // minStack维护一个趋势递减的元素顺序
+  // 为什么不需要双端队列去做？   push和pop操作都是从栈顶操作的
   private Stack<Integer> minStack;
 
   /**
