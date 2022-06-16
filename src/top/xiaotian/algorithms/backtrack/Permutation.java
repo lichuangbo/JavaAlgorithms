@@ -102,6 +102,53 @@ public class Permutation {
         }
     }
 
+    /**
+     * 剑指 Offer 38. 字符串的排列
+     *
+     * 输入一个字符串，打印出该字符串中字符的所有排列。
+     * 你可以以任意顺序返回这个字符串数组，但里面不能有重复元素。
+     *
+     * 示例:
+     * 输入：s = "abc"
+     * 输出：["abc","acb","bac","bca","cab","cba"]
+     *
+     * 限制：
+     * 1 <= s 的长度 <= 8
+     */
+    public String[] permutation(String s) {
+      char[] chars = s.toCharArray();
+      Arrays.sort(chars);
+      boolean[] visited = new boolean[chars.length];
+      List<String> resList = new ArrayList<>();
+      help(chars, visited, 0, new StringBuilder(), resList);
+
+      String[] resArr = new String[resList.size()];
+      for (int i = 0; i < resList.size(); i++) {
+        resArr[i] = resList.get(i);
+      }
+      return resArr;
+    }
+
+  private void help(char[] chars, boolean[] visited, int index, StringBuilder curr, List<String> resList) {
+    if (index == chars.length) {
+      resList.add(curr.toString());
+      return;
+    }
+
+    for (int i = 0; i < chars.length; i++) {
+      if (i != 0 && chars[i] == chars[i - 1] && !visited[i - 1])
+        continue;
+
+      if (!visited[i]) {
+        visited[i] = true;
+        curr.append(chars[i]);
+        help(chars, visited, index + 1, curr, resList);
+        curr.deleteCharAt(curr.length() - 1);
+        visited[i] = false;
+      }
+    }
+  }
+
     public static void main(String[] args) {
 //        int[] nums = {1, 2, 3};
         int[] nums = {1, 1, 2};

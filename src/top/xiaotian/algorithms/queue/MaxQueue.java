@@ -2,6 +2,7 @@ package top.xiaotian.algorithms.queue;
 
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * 剑指 Offer 59 - II. 队列的最大值
@@ -32,8 +33,9 @@ public class MaxQueue {
 
   // 维护一个全局的最大值不可行：如果将最大值删除后，全局的maxVal并没有更新为次大，导致出错
 
-  private final Deque<Integer> queue;
+  private final Queue<Integer> queue;
   // 双端队列维护元素大小递减的的顺序，取最大值只需要从递减队列头部取就行
+  // 为什么用双端队列？ push_back需要删除队尾，pop_front需要删除队头
   private final Deque<Integer> deque;
 
   public MaxQueue() {
@@ -49,8 +51,13 @@ public class MaxQueue {
   }
 
   public void push_back(int value) {
-    queue.addLast(value);
+    queue.offer(value);
     // 当加入的元素小于队尾，需要一直删除队尾，来保证递减顺序
+    /**
+     * push_back 5    deque: 5
+     * push_back 1    deque: 5 1
+     * push_back 3    deque: 5 3
+     */
     while (!deque.isEmpty() && deque.peekLast() < value) {
       deque.pollLast();
     }
@@ -66,6 +73,6 @@ public class MaxQueue {
     if (queue.peek().equals(deque.peekFirst())) {
       deque.pollFirst();
     }
-    return queue.removeFirst();
+    return queue.poll();
   }
 }

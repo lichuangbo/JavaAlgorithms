@@ -38,14 +38,14 @@ public class QuickSort {
         quickSort(arr, p + 1, r);
     }
 
-    // 对数组[l...r]区间进行partition操作：使得arr[l...p-1] < arr[p] && arr[p+1...r} > arr[p]
+    // 对数组[l...r]区间进行partition操作：使得arr[l...p-1] < arr[p] && arr[p+1...r] > arr[p]
     private int partition(int[] arr, int l, int r) {
         SwapUtil.swap(arr, l, random.nextInt(r) % (r - l + 1) + l);
         int pivot = arr[l];
 
-        // 使arr[l+1...j] < pivot  arr[j+1...i) > pivot
-        int j = l;// j记录两分区的分界点; l是选中的分区点(初始状态，[l+1...l]为空区间，[j+1...j+1)也为空区间)
-        for (int i = l + 1; i <= r; i++) {// 遍历传入的数组区间
+        // 使arr[l+1...j] < pivot  arr[j+1...i-1] > pivot
+        int j = l;// j记录两分区的分界点下标; l是选中的分区点下标(初始状态，[l+1...l]为空区间，[j+1...j]也为空区间)
+        for (int i = l + 1; i <= r; i++) {// i是当前遍历的元素下标
             // arr[i] > pivot不操作，属于区间2；< pivot，属于区间1，要进行交换操作（和区间2的第一个元素交换，而后j后移，保证j仍位于分区分界点上）
             if (arr[i] < pivot) {
                 SwapUtil.swap(arr, i, j + 1);
