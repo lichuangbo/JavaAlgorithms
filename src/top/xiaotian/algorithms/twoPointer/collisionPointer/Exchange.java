@@ -17,7 +17,7 @@ public class Exchange {
 
   public int[] exchange(int[] nums) {
     int left = 0, right = nums.length - 1;
-    while (left <= right) {
+    while (left < right) {
       // (nums[left] & 1) == 1  奇数判断，等价于nums[left] % 2 == 1
       if ((nums[left] & 1) == 1) {
         left++;
