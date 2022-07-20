@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.array;
+package top.xiaotian.algorithms.twoPointer.fastSlowPointer;
 
 import java.util.Arrays;
 
@@ -16,19 +16,19 @@ import java.util.Arrays;
  */
 public class MoveZeros {
     /***
+     * 快慢指针
      * 时间O(n)
      * @param nums
      */
     public void moveZeroes(int[] nums) {
-        int k = 0;
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] != 0) {
-                nums[k] = nums[i];
-                k++;
+        int slow = 0;
+        for (int fast = 0; fast < nums.length; fast++) {
+            if (nums[fast] != 0) {
+                nums[slow++] = nums[fast];
             }
         }
 
-        for (int i = k; i < nums.length; i++) {
+        for (int i = slow; i < nums.length; i++) {
             nums[i] = 0;
         }
     }
@@ -38,6 +38,7 @@ public class MoveZeros {
      * @param nums
      */
     public void moveZeroes2(int[] nums) {
+        // 以k为界限，左边是不为0的，右边的是为0的
         int k = 0;
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] != 0) {
@@ -47,12 +48,5 @@ public class MoveZeros {
                 k++;
             }
         }
-    }
-
-    public static void main(String[] args) {
-        int[] arr = {0, 1, 0, 3, 12};
-        MoveZeros moveZeros = new MoveZeros();
-        moveZeros.moveZeroes2(arr);
-        System.out.println(Arrays.toString(arr));
     }
 }
