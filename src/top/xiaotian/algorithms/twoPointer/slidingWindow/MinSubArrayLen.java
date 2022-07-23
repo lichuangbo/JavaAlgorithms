@@ -72,6 +72,7 @@ public class MinSubArrayLen {
     int sum = 0;
     while (r < nums.length) {
       sum += nums[r];
+      // 这里必须是while, 比如前一个和为10,左窗口移动后，和变成7，仍然是满足条件的，左窗口需要继续移动
       while (sum >= s) {
         res = Math.min(res, r - l + 1);
         sum -= nums[l];
