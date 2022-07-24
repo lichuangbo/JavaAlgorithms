@@ -77,29 +77,39 @@ public class SpiralMatrix {
     }
 
     public List<Integer> spiralOrder2(int[][] matrix) {
-        List<Integer> order = new ArrayList<>();
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-            return order;
-        }
-        int rows = matrix.length, cols = matrix[0].length;
-        boolean[][] visited = new boolean[rows][cols];
-        int row = 0, col = 0;
-        // 方向理解：(0,1)表示x位置不动（纵坐标不变），y位置+1（横坐标+1），即右移
-        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-        int directionIndex = 0;// 记录当前方向，0-右，1-下，2-左，3-上， 循环使用
-        for (int i = 0; i < rows * cols; i++) {
-            order.add(matrix[row][col]);
-            visited[row][col] = true;
-            int nextRow = row + directions[directionIndex][0], nextCol = col + directions[directionIndex][1];
-            // 按照当前方向继续访问  如果出现访问越界 或者 元素已经访问过 就更换方向
-            if (nextRow < 0 || nextRow >= rows || nextCol < 0 || nextCol >= cols || visited[nextRow][nextCol]) {
-                directionIndex = (directionIndex + 1) % 4;
+        List<Integer> res = new ArrayList<>();
+        int l = 0, r = matrix[0].length - 1, t = 0, b = matrix.length - 1;
+        while (true) {
+            for (int j = l; j <= r; j++) {
+                res.add(matrix[t][j]);
             }
-            // 按照当前方向前进
-            row += directions[directionIndex][0];
-            col += directions[directionIndex][1];
+            t++;
+            if (t > b) {
+                break;
+            }
+            for (int i = t; i <= b; i++) {
+                res.add(matrix[i][r]);
+            }
+            r--;
+            if (l > r) {
+                break;
+            }
+            for (int j = r; j >= l; j--) {
+                res.add(matrix[b][j]);
+            }
+            b--;
+            if (t > b) {
+                break;
+            }
+            for (int i = b; i >= t; i--) {
+                res.add(matrix[i][l]);
+            }
+            l++;
+            if (l > r) {
+                break;
+            }
         }
-        return order;
+        return res;
     }
 
     // 59. 螺旋矩阵 II
@@ -118,40 +128,5 @@ public class SpiralMatrix {
             l++;
         }
         return res;
-    }
-
-    public int[][] generateMatrix2(int n) {
-        int[][] res = new int[n][n];
-        boolean[][] visited = new boolean[n][n];
-        int row = 0, col = 0;
-        // 方向理解：(0,1)表示x位置不动（纵坐标不变），y位置+1（横坐标+1），即右移
-        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-        int directionIndex = 0;// 记录当前方向，0-右，1-下，2-左，3-上， 循环使用
-        for (int i = 1; i <= n * n; i++) {
-            res[row][col] = i;
-            visited[row][col] = true;
-            int nextRow = row + directions[directionIndex][0], nextCol = col + directions[directionIndex][1];
-            // 按照当前方向继续访问  如果出现访问越界 或者 元素已经访问过 就更换方向
-            if (nextRow < 0 || nextRow >= n || nextCol < 0 || nextCol >= n || visited[nextRow][nextCol]) {
-                directionIndex = (directionIndex + 1) % 4;
-            }
-            // 按照当前方向前进
-            row += directions[directionIndex][0];
-            col += directions[directionIndex][1];
-        }
-        return res;
-    }
-
-    public static void main(String[] args) {
-        int[][] matrix = {
-                {1, 2, 3, 4},
-                {5, 6, 7, 8},
-                {9, 10, 11, 12},
-                {13, 14, 15, 16}
-        };
-        List<Integer> res = new SpiralMatrix().spiralOrder2(matrix);
-        int[][] res2 = new SpiralMatrix().generateMatrix2(3);
-        System.out.println(res);
-        System.out.println(Arrays.deepToString(res2));
     }
 }
