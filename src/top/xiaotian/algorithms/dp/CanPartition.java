@@ -56,8 +56,68 @@ public class CanPartition {
         return memo[index][sum] == 1;
     }
 
+    public boolean canPartition1(int[] nums) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
 
-    public boolean canPartitionDp(int[] nums) {
+        if (sum % 2 != 0) {
+            return false;
+        }
+        int target = sum / 2;
+        int len = nums.length;
+        boolean[][] dp = new boolean[len][target + 1];
+        // 初始化
+        for (int j = 0; j <= target; j++) {
+            dp[0][j] = (j == nums[0]);
+        }
+        // 遍历
+        for (int i = 1; i < len; i++) {
+            for (int j = 0; j <= target; j++) {
+                if (j < nums[i]) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i]];
+                }
+            }
+        }
+        return dp[len - 1][target];
+    }
+
+    public boolean canPartition2(int[] nums) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+
+        if (sum % 2 != 0) {
+            return false;
+        }
+        int target = sum / 2;
+        int len = nums.length;
+        boolean[][] dp = new boolean[2][target + 1];
+        // 初始化
+        for (int j = 0; j <= target; j++) {
+            dp[0][j] = (j == nums[0]);
+        }
+        // 遍历
+        for (int i = 1; i < len; i++) {
+            for (int j = 0; j <= target; j++) {
+                int newI = (i - 1) % 2;
+                boolean res;
+                if (j < nums[i]) {
+                    res = dp[newI][j];
+                } else {
+                    res = dp[newI][j] || dp[newI][j - nums[i]];
+                }
+                dp[i % 2][j] = res;
+            }
+        }
+        return dp[(len - 1) % 2][target];
+    }
+
+    public boolean canPartition3(int[] nums) {
         int sum = 0;
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
