@@ -1,19 +1,18 @@
 package top.xiaotian.algorithms.dfs;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * 494. 目标和 给你一个整数数组 nums 和一个整数 target 。
- *
+ * <p>
  * 向数组中的每个整数前添加 '+' 或 '-' ，然后串联起所有整数，可以构造一个 表达式 ：
- *
+ * <p>
  * 例如，nums = [2, 1] ，可以在 2 之前添加 '+' ，在 1 之前添加 '-' ，然后串联起来得到表达式 "+2-1" 。 返回可以通过上述方法构造的、运算结果等于 target
  * 的不同 表达式 的数目。
- *
+ * <p>
  * 示例 1：
- *
+ * <p>
  * 输入：nums = [1,1,1,1,1], target = 3 输出：5 解释：一共有 5 种方法让最终目标和为 3 。 -1 + 1 + 1 + 1 + 1 = 3 +1 - 1 + 1
  * + 1 + 1 = 3 +1 + 1 - 1 + 1 + 1 = 3 +1 + 1 + 1 - 1 + 1 = 3 +1 + 1 + 1 + 1 - 1 = 3
  */
@@ -102,57 +101,43 @@ public class FindTargetSumWays {
     }
     int len = nums.length;
     int cap = (S + sum) / 2;
-    int[][] dp = new int[len][cap + 1];
+    cap = Math.abs(cap);
+    int[][] dp = new int[len + 1][cap + 1];
     // 初始化： 恰好装满背包和不超过背包容量初始化是不一样的，恰好等于容量才是合法的
-    dp[0][0] = 1;
-    for (int j = 1; j <= cap; j++) {
-      dp[0][j] = (nums[0] == j) ? 1 : 0;
+    // 填满背包容量为0的方法有一种
+    for (int i = 0; i <= len; i++) {
+      dp[i][0] = 1;
     }
-    System.out.println(Arrays.deepToString(dp));
     // 遍历
-    for (int i = 1; i < len; i++) {
+    for (int i = 1; i <= len; i++) {
       for (int j = 0; j <= cap; j++) {
-        if (nums[i] > j) {
+        if (nums[i - 1] > j) {
           dp[i][j] = dp[i - 1][j];
         } else {
-          dp[i][j] = dp[i - 1][j] + dp[i - 1][j - nums[i]];
+          dp[i][j] = dp[i - 1][j] + dp[i - 1][j - nums[i - 1]];
         }
       }
     }
-    System.out.println(Arrays.deepToString(dp));
-    return dp[len - 1][cap];
+    return dp[len][cap];
   }
 
-  public int findTargetSumWays5(int[] nums, int target) {
+  public int findTargetSumWays5(int[] nums, int S) {
     int sum = 0;
     for (int num : nums) {
       sum += num;
     }
-    if ((target + sum) % 2 != 0) {
+    if ((S + sum) % 2 != 0) {
       return 0;
     }
-    int cap = (target + sum) / 2;
-    if (cap < 0) {
-      cap = -cap;
-    }
+    int cap = (S + sum) / 2;
+    cap = Math.abs(cap);
     int[] dp = new int[cap + 1];
     dp[0] = 1;
-//    for (int j = 1; j <= cap; j++) {
-//      dp[j] = (nums[0] == j) ? 1 : 0;
-//    }
-    System.out.println(Arrays.toString(dp));
     for (int i = 0; i < nums.length; i++) {
       for (int j = cap; j >= nums[i]; j--) {
         dp[j] += dp[j - nums[i]];
       }
-      System.out.println(Arrays.toString(dp));
     }
     return dp[cap];
-  }
-
-  public static void main(String[] args) {
-    int[] nums = {0, 0, 0, 0, 0, 0, 0, 0, 1};
-    int res = new FindTargetSumWays().findTargetSumWays4(nums, 1);
-    System.out.println(res);
   }
 }
