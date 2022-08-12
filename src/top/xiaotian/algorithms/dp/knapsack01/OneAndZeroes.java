@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.dp;
+package top.xiaotian.algorithms.dp.knapsack01;
 
 /**
  * 474. 一和零

@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.dp;
+package top.xiaotian.algorithms.dp.knapsack01;
 
 /**
  * 416. 分割等和子集
