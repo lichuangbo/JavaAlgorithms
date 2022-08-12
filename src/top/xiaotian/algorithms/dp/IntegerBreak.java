@@ -38,7 +38,7 @@ public class IntegerBreak {
         for (int i = 1; i <= target - 1; i++) {
             // 可以分割为两部分 i  target-i
             // 第一个参数指 只分割两部分(i, target-i)  第三个参数指继续进行分割， target-i部分继续
-            res = Math.max(i * (target - i), Math.max(res, i * help(target - i, memo)));
+            res = Math.max(res, Math.max(i * (target - i), i * help(target - i, memo)));
         }
         memo[target] = res;
         return res;
