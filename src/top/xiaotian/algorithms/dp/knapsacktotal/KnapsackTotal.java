@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.dp;
+package top.xiaotian.algorithms.dp.knapsacktotal;
 
 /**
  * 完全背包问题
