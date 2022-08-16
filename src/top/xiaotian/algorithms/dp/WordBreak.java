@@ -33,7 +33,9 @@ public class WordBreak {
    * 1 <= s.length <= 300 1 <= wordDict.length <= 1000 1 <= wordDict[i].length <= 20 s 和 wordDict[i]
    * 仅有小写英文字母组成 wordDict 中的所有字符串 互不相同
    */
+  // DFS + 回溯
   public boolean wordBreak(String s, List<String> wordDict) {
+    // 0表示未计算，1表示计算过可行，-1表示计算过不可行
     int[] memo = new int[s.length()];
     return help(s, wordDict, 0, memo);
   }
@@ -43,21 +45,39 @@ public class WordBreak {
     if (index == s.length()) {
       return true;
     }
-    if (memo[index] == -1) {
-      return false;
+    if (memo[index] != 0) {
+      return memo[index] == 1;
     }
 
     for (int i = index; i < s.length(); i++) {
       String subWord = s.substring(index, i + 1);
-      if (!wordDict.contains(subWord)) {
-        continue;
-      }
-      if (help(s, wordDict, i + 1, memo)) {
+      if (wordDict.contains(subWord) && help(s, wordDict, i + 1, memo)) {
+        memo[index] = 1;
         return true;
       }
     }
     memo[index] = -1;
     return false;
+  }
+
+  public boolean wordBreak2(String s, List<String> wordDict) {
+    // dp[i]表示字符串[0, i]区间内是否可以拆分为字典中的值
+    // 状态转移方程：dp[i] = dp[j] && wordDict.contains(s[j, i])
+    int len = s.length();
+    boolean[] dp = new boolean[len + 1];
+    // 初始化：dp[i]依赖于之前的元素,所以首元素必须初始化为true
+    dp[0] = true;
+    for (int i = 1; i <= len; i++) {
+      for (int j = 0; j < i; j++) {
+        String subWord = s.substring(j, i);
+        if (dp[j] && wordDict.contains(subWord)) {
+          dp[i] = true;
+          // 后续的不用在计算了
+          break;
+        }
+      }
+    }
+    return dp[len];
   }
 
 }
