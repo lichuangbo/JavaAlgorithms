@@ -13,7 +13,6 @@ import java.util.Arrays;
  * @Description: 描述: 213 337 309
  */
 public class HouseRobber {
-    private int[] momo;
     /**
      * 198. 打家劫舍
      * 你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
@@ -35,26 +34,30 @@ public class HouseRobber {
         if (nums == null || nums.length == 0) {
             return 0;
         }
-        momo = new int[nums.length];
-        return tryRob(nums, 0);
+        int[] memo = new int[nums.length];
+        Arrays.fill(memo, -1);
+        return tryRob(nums, 0, memo);
     }
     // 递归+记忆化
-    private int tryRob(int[] nums, int index) {
+    // 考虑去抢劫[index, nums.length)范围内的房子
+    private int tryRob(int[] nums, int index, int[] memo) {
         if (index >= nums.length) {
             return 0;
         }
 
-        if (momo[index] != 0) {
-            return momo[index];
+        if (memo[index] != -1) {
+            return memo[index];
         }
         int res = Integer.MIN_VALUE;
         for (int i = index; i < nums.length; i++) {
-            res = Math.max(res, nums[i] + tryRob(nums, i + 2));
+            // 抢劫编号为i的这个房屋，并且考虑之后的范围的抢劫
+            res = Math.max(res, nums[i] + tryRob(nums, i + 2, memo));
         }
-        momo[index] = res;
+        memo[index] = res;
         return res;
     }
     // 动态规划1
+    // 自顶向下
     public int rob2(int[] nums) {
         if (nums == null || nums.length == 0) {
             return 0;
@@ -127,37 +130,24 @@ public class HouseRobber {
         return Math.max(res[0], res[1]);
     }
 
-    private int[] dfs(TreeNode node) {
-        if (node == null) {
+    // 树形DP
+    private int[] dfs(TreeNode root) {
+        // dfs出口
+        if (root == null) {
             return new int[]{0, 0};
         }
 
-        // 分类讨论的标准是：当前结点偷或者不偷
-        // 由于需要后序遍历，所以先计算左右子结点，然后计算当前结点的状态值
-        int[] left = dfs(node.left);
-        int[] right = dfs(node.right);
+        // 后序遍历：因为当前层的决定是由左右孩子决定的
+        int[] left = dfs(root.left);
+        int[] right = dfs(root.right);
 
-        // dp[0]：以当前 node 为根结点的子树能够偷取的最大价值，规定 node 结点不偷
-        // dp[1]：以当前 node 为根结点的子树能够偷取的最大价值，规定 node 结点偷
+        // 当前层要做的事
         int[] dp = new int[2];
-
-        // 不偷取当前节点，左右子节点可以偷，也可以不偷   从中选取最大的
+        // dp[0] 记录不偷取当前节点
+        // 分别从左右子树中选取最大的，相加之和就是当前结果
         dp[0] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
-        // 偷取当前节点，那就不能偷取其左右子节点（复用dp[0]语义）
-        dp[1] = node.val + left[0] + right[0];
+        // dp[1] 记录偷取当前节点
+        dp[1] = root.val + left[0] + right[0];
         return dp;
-    }
-
-    public static void main(String[] args) {
-//        int[] nums = {1, 2, 3, 1};
-//        HouseRobber robber = new HouseRobber();
-//        int res = robber.rob2(nums);
-//        System.out.println(res);
-
-        String[] nums = {"3", "4", "5", "1", "3", "null", "1"};
-        TreeNode treeNode = new TreeNode(nums);
-        HouseRobber robber = new HouseRobber();
-        int res = robber.rob(treeNode);
-        System.out.println(res);
     }
 }
