@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.dp;
+package top.xiaotian.algorithms.dp.sub_sequence;
 
 /**
  * 1143. 最长公共子序列

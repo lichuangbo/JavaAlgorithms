@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.dp;
+package top.xiaotian.algorithms.dp.sub_sequence;
 
 import java.util.Arrays;
 

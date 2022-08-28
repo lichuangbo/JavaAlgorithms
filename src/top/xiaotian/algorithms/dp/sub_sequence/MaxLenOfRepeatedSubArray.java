@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.dp;
+package top.xiaotian.algorithms.dp.sub_sequence;
 
 /**
  * 718. 最长重复子数组

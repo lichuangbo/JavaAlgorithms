@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.dp;
+package top.xiaotian.algorithms.dp.sub_sequence;
 
 /**
  * 1035. 不相交的线
