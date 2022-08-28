@@ -20,39 +20,44 @@ package top.xiaotian.algorithms.dp;
  * @Description: 描述:
  */
 public class LCS {
-    private int[][] mono;
+    private int[][] memo;
     public int longestCommonSubsequence(String text1, String text2) {
         /**
          * abcde    t1[len1]与t2[len2]相同， 返回t1[0...len1-1]与t2[0...len2-1]的最长公共子序列长度+1
          * ace                     不相同，返回max(t1[0...len1-1]与t2[0...len2], t1[0...len1]与t2[0...len2-1])
          */
         int len1 = text1.length(), len2 = text2.length();
-        mono = new int[len1 + 1][len2 + 1];
-        return help(text1, len1, text2, len2);
+        memo = new int[len1 + 1][len2 + 1];
+        char[] chars1 = text1.toCharArray();
+        char[] chars2 = text2.toCharArray();
+        return help(chars1, len1, chars2, len2);
     }
 
-    private int help(String text1, int i, String text2, int j) {
+    private int help(char[] chars1, int i, char[] chars2, int j) {
         if (i == 0 || j == 0) {
             return 0;
         }
-        if (mono[i][j] != 0) {
-            return mono[i][j];
+        if (memo[i][j] != 0) {
+            return memo[i][j];
         }
 
-        if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
-            mono[i][j] = help(text1, i - 1, text2, j - 1) + 1;
+        if (chars1[i - 1] == chars2[j - 1]) {
+            memo[i][j] = help(chars1, i - 1, chars2, j - 1) + 1;
         } else {
-            mono[i][j] = Math.max(help(text1, i - 1, text2, j), help(text1, i, text2, j - 1));
+            memo[i][j] = Math.max(help(chars1, i - 1, chars2, j), help(chars1, i, chars2, j - 1));
         }
-        return mono[i][j];
+        return memo[i][j];
     }
 
     public int longestCommonSubsequence2(String text1, String text2) {
         int len1 = text1.length(), len2 = text2.length();
+        char[] chars1 = text1.toCharArray();
+        char[] chars2 = text2.toCharArray();
+        // dp[i][j]表示以str1[i]结尾和以str2[j]结尾的字符串的最长公共子序列的长度
         int[][] dp = new int[len1 + 1][len2 + 1];
         for (int i = 1; i <= len1; i++) {
             for (int j = 1; j <= len2; j++) {
-                if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
+                if (chars1[i - 1] == chars2[j - 1]) {
                     dp[i][j] = dp[i - 1][j - 1] + 1;
                 } else {
                     dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
