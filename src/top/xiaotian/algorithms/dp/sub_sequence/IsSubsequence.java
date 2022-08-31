@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.greedy;
+package top.xiaotian.algorithms.dp.sub_sequence;
 
 /**
  * 392. 判断子序列
@@ -42,5 +42,25 @@ public class IsSubsequence {
             }
         }
         return i == sLen;
+    }
+
+    // 动态规划
+    public boolean isSubsequence2(String s, String t) {
+        // dp[i][j]表示以s[i-1]结尾和以t[j-1]结尾的的相同子序列长度
+        char[] chars1 = s.toCharArray();
+        char[] chars2 = t.toCharArray();
+        int len1 = chars1.length;
+        int len2 = chars2.length;
+        int[][] dp = new int [len1 + 1][len2 + 1];
+        for (int i = 1; i <= len1; i++) {
+          for (int j = 1; j <= len2; j++) {
+            if (chars1[i - 1] == chars2[j - 1]) {// 在s/t中找到了一个相同的字符，更新dp[i][j]状态
+              dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {// 不相同，t字符串删除这个字符，继续判断
+              dp[i][j] = dp[i][j - 1];
+            }
+          }
+        }
+        return dp[len1][len2] == len1;
     }
 }
