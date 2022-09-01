@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.dp.sub_sequence;
+package top.xiaotian.algorithms.dp.edit_distance;
 
 /**
  * 583. 两个字符串的删除操作

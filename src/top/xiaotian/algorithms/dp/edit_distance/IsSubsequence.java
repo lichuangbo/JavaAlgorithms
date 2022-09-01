@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.dp.sub_sequence;
+package top.xiaotian.algorithms.dp.edit_distance;
 
 /**
  * 392. 判断子序列

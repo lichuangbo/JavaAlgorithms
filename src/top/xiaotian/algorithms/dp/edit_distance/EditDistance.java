@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.dp.sub_sequence;
+package top.xiaotian.algorithms.dp.edit_distance;
 
 /**
  * 72. 编辑距离
