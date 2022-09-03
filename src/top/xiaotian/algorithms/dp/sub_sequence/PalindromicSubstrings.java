@@ -88,7 +88,7 @@ public class PalindromicSubstrings {
     // dp[i][j]表示区间范围[i,j]的子串是否是回文子串
     boolean[][] dp = new boolean[len][len];
     for (int i = len - 1; i >= 0; i--) {  // 从下到上，从左到右遍历
-      for (int j = 0; j < len; j++) {
+      for (int j = i; j < len; j++) {
         if (chars[i] != chars[j]) {
           dp[i][j] = false;
         } else {
