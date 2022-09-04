@@ -151,41 +151,4 @@ public class Combination {
             curr.removeLast();
         }
     }
-
-    /**
-     * 216. 组合总和 III
-     * 找出所有相加之和为 n 的 k 个数的组合，且满足下列条件：
-     *
-     * 只使用数字1到9
-     * 每个数字 最多使用一次
-     * 返回 所有可能的有效组合的列表 。该列表不能包含相同的组合两次，组合可以以任何顺序返回。
-     *
-     *
-     *
-     * 示例 1:
-     *
-     * 输入: k = 3, n = 7
-     * 输出: [[1,2,4]]
-     * 解释:
-     * 1 + 2 + 4 = 7
-     * 没有其他符合的组合了。
-     */
-    public List<List<Integer>> combinationSumIII(int k, int n) {
-        res = new ArrayList<>();
-        generateSumIII(k, n, 1, new LinkedList<>());
-        return res;
-    }
-
-    private void generateSumIII(int k, int n, int start, LinkedList<Integer> curr) {
-        if (curr.size() == k && n == 0) {
-            res.add(new ArrayList<>(curr));
-            return;
-        }
-
-        for (int i = start; i <= 9; i++) {
-            curr.addLast(i);
-            generateSumIII(k, n - i, i + 1, curr);
-            curr.removeLast();
-        }
-    }
 }
