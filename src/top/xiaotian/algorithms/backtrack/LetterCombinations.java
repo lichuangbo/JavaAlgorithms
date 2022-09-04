@@ -19,7 +19,7 @@ import java.util.List;
  * @created 2021/1/28 93 131  46
  */
 public class LetterCombinations {
-    private String[] letterMap = {
+    private final String[] letterMap = {
             "",// 0
             "!@#",
             "abc",// 2
@@ -41,33 +41,25 @@ public class LetterCombinations {
             return res;
         }
 
-        findCombination(digits, 0, "");
+        findCombination(digits, 0, new StringBuilder());
         return res;
     }
 
-    // s保存从digits[0...index-1]翻译得到的一个字母字符串
-    private void findCombination(String digits, int index, String s) {
+    // curr保存从digits[0...index-1]翻译得到的一个字母字符串，然后继续寻找和digits[index]匹配的字母(index指向的是digits字符串的遍历进度，比如说2的按键组合遍历完了，继续看3的按键组合)
+    private void findCombination(String digits, int index, StringBuilder curr) {
         // 当递归到数字串的最后时，说明找到了一组解，加入结果集
-        System.out.println(index + " : " + s);// 递归进入前打印
         if (index == digits.length()) {
-            res.add(s);
-            System.out.println("get " + s);
+            res.add(curr.toString());
             return;
         }
 
         char ch = digits.charAt(index);
-        String letters = letterMap[ch - '0'];// 找到当前数字按键对应的字符，开始遍历所有可能的字符
-        for (int i = 0; i < letters.length(); i++) {
-            System.out.println("digits[" + index + "] = " + ch + " , use " + letters.charAt(i));// 递归调用前打印
+        char[] chars = letterMap[ch - '0'].toCharArray();// 找到当前数字按键对应的字符，开始遍历所有可能的字符
+        for (int i = 0; i < chars.length; i++) {
             // 基于选定的这一个字符，向下递归：去处理下一个数字键代表的字符
-            // 递归语义中，s此时应该传入[0...index]翻译得到的字母字符串
-            findCombination(digits, index + 1, s + letters.charAt(i));
+            curr.append(chars[i]);
+            findCombination(digits, index + 1, curr);
+            curr.deleteCharAt(curr.length() - 1);
         }
-    }
-
-    public static void main(String[] args) {
-        String digits = "23";
-        List<String> res = new LetterCombinations().letterCombinations(digits);
-        System.out.println(res);
     }
 }
