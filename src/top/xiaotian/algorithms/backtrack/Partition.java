@@ -42,15 +42,16 @@ public class Partition {
         }
 
         for (int i = index; i < s.length(); i++) {
+            // 只有当尝试截断的字符串是回文串时，才去做后续的递归
             if (isValid(s, index, i)) {
-                continue;
+                curr.addLast(s.substring(index, i + 1));
+                help(s, i + 1, curr);
+                curr.removeLast();
             }
-            curr.addLast(s.substring(index, i + 1));
-            help(s, i + 1, curr);
-            curr.removeLast();
         }
     }
 
+    // 判断s[l, r]区间的字符串是否为回文串
     private boolean isValid(String s, int l, int r) {
         while (l < r) {
             if (s.charAt(l) != s.charAt(r)) {
@@ -59,12 +60,5 @@ public class Partition {
             l++; r--;
         }
         return true;
-    }
-
-    public static void main(String[] args) {
-        String s = "aab";
-        Partition partition = new Partition();
-        List<List<String>> res = partition.partition(s);
-        System.out.println(res);
     }
 }
