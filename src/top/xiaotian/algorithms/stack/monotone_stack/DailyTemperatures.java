@@ -18,6 +18,7 @@ public class DailyTemperatures {
     int[] res = new int[len];
     for (int i = 0; i < len; i++) {
       // 维护一个单调栈，栈中存放的是元素的下标（因为题目问的其实是下标的间隔长度）
+      // 栈顶到栈底：元素单调递增的顺序
       while (!deque.isEmpty() && temperatures[deque.peekLast()] < temperatures[i]) {
         // 在每一次出栈时，拿到出栈元素的下标pos，此时进行更新res[pos]
         int pos = deque.pollLast();
