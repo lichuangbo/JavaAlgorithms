@@ -1,9 +1,10 @@
-package top.xiaotian.algorithms.twoPointer.slidingWindow;
+package top.xiaotian.algorithms.queue.monotone_queue;
 
 import java.util.Deque;
 import java.util.LinkedList;
 
 /**
+ * 239. 滑动窗口最大值
  * 剑指 Offer 59 - I. 滑动窗口的最大值
  * 给定一个数组 nums 和滑动窗口的大小 k，请找出所有滑动窗口里的最大值。
  * <p>
@@ -28,51 +29,48 @@ import java.util.LinkedList;
  * 你可以假设 k 总是有效的，在输入数组不为空的情况下，1 ≤ k ≤ 输入数组的大小。
  */
 public class MaxSlidingWindow {
+  // 暴力解法：提交超时
   public int[] maxSlidingWindow(int[] nums, int k) {
-    if (k == 0) {
-      return new int[0];
-    }
     int[] res = new int[nums.length - k + 1];
-    int[] tmp = new int[k];
-    for (int m = 0; m < nums.length - k + 1; m++) {
-      System.arraycopy(nums, m, tmp, 0, k);
-      res[m] = help(tmp);
+    for (int i = 0; i < nums.length - k + 1; i++) {
+      int tmp = Integer.MIN_VALUE;
+      for (int j = i; j < i + k; j++) {
+        if (tmp < nums[j]) {
+          tmp = nums[j];
+        }
+      }
+      res[i] = tmp;
     }
     return res;
   }
 
-  private int help(int[] nums) {
-    int max = Integer.MIN_VALUE;
-    for (int num : nums) {
-      if (max < num) {
-        max = num;
-      }
-    }
-    return max;
-  }
-
+  // 使用双端队列，来维护一个单调递减队列
   public int[] maxSlidingWindow2(int[] nums, int k) {
     if (nums.length == 0 || k == 0) {
       return new int[0];
     }
-    // 双端队列：维护窗口内元素的递减队列
     Deque<Integer> deque = new LinkedList<>();
     int[] res = new int[nums.length - k + 1];
-    // 当i小于0时，窗口还未形成；这时候也需要记录递减队列
-    for (int j = 0, i = 1 - k; j < nums.length; i++, j++) {
-      // 保持 deque 递减
-      while (!deque.isEmpty() && deque.peekLast() < nums[j]) {
+    // 未形成窗口：只管入队
+    for (int i = 0; i < k; i++) {
+      // 针对新加入窗口的元素num：需要将队列中小于num的都出队来保证队列的递减；从尾部遍历是因为队列是递减的
+      while (!deque.isEmpty() && deque.peekLast() < nums[i]) {
         deque.removeLast();
       }
-      // 如果左区间移除的元素刚好是最大值，同步删除递减队列最大值
-      if (i > 0 && !deque.isEmpty() && deque.peekFirst() == nums[i - 1]) {
+      deque.addLast(nums[i]);
+    }
+    res[0] = deque.peekFirst();
+    // 形成窗口后：随着移动一边入队一边出队
+    for (int i = k; i < nums.length; i++) {
+      // 针对移出窗口的元素num：num就是队首元素，需要将队列中该元素也移除，在这里就是队首出队
+      if (deque.peekFirst() == nums[i - k]) {
         deque.removeFirst();
       }
-      deque.addLast(nums[j]);
-      // 记录窗口最大值
-      if (i >= 0) {
-        res[i] = deque.peekFirst();
+      while (!deque.isEmpty() && deque.peekLast() < nums[i]) {
+        deque.removeLast();
       }
+      deque.addLast(nums[i]);
+      res[i - k + 1] = deque.peekFirst();
     }
     return res;
   }

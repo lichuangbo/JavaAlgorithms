@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.heap;
+package top.xiaotian.algorithms.queue.priority_queue;
 
 import java.util.PriorityQueue;
 

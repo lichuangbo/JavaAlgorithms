@@ -80,14 +80,72 @@ public class NQueens {
         return resList;
     }
 
-    public static void main(String[] args) {
-        NQueens nQueens = new NQueens();
-        List<List<String>> res = nQueens.solveNQueens(8);
-        for (List<String> list : res){
-            for (String str : list) {
-                System.out.println(str);
-            }
-            System.out.println();
+    public List<List<String>> solveNQueens2(int n) {
+        res = new ArrayList<>();
+        char[][] board = new char[n][n];
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(board[i], '.');
         }
+        help(board, 0);
+        return res;
+    }
+
+    private void help(char[][] board, int rowIndex) {
+        if (rowIndex == board.length) {
+            res.add(generateBoard(board));
+            return;
+        }
+
+        for (int colIndex = 0; colIndex < board.length; colIndex++) {
+            if (isValid(board, rowIndex, colIndex)) {
+                board[rowIndex][colIndex] = 'Q';
+                help(board, rowIndex + 1);
+                board[rowIndex][colIndex] = '.';
+            }
+        }
+    }
+
+    private boolean isValid(char[][] board, int rowIndex, int colIndex) {
+        // 竖向判断
+        for (int i = 0; i < rowIndex; i++) {
+            if (board[i][colIndex] == 'Q') {
+                return false;
+            }
+        }
+
+        // 对角判断
+        int i = rowIndex - 1;
+        int j = colIndex - 1;
+        while (i >= 0 && j >= 0) {
+            if (board[i][j] == 'Q') {
+                return false;
+            }
+            i--;
+            j--;
+        }
+
+        // 反对角判断
+        i = rowIndex - 1;
+        j = colIndex + 1;
+        while (i >= 0 && j < board.length) {
+            if (board[i][j] == 'Q') {
+                return false;
+            }
+            i--;
+            j++;
+        }
+        return true;
+    }
+
+    private List<String> generateBoard(char[][] board) {
+        List<String> res = new ArrayList<>();
+        for (int i = 0; i < board.length; i++) {
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < board.length; j++) {
+                sb.append(board[i][j]);
+            }
+            res.add(sb.toString());
+        }
+        return res;
     }
 }
