@@ -7,20 +7,24 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * 116. 填充每个节点的下一个右侧节点指针
- * 给定一个 完美二叉树 ，其所有叶子节点都在同一层，每个父节点都有两个子节点。二叉树定义如下：
- * <p>
- * struct Node {
- * int val;
- * Node *left;
- * Node *right;
- * Node *next;
- * }
- * 填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。
- * <p>
- * 初始状态下，所有 next 指针都被设置为 NULL。
+ * 填充每个节点的下一个右侧节点指针 问题
  */
 public class Connect {
+
+  /**
+   * 116. 填充每个节点的下一个右侧节点指针
+   * 给定一个 完美二叉树 ，其所有叶子节点都在同一层，每个父节点都有两个子节点。二叉树定义如下：
+   * <p>
+   * struct Node {
+   * int val;
+   * Node *left;
+   * Node *right;
+   * Node *next;
+   * }
+   * 填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。
+   * <p>
+   * 初始状态下，所有 next 指针都被设置为 NULL。
+   */
   // 递归
   public Node connect(Node root) {
     if (root == null) {
@@ -61,4 +65,20 @@ public class Connect {
     }
     return root;
   }
+
+  /**
+   * 117. 填充每个节点的下一个右侧节点指针 II
+   * 给定一个二叉树
+   *
+   * struct Node {
+   *   int val;
+   *   Node *left;
+   *   Node *right;
+   *   Node *next;
+   * }
+   * 填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。
+   *
+   * 初始状态下，所有 next 指针都被设置为 NULL。
+   */
+  // 和上一题不同的是，它是二叉树，116的递归思路走不通，因为不确定上层节点是否有左子节点；但是层序遍历是一样适用的
 }
