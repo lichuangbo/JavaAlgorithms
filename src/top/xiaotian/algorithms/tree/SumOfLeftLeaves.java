@@ -16,25 +16,22 @@ import java.util.Stack;
  *     /  \
  *    15   7
  * 在这个二叉树中，有两个左叶子，分别是 9 和 15，所以返回 24
- * @author lichuangbo
- * @version 1.0
- * @created 2021/1/25
  */
 public class SumOfLeftLeaves {
     // 方法语义：返回以root为根节点的二叉树的所有左叶子之和
     // 左子树返回0，右子树返回15，需要加上以根3的左叶子9
     public int sumOfLeftLeaves(TreeNode root) {
-        if (root == null) {
+        if (root == null || (root.left == null && root.right == null)) {
             return 0;
         }
 
-        int res = 0;
+        int mid = 0;
         // 正确表达左叶子的含义！  root.left==null && root.right == null表示所有叶子节点，然后想怎么筛掉右叶子，跑偏了
         // 不能站在单独的叶子节点上判断，比如9，已经没办法判断它是左叶子了（指针没有往回指），需要从上层节点出去看
         if (root.left != null && root.left.left == null && root.left.right == null) {
-            res = root.left.val;
+            mid = root.left.val;
         }
-        return sumOfLeftLeaves(root.left) + sumOfLeftLeaves(root.right) + res;
+        return sumOfLeftLeaves(root.left) + sumOfLeftLeaves(root.right) + mid;
     }
 
     // 先序遍历
@@ -61,6 +58,7 @@ public class SumOfLeftLeaves {
         return res;
     }
 
+    // 层序遍历
     public int sumOfLeftLeaves3(TreeNode root) {
         if (root == null) {
             return 0;
