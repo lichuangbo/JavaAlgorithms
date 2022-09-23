@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.recursion;
+package top.xiaotian.algorithms.tree;
 
 import top.xiaotian.util.TreeNode;
 
