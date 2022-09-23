@@ -8,37 +8,6 @@ import java.util.Deque;
 
 public class LowestCommonAncestor {
 
-    // 98. 验证二叉搜索树
-    public boolean isValidBST(TreeNode root) {
-        // 错误！！
-//        if (root == null) {
-//            return true;
-//        }
-//        if (root.left == null && root.right == null) {// 走到叶子节点，返回true
-//            return true;
-//        }
-//        if (root.left != null && root.right != null && (root.left.val > root.val || root.right.val < root.val)) {
-//            return false;
-//        }
-//
-//        return isValidBST(root.left) && isValidBST(root.right);
-        return help(root, Long.MIN_VALUE, Long.MAX_VALUE);
-    }
-
-    // 递归语义：自顶向下看，以root为根的二叉搜索树中，判断树中左子节点值和右子节点值是否同时符合二叉搜索树特性
-    private boolean help(TreeNode root, long l, long r) {
-        if (root == null) {
-            return true;
-        }
-
-        // root节点不在区间内，直接返回false
-        if (root.val <= l || root.val >= r) {
-            return false;
-        }
-        // 左子树的上界是根节点值(小于根节点)， 右子树的下界是根节点值(大于根节点)
-        return help(root.left, l, root.val) && help(root.right, root.val, r);
-    }
-
     // 450. 删除二叉搜索树中的节点
     public TreeNode deleteNode(TreeNode root, int key) {
         if (root == null) {
