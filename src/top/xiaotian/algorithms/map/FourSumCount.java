@@ -29,15 +29,11 @@ public class FourSumCount {
      * 时间：O(n2)
      * 查找表法，减低时间复杂度
      * 同时stream流操作也可以减少执行时长
-     * @param A
-     * @param B
-     * @param C
-     * @param D
-     * @return
      */
     public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
         Map<Integer, Integer> map = new HashMap<>();
         int len = A.length;
+        // 将c[i]+d[j]的和作为键，出现的次数作为值，缓存起来
         for (int i = 0; i < len; i++) {
             for (int j = 0; j < len; j++) {
 //                if (map.containsKey(C[i] + D[j])) {
@@ -50,6 +46,7 @@ public class FourSumCount {
         }
 
         int res = 0;
+        // 遍历a[i]和b[j]，从缓存中查找是否存在能够组合为0的情况，统计出来
         for (int i = 0; i < len; i++) {
             for (int j = 0; j < len; j++) {
 //                if (map.containsKey(0 - A[i] - B[j])) {
@@ -59,11 +56,5 @@ public class FourSumCount {
             }
         }
         return res;
-    }
-
-    public static void main(String[] args) {
-        int[] A = {0, 1, -1}, B = {-1, 1, 0}, C = {0, 0, 1}, D = {-1, 1, 1};
-        int res = new FourSumCount().fourSumCount(A, B, C, D);
-        System.out.println(res);
     }
 }
