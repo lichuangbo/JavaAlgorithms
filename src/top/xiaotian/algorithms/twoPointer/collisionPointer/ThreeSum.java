@@ -37,7 +37,7 @@ public class ThreeSum {
                 break;
             }
             // (-4,-1,-1,0,1,2)处理重复，nums[i-1]已经纳入考虑范围了，就不要nums[i]了，元素a去重
-            if (i > 0 && nums[i] == nums[i - 1]) {
+            if (i != 0 && nums[i] == nums[i - 1]) {
                 continue;
             }
             int l = i + 1, r = nums.length - 1;
