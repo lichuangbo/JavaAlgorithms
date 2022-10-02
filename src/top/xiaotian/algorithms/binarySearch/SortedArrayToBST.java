@@ -40,10 +40,4 @@ public class SortedArrayToBST {
         root.right = help(nums, mid + 1, r);
         return root;
     }
-
-    public static void main(String[] args) {
-        int[] nums = {-10,-3,0,5,9};
-        TreeNode treeNode = new SortedArrayToBST().sortedArrayToBST(nums);
-        System.out.println(treeNode);
-    }
 }

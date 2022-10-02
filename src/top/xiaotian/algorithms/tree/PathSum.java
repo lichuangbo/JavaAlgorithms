@@ -22,28 +22,11 @@ public class PathSum {
      * 时间：O(n),n为节点个数
      * 空间：O(logn),递归树的高度
      */
-    public boolean hasPathSum0(TreeNode root, int targetSum) {
-        /**
-         * 反例：
-         *     5
-         *       \
-         *        12, targetSum = 5
-         * 递归终止条件需要识别出节点的上一级是叶子节点才行
-         */
-        if (root == null) {
-            return targetSum == 0;
-        }
-
-        // 递归的从左右子树开始寻找剩余值
-        return hasPathSum0(root.left, targetSum - root.val) ||
-                hasPathSum0(root.right, targetSum - root.val);
-    }
     // 方法语义：判断以root为根节点的二叉树，是否存在一条（从根到叶子的）路径是等于targetSum的
     public boolean hasPathSum(TreeNode root, int targetSum) {
         if (root == null) {
             return false;
         }
-        // 叶子节点！！
         if (root.left == null && root.right == null && root.val == targetSum) {
             return true;
         }
@@ -66,13 +49,17 @@ public class PathSum {
      * 时间：O(n2),路径n，每一个节点还要添加进结果n
      * 空间：O(n)
      */
+    private List<List<Integer>> res;
     public List<List<Integer>> pathSumII(TreeNode root, int targetSum) {
-        List<List<Integer>> res = new ArrayList<>();
-        help(root, targetSum, res, new LinkedList<>());
+        res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        help(root, targetSum, new LinkedList<>());
         return res;
     }
 
-    private void help(TreeNode root, int targetSum, List<List<Integer>> resList, LinkedList<Integer> currList) {
+    private void help(TreeNode root, int targetSum, LinkedList<Integer> currList) {
         if (root == null) {
             return;
         }
@@ -81,7 +68,7 @@ public class PathSum {
         currList.add(root.val);
         // 将找到的路径加入结果集
         if (targetSum == root.val && root.left == null && root.right == null) {
-            resList.add(new ArrayList<>(currList));
+            res.add(new ArrayList<>(currList));
             /**
              *        5
              *      /   \
@@ -100,10 +87,27 @@ public class PathSum {
         }
 
         // 递归遍历左右子树中符合的路径
-        help(root.left, targetSum - root.val, resList, currList);
-        help(root.right, targetSum - root.val, resList, currList);
+        help(root.left, targetSum - root.val, currList);
+        help(root.right, targetSum - root.val, currList);
         // 当以加入该节点为前提递归寻找其左右子树后，删除该节点
         currList.removeLast();
+    }
+
+    private void help2(TreeNode root, int targetSum, LinkedList<Integer> currList) {
+        currList.add(root.val);
+        if (root.left == null && root.right == null && targetSum == root.val) {
+            res.add(new ArrayList<>(currList));
+            return;
+        }
+
+        if (root.left != null) {
+            help2(root.left, targetSum - root.val, currList);
+            currList.removeLast();
+        }
+        if (root.right != null) {
+            help2(root.right, targetSum - root.val, currList);
+            currList.removeLast();
+        }
     }
 
     /**

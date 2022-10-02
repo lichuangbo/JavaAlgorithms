@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.tree;
+package top.xiaotian.algorithms.tree.binary_search_tree;
 
 import top.xiaotian.util.TreeNode;
 

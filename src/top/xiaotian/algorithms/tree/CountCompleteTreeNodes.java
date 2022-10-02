@@ -14,13 +14,8 @@ import java.util.Queue;
  * 示例1：
  * 输入：root = [1,2,3,4,5,6]
  * 输出：6
- *
- * @author lichuangbo
- * @email lichuangbo@smtp.telek.com.cn
- * @time 2021/1/25 17:03
- * @Description: 描述:
  */
-public class CountNodes {
+public class CountCompleteTreeNodes {
 
     public int countNodes(TreeNode root) {
         if (root == null) {
@@ -33,8 +28,6 @@ public class CountNodes {
     /**
      * 时间O(n)
      * 层序遍历统计
-     * @param root
-     * @return
      */
     public int countNodes1(TreeNode root) {
         int count = 0;
@@ -72,8 +65,6 @@ public class CountNodes {
      *   /
      *  4
      * 如果left!=right, 说明右子树是满二叉树(倒数第二层)，此时只要套用公式(2^right - 1) + 1 + 左子树节点个数
-     * @param root
-     * @return
      */
     // 方法语义：返回以root为根节点的二叉树的节点个数
     public int countNodes2(TreeNode root) {

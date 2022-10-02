@@ -23,6 +23,22 @@ import java.util.Set;
  * @created 2021/1/4
  */
 public class TwoSum {
+
+    // 两次遍历
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(target - nums[i], i);
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(nums[i]) && map.get(nums[i]) != i) {
+                return new int[]{i, map.get(nums[i])};
+            }
+        }
+        return new int[0];
+    }
+
     /**
      * 查找表法(在遍历的同时记录一些关键信息，以空间换时间)
      * 时间O(n)
@@ -30,7 +46,7 @@ public class TwoSum {
      * @param target
      * @return
      */
-    public int[] twoSum(int[] nums, int target) {
+    public int[] twoSum2(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
             // 每遍历一个元素,看另一个数是否存在，存在的话说明找到了一组解

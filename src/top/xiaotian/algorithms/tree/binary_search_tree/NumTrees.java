@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.tree;
+package top.xiaotian.algorithms.tree.binary_search_tree;
 
 /**
  * 96. 不同的二叉搜索树

@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.tree;
+package top.xiaotian.algorithms.tree.binary_search_tree;
 
 /**
  * 剑指 Offer 33. 二叉搜索树的后序遍历序列

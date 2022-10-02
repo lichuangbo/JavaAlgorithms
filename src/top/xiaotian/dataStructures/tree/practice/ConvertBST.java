@@ -4,6 +4,7 @@ import top.xiaotian.util.TreeNode;
 
 /**
  * 538. 把二叉搜索树转换为累加树
+ * 1038. 从二叉搜索树到更大和树
  * 给出二叉 搜索 树的根节点，该树的节点值各不相同，请你将其转换为累加树（Greater Sum Tree），使每个节点 node 的新值等于原树中大于或等于 node.val 的值之和。
  *
  * 提醒一下，二叉搜索树满足下列约束条件：
@@ -23,7 +24,7 @@ import top.xiaotian.util.TreeNode;
  */
 public class ConvertBST {
 
-  private int num;
+  private TreeNode prev;
 
   /**
    * 反向中序遍历
@@ -34,10 +35,12 @@ public class ConvertBST {
     if (root == null) {
       return null;
     }
+
     convertBST(root.right);
-    root.val = root.val + num;
-    // 树节点元素累加
-    num = root.val;
+    if (prev != null) {
+      root.val += root.val + prev.val;
+    }
+    prev = root;
     convertBST(root.left);
     return root;
   }

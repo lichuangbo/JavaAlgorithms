@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.recursion;
+package top.xiaotian.algorithms.tree;
 
 import top.xiaotian.util.TreeNode;
 
@@ -45,13 +45,5 @@ public class DiameterOfBinaryTree {
     // 在递归所有节点时，记录最大值
     res = Math.max(left + right, res);
     return Math.max(left, right) + 1;
-  }
-
-  public static void main(String[] args) {
-//    String[] nums = new String[]{"1", "2", "3", "4", "5", "null", "null", "null", "null", "null", "null"};
-    String[] nums = new String[]{"1", "null", "null"};
-    TreeNode treeNode = new TreeNode(nums);
-    int res = new DiameterOfBinaryTree().diameterOfBinaryTree(treeNode);
-    System.out.println(res);
   }
 }

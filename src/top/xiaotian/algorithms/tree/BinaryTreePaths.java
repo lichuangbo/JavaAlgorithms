@@ -44,13 +44,17 @@ public class BinaryTreePaths {
     // 递归遍历左子树，拿到左子树的结果集，如["2->5"]
     List<String> leftStr = binaryTreePaths(root.left);
     // 把root节点拼接进左子树的路径中
-    for (int i = 0; i < leftStr.size(); i++) {
-      res.add(root.val + "->" + leftStr.get(i));
+    for (String path : leftStr) {
+      StringBuilder sb = new StringBuilder();
+      sb.append(root.val).append("->").append(path);
+      res.add(sb.toString());
     }
     // 递归遍历右子树，拿到右子树的结果集，如["3"]
     List<String> rightStr = binaryTreePaths(root.right);
-    for (int i = 0; i < rightStr.size(); i++) {
-      res.add(root.val + "->" + rightStr.get(i));
+    for (String path : rightStr) {
+      StringBuilder sb = new StringBuilder();
+      sb.append(root.val).append("->").append(path);
+      res.add(sb.toString());
     }
     return res;
   }
@@ -65,7 +69,7 @@ public class BinaryTreePaths {
     Queue<String> pathQueue = new LinkedList<>();
 
     nodeQueue.offer(root);
-    pathQueue.offer(Integer.toString(root.val));
+    pathQueue.offer(String.valueOf(root.val));
 
     while (!nodeQueue.isEmpty()) {
       TreeNode node = nodeQueue.poll();
@@ -73,18 +77,47 @@ public class BinaryTreePaths {
 
       if (node.left == null && node.right == null) {
         paths.add(path);
-      } else {
-        if (node.left != null) {
-          nodeQueue.offer(node.left);
-          pathQueue.offer(path + "->" + node.left.val);
-        }
+      }
+      if (node.left != null) {
+        nodeQueue.offer(node.left);
+        pathQueue.offer(path + "->" + node.left.val);
+      }
 
-        if (node.right != null) {
-          nodeQueue.offer(node.right);
-          pathQueue.offer(path + "->" + node.right.val);
-        }
+      if (node.right != null) {
+        nodeQueue.offer(node.right);
+        pathQueue.offer(path + "->" + node.right.val);
       }
     }
     return paths;
+  }
+
+  // 回溯
+  private List<String> res;
+
+  public List<String> binaryTreePaths3(TreeNode root) {
+    res = new ArrayList<>();
+    if (root == null) {
+      return res;
+    }
+
+    help(root, new LinkedList<>());
+    return res;
+  }
+
+  private void help(TreeNode root, LinkedList<String> curr) {
+    curr.add(String.valueOf(root.val));
+    if (root.left == null && root.right == null) {
+      res.add(String.join("->", curr));
+      return;
+    }
+
+    if (root.left != null) {
+      help(root.left, curr);
+      curr.removeLast();
+    }
+    if (root.right != null) {
+      help(root.right, curr);
+      curr.removeLast();
+    }
   }
 }
