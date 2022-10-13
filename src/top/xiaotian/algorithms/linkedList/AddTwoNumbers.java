@@ -30,9 +30,6 @@ import java.util.Stack;
 public class AddTwoNumbers {
     /**
      * 时间: O(max(l1, l2))
-     * @param l1
-     * @param l2
-     * @return
      */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode dummyHead = new ListNode(-1);
@@ -60,8 +57,12 @@ public class AddTwoNumbers {
         return dummyHead.next;
     }
 
-    // 445. 两数相加 II
-    // 这才是真正的两数求和
+    /**
+     * 445. 两数相加 II
+     * 给你两个 非空 链表来代表两个非负整数。数字最高位位于链表开始位置。它们的每个节点只存储一位数字。将这两数相加会返回一个新的链表。
+     *
+     * 你可以假设除了数字 0 之外，这两个数字都不会以零开头。
+     */
     public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
         Stack<Integer> stack1 = new Stack<>(), stack2 = new Stack<>();
         while (l1 != null) {
@@ -89,11 +90,5 @@ public class AddTwoNumbers {
             curr = tmp;
         }
         return curr;
-    }
-
-    public static void main(String[] args) {
-        int[] nums1 = {7, 2, 4, 3}, nums2 = {5, 6, 4};
-        ListNode resList = new AddTwoNumbers().addTwoNumbers2(new ListNode(nums1), new ListNode(nums2));
-        System.out.println(resList);
     }
 }

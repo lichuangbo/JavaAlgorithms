@@ -1,9 +1,10 @@
-package top.xiaotian.algorithms.stack;
+package top.xiaotian.algorithms.stack.monotone_stack;
 
 import java.util.Stack;
 
 /**
  * 剑指 Offer 30. 包含min函数的栈
+ * 面试题 03.02. 栈的最小值
  *
  * 定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的 min 函数在该栈中，调用 min、push 及 pop 的时间复杂度都是 O(1)。
  *
@@ -39,19 +40,17 @@ class MinStack {
 
   public void push(int x) {
     stack.push(x);
-    if (minStack.isEmpty()) {
-      minStack.push(x);
-      // push 0 1 0 min pop min;  如果是大于的话，重复最小值不会进入minStack（minStack: 0）,pop后0直接出栈，丢失了一个最小值
-    } else if (minStack.peek() >= x) {
+    // push 0 1 0 min pop min;  如果是大于的话，重复最小值不会进入minStack（minStack: 0）,pop后0直接出栈，丢失了一个最小值
+    if (minStack.isEmpty() || minStack.peek() >= x) {
       minStack.push(x);
     }
   }
 
   public void pop() {
-    if (stack.peek().equals(minStack.peek())) {
+    int tmp = stack.pop();
+    if (!minStack.isEmpty() && minStack.peek() == tmp) {
       minStack.pop();
     }
-    stack.pop();
   }
 
   public int top() {
