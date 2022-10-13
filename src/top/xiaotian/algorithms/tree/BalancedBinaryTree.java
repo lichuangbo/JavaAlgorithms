@@ -55,21 +55,30 @@ public class BalancedBinaryTree {
     return Math.max(countDepth(root.left), countDepth(root.right)) + 1;
   }
 
+  // 剪枝，最优解
   public boolean isBalanced2(TreeNode root) {
-    return recur(root) != -1;
+    return help(root) != -1;
   }
 
-  // 方法语义：先序遍历，返回以root为根节点的二叉树的高度
-  private int recur(TreeNode root) {
-    // 递归终止条件：
-    // root节点为null，返回高度0
-    // 当子树高度为-1时，代表此子树不是平衡树，因此直接返回 -1
-    if (root == null) return 0;
-    int left = recur(root.left);
-    if (left == -1) return -1;
-    int right = recur(root.right);
-    if (right == -1) return -1;
-
-    return Math.abs(left - right) < 2 ? Math.max(left, right) + 1 : -1;
+  // 方法语义：求以root为根的二叉树的高度，其中如果root本身不平衡返回-1
+  private int help(TreeNode root) {
+    if (root == null) {
+      return 0;
+    }
+    int leftDepth = help(root.left);
+    // 剪枝:左子树不平衡，直接返回-1
+    if (leftDepth == -1) {
+      return -1;
+    }
+    int rightDepth = help(root.right);
+    // 剪枝：右子树不平衡，直接返回-1
+    if (rightDepth == -1) {
+      return -1;
+    }
+    // 左右子树高度相差大于1，返回-1
+    if (Math.abs(leftDepth - rightDepth) > 1) {
+      return -1;
+    }
+    return Math.max(leftDepth, rightDepth) + 1;
   }
 }
