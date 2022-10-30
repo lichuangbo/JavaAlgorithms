@@ -127,24 +127,4 @@ public class BinarySearch {
         }
         return -1;
     }
-
-    public static void main(String[] args) {
-        Random random = new Random();
-        int n = 10;
-        int[] arr = new int[n];
-        for (int i = 0; i < n; i++) {
-            arr[i] = random.nextInt(7);
-        }
-        Arrays.sort(arr);
-
-        BinarySearch binarySearch = new BinarySearch();
-//        System.out.println(binarySearch.binarySearch(arr, 67));
-//        System.out.println(binarySearch.binarySearch2(arr, 67));
-
-        int[] arr1 = {1, 1, 3, 4, 5, 6, 6, 7, 8, 10};
-        System.out.println(binarySearch.binarySearch3(arr1, 6));// 5
-        System.out.println(binarySearch.binarySearch4(arr1, 6));// 6
-        System.out.println(binarySearch.binarySearch5(arr1, 2));// 2
-        System.out.println(binarySearch.binarySearch6(arr1, 2));// 1
-    }
 }
