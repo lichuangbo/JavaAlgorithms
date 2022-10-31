@@ -27,8 +27,6 @@ public class ThreeSum {
     /**
      * 对撞指针
      * 时间 排序O(nlogn)+遍历、指针对撞O(n2)
-     * @param nums
-     * @return
      */
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
@@ -38,7 +36,7 @@ public class ThreeSum {
             if (nums[i] > 0) {
                 break;
             }
-            // (-4,-1,-1,0,1,2)处理重复，nums[i-1]已经纳入考虑范围了，就不要nums[i]了
+            // (-4,-1,-1,0,1,2)处理重复，nums[i-1]已经纳入考虑范围了，就不要nums[i]了，元素a去重
             if (i != 0 && nums[i] == nums[i - 1]) {
                 continue;
             }
@@ -49,24 +47,20 @@ public class ThreeSum {
                 if (sum == 0) {
                     res.add(new ArrayList<>(Arrays.asList(nums[i], nums[l], nums[r])));
                     l++;
+                    r--;
+
+                    // 元素b去重
                     while (l < r && nums[l] == nums[l - 1]) {
                         l++;
                     }
-                    r--;
+                    // 元素c去重
                     while (r > l && nums[r] == nums[r + 1]) {
                         r--;
                     }
                 } else if (sum < 0) {
                     l++;
-                    while (l < r && nums[l] == nums[l - 1]) {
-                        l++;
-                    }
                 } else {
                     r--;
-                    // 去重操作，nums[r+1]已经纳入考虑了，nums[r]就不要了
-                    while (r > l && nums[r] == nums[r + 1]) {
-                        r--;
-                    }
                 }
             }
         }
