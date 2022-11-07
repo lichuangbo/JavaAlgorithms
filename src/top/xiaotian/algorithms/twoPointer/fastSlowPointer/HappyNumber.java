@@ -31,8 +31,6 @@ public class HappyNumber {
     /***
      * 集合判重
      * 时间O(logn)
-     * @param n
-     * @return
      */
     public boolean isHappy(int n) {
         Set<Integer> set = new HashSet<>();
@@ -50,32 +48,29 @@ public class HappyNumber {
     /***
      * 快慢指针（变形）
      * 时间O(logn)
-     * @param n
-     * @return
      */
     public boolean isHappy2(int n) {
+        int fast = n;
         int slow = n;
-        // 快指针会比慢指针先到终点（先判断是否为快乐数，而且内部是连续计算两次下一轮和，并不会遗漏）
-        int fast = getNextRoundSum(n);
-        while (fast != 1) {
+        while (true) {
+            fast = getNextRoundSum(getNextRoundSum(fast));
+            slow = getNextRoundSum(slow);
+            if (fast == 1) {
+                return true;
+            }
             if (fast == slow) {
                 return false;
             }
-            // 慢指针一次走一步，快指针一次走两步
-            slow = getNextRoundSum(slow);
-            fast = getNextRoundSum(getNextRoundSum(fast));
         }
-        return true;
     }
 
     private int getNextRoundSum(int n) {
-        int totalSum = 0;
-        // 求解数字的每一位(经典用法)
+        int sum = 0;
         while (n > 0) {
-            int d = n % 10;
+            int m = n % 10;
+            sum += m * m;
             n = n / 10;
-            totalSum += d * d;
         }
-        return totalSum;
+        return sum;
     }
 }
