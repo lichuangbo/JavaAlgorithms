@@ -56,4 +56,35 @@ public class ReplaceSpaces {
     }
     return new String(chars, last + 1, chars.length - last - 1);
   }
+
+  /**
+   * 剑指 Offer 05. 替换空格
+   * 请实现一个函数，把字符串 s 中的每个空格替换成"%20"。
+   *
+   *
+   *
+   * 示例 1：
+   *
+   * 输入：s = "We are happy."
+   * 输出："We%20are%20happy."
+   */
+  public String replaceSpace(String s) {
+    char[] chars = s.toCharArray();
+    int oldLen = chars.length;
+    char[] newChars = new char[oldLen * 3];
+    System.arraycopy(chars, 0, newChars, 0, oldLen);
+
+    int newLen = newChars.length;
+    int last = newLen - 1;
+    for (int i = oldLen - 1; i >= 0; i--) {
+      if (newChars[i] == ' ') {
+        newChars[last--] = '0';
+        newChars[last--] = '2';
+        newChars[last--] = '%';
+      } else {
+        newChars[last--] = chars[i];
+      }
+    }
+    return new String(newChars, last + 1, newLen - last - 1);
+  }
 }
