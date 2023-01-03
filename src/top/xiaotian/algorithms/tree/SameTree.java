@@ -35,12 +35,20 @@ import top.xiaotian.util.TreeNode;
 public class SameTree {
   // 方法语义：以p为根和以q为根的二叉树是否相同
   public boolean isSameTree(TreeNode p, TreeNode q) {
-    if (p == null && q != null) {
-      return false;
-    } else if (p != null && q == null) {
-      return false;
-    } else if (p == null && q == null) {
+//    if (p == null && q != null) {
+//      return false;
+//    } else if (p != null && q == null) {
+//      return false;
+//    } else if (p == null && q == null) {
+//      return true;
+//    }
+
+    // 简写方式
+    if (p == null && q == null) {
       return true;
+    }
+    if (p == null || q == null) {
+      return false;
     }
 
     return isSameTree(p.left, q.left) && isSameTree(p.right, q.right) && p.val == q.val;

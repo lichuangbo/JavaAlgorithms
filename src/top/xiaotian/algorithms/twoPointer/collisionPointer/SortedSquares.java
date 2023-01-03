@@ -28,16 +28,15 @@ import java.util.Arrays;
  */
 public class SortedSquares {
   /**
-   * 时间O(nlogn) 空间O(n)
+   * 时间O(nlogn) 空间O(1)
    */
   public int[] sortedSquares(int[] nums) {
-    int[] res = new int[nums.length];
     int k = 0;
     for (int num : nums) {
-      res[k++] = num * num;
+      nums[k++] = num * num;
     }
-    Arrays.sort(res);
-    return res;
+    Arrays.sort(nums);
+    return nums;
   }
 
   /**
@@ -45,19 +44,23 @@ public class SortedSquares {
    * 最大值始终在最外层，最小值始终在内层
    */
   public int[] sortedSquares2(int[] nums) {
-    int[] res = new int[nums.length];
-    int k = nums.length - 1;
-    for (int i = 0, j = nums.length - 1; i <= j; ) {
-      int left = nums[i] * nums[i];
-      int right = nums[j] * nums[j];
-      if (left < right) {
-        res[k--] = right;
-        j--;
+    int len = nums.length;
+    int[] res = new int[len];
+    int low = 0;
+    int high = len - 1;
+    int k = len - 1;
+    while (low <= high) {
+      int leftRes = nums[low] * nums[low];
+      int rightRes = nums[high] * nums[high];
+      if (leftRes > rightRes) {
+        res[k--] = leftRes;
+        low++;
       } else {
-        res[k--] = left;
-        i++;
+        res[k--] = rightRes;
+        high--;
       }
     }
+
     return res;
   }
 }
