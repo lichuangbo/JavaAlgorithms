@@ -29,69 +29,80 @@ package top.xiaotian.algorithms.dp;
  * @created 2021/2/6 120 64
  */
 public class ClimbStairs {
-    public int climbStairs(int n) {
-        // 递归(从上向下思考)：爬n阶台阶有两种途径 (1)-先爬n-1阶台阶，再爬1阶 (2)-先爬n-2阶台阶，再爬2阶
-        if (n == 1) return 1;
-        if (n == 2) return 2;
-        return climbStairs(n - 1) + climbStairs(n - 2);
+
+  public int climbStairs(int n) {
+    // 递归(从上向下思考)：爬n阶台阶有两种途径 (1)-先爬n-1阶台阶，再爬1阶 (2)-先爬n-2阶台阶，再爬2阶
+    if (n == 1) {
+      return 1;
     }
+    if (n == 2) {
+      return 2;
+    }
+    return climbStairs(n - 1) + climbStairs(n - 2);
+  }
 
 
-    private int[] memo;
-    private int help(int n, int[] momo) {
-        if (n == 1) return 1;
-        if (n == 2) return 2;
-        if (momo[n] == 0) {
-            momo[n] = help(n - 1, momo) + help(n - 2, momo);
+  private int[] memo;
+
+  private int help(int n) {
+    if (n == 1) {
+      return 1;
+    }
+    if (n == 2) {
+      return 2;
+    }
+    if (memo[n] == 0) {
+      memo[n] = help(n - 1) + help(n - 2);
+    }
+    return memo[n];
+  }
+
+  public int climbStairs2(int n) {
+    // 记忆化搜索：还是从上向下的思考方式
+    memo = new int[n + 1];
+    return help(n);
+  }
+
+  public int climbStairs3(int n) {
+    // 动态规划(自下向上思考): 先解决子问题，并记录子问题结果
+    memo = new int[n + 1];
+    memo[0] = 1;
+    memo[1] = 1;
+    for (int i = 2; i <= n; i++) {
+      memo[i] = memo[i - 1] + memo[i - 2];
+    }
+    return memo[n];
+  }
+
+  // 状态压缩：只需要最近的两次计算结果，其他不需要保存
+  public int climbStairs4(int n) {
+    if (n == 0) {
+      return 1;
+    }
+    int a = 1, b = 1, sum = n;
+    for (int i = 2; i <= n; i++) {
+      sum = (a + b) % 1000000007;
+      a = b;
+      b = sum;
+    }
+    return sum;
+  }
+
+  /**
+   * 转化为完全背包问题
+   */
+  public int climbStairs5(int n) {
+    int[] dp = new int[n + 1];
+    int[] weight = {1, 2};
+    dp[0] = 1;
+
+    for (int i = 0; i <= n; i++) {
+      for (int j = 0; j < weight.length; j++) {
+        if (i >= weight[j]) {
+          dp[i] += dp[i - weight[j]];
         }
-        return momo[n];
+      }
     }
-    public int climbStairs2(int n) {
-        // 记忆化搜索：还是从上向下的思考方式
-        memo = new int[n + 1];
-        return help(n, memo);
-    }
-
-    public int climbStairs3(int n) {
-        // 动态规划(自下向上思考): 先解决子问题，并记录子问题结果
-        memo = new int[n + 1];
-        memo[0] = 1;
-        memo[1] = 1;
-        for (int i = 2; i <= n; i++) {
-            memo[i] = memo[i - 1] + memo[i - 2];
-        }
-        return memo[n];
-    }
-
-    // 状态压缩：只需要最近的两次计算结果，其他不需要保存
-    public int climbStairs4(int n) {
-        if (n == 0) {
-            return 1;
-        }
-        int a = 1, b = 1, sum = n;
-        for (int i = 2; i <= n; i++) {
-            sum = (a + b) % 1000000007;
-            a = b;
-            b = sum;
-        }
-        return sum;
-    }
-
-    /**
-     * 转化为完全背包问题
-     */
-    public int climbStairs5(int n) {
-        int[] dp = new int[n + 1];
-        int[] weight = {1,2};
-        dp[0] = 1;
-
-        for (int i = 0; i <= n; i++) {
-            for (int j = 0; j < weight.length; j++) {
-                if (i >= weight[j]) {
-                    dp[i] += dp[i - weight[j]];
-                }
-            }
-        }
-        return dp[n];
-    }
+    return dp[n];
+  }
 }
