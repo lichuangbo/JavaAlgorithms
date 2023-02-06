@@ -42,8 +42,9 @@ public class Straight {
         return false;
       }
       // 统计整副牌的间隙
-      gap = gap + (nums[i + 1] - nums[i] - 1);
+      gap += nums[i + 1] - nums[i] - 1;
     }
+    // 间隙为0（如1,2,3,4,5），间隙不为0那么间隙必须比大小王数量小（如0,0,1,2,5）  注意特例11,0,9,0,0
     if (gap == 0 || gap <= zeroNum) {
       return true;
     } else {
@@ -53,7 +54,8 @@ public class Straight {
 
   public boolean isStraight2(int[] nums) {
     // 除大小王外，最大牌-最小牌<5,就能构成对子
-    int min = nums[0], max = min;
+    int min = nums[0];
+    int max = nums[0];
     Set<Integer> set = new HashSet<>();
     for (int i = 0; i < nums.length; i++) {
       if (nums[i] == 0) {
@@ -67,6 +69,20 @@ public class Straight {
       set.add(nums[i]);
     }
     return max - min < 5;
+  }
+
+  public boolean isStraight3(int[] nums) {
+    Arrays.sort(nums);
+    int num0 = 0;
+    for (int i = 0; i < nums.length - 1; i++) {
+      if (nums[i] == 0) {
+        num0++; // 统计大小王数量
+      }// 除大小王外，一旦出现牌相等，必然不能组成对子
+      else if (nums[i] == nums[i + 1]) {
+        return false;
+      }
+    }
+    return nums[4] - nums[num0] < 5; // 最大牌 - 最小牌 < 5 则可构成顺子
   }
 
 }

@@ -25,30 +25,24 @@ public class Permutation {
    */
   public List<List<Integer>> permute(int[] nums) {
     res = new ArrayList<>();
-    help(nums, 0, new LinkedList<>(), new boolean[nums.length]);
+    help(nums, res, new LinkedList<>(), new boolean[nums.length]);
     return res;
   }
 
-  private void help(int[] nums, int index, LinkedList<Integer> curr, boolean[] visited) {
-    if (index == nums.length) {
-      res.add(new ArrayList<>(curr));
+  private void help(int[] nums, List<List<Integer>> resList, LinkedList<Integer> currList, boolean[] visited) {
+    if (currList.size() == nums.length) {
+      resList.add(new ArrayList<>(currList));
       return;
     }
 
-    /**
-     * 算法流程模拟：
-     * 基于1，递归向下遍历数组，由于1使用过了，选定2，递归向下遍历数组，由于1,2使用过了，选定3，递归向下，此时由于index到达边界，得到了一组解[1,2,3]
-     * 状态回退，3不选，没有其他选择，继续回退，上步的2不选，选定3，递归向下遍历数组，由于1使用过了，选定2，递归向下，此时由于index到达边界，得到一组解[1,3,2]
-     */
-    // 为什么这里是i==0,而不是i==index? 针对枚举的每一次选择都要看在整个数组中能否找到一组解
     for (int i = 0; i < nums.length; i++) {
       if (visited[i]) {
         continue;
       }
-      curr.add(nums[i]);
+      currList.add(nums[i]);
       visited[i] = true;
-      help(nums, index + 1, curr, visited);
-      curr.removeLast();
+      help(nums, resList, currList, visited);
+      currList.removeLast();
       visited[i] = false;
     }
   }
@@ -67,12 +61,12 @@ public class Permutation {
   public List<List<Integer>> permuteUnique(int[] nums) {
     res = new ArrayList<>();
     Arrays.sort(nums);
-    help2(nums, 0, new LinkedList<>(), new boolean[nums.length]);
+    help2(nums, res, new LinkedList<>(), new boolean[nums.length]);
     return res;
   }
 
-  private void help2(int[] nums, int index, LinkedList<Integer> curr, boolean[] visited) {
-    if (index == nums.length) {
+  private void help2(int[] nums, List<List<Integer>> resList, LinkedList<Integer> curr, boolean[] visited) {
+    if (curr.size() == nums.length) {
       res.add(new ArrayList<>(curr));
       return;
     }
@@ -89,7 +83,7 @@ public class Permutation {
 
       curr.add(nums[i]);
       visited[i] = true;
-      help2(nums, index + 1, curr, visited);
+      help2(nums, resList, curr, visited);
       curr.removeLast();
       visited[i] = false;
     }
