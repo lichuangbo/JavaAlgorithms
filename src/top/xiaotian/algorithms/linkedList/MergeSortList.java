@@ -16,6 +16,7 @@ import top.xiaotian.util.ListNode;
  * @author lichuangbo
  * @version 1.0
  * @created 2020/12/6
+ * @see top.xiaotian.algorithms.queue.priority_queue.MergeKLists
  */
 public class MergeSortList {
 
