@@ -1,5 +1,6 @@
 package top.xiaotian.dataStructures.stack.practice;
 
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -25,41 +26,35 @@ import java.util.Stack;
  * @Description: 描述:71
  */
 public class EvalRPN {
-    /**
-     * 时间：数组遍历O(n)
-     * 空间：数组入栈O(n)
-     * @param tokens
-     * @return
-     */
-    public int evalRPN(String[] tokens) {
-        if (tokens == null || tokens.length == 0) {
-            return 0;
-        }
 
-        Stack<Integer> stack = new Stack<>();
-        for (int i = 0; i < tokens.length; i++) {
-            String token = tokens[i];
-            if ("+-*/".contains(token)) {
-                Integer pop2 = stack.pop();
-                Integer pop1 = stack.pop();
-                switch (token) {
-                    case "+":
-                        stack.push(pop1 + pop2);
-                        break;
-                    case "-":
-                        stack.push(pop1 - pop2);
-                        break;
-                    case "*":
-                        stack.push(pop1 * pop2);
-                        break;
-                    case "/":
-                        stack.push(pop1 / pop2);
-                        break;
-                }
-            } else {
-                stack.push(Integer.parseInt(token));
-            }
+  /**
+   * 时间：数组遍历O(n)
+   * 空间：数组入栈O(n)
+   */
+  public int evalRPN(String[] tokens) {
+    Stack<Integer> numStack = new Stack<>();
+    for (String token : tokens) {
+      if (List.of("+", "-", "*", "/").contains(token)) {
+        Integer b = numStack.pop();
+        Integer a = numStack.pop();
+        switch (token) {
+          case "+":
+            numStack.push(a + b);
+            break;
+          case "-":
+            numStack.push(a - b);
+            break;
+          case "*":
+            numStack.push(a * b);
+            break;
+          case "/":
+            numStack.push(a / b);
+            break;
         }
-        return stack.pop();
+      } else {
+        numStack.push(Integer.parseInt(token));
+      }
     }
+    return numStack.pop();
+  }
 }
