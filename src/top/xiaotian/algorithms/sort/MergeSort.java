@@ -1,9 +1,5 @@
 package top.xiaotian.algorithms.sort;
 
-import top.xiaotian.util.RandomUtil;
-
-import java.util.Arrays;
-
 /**
  * 归并排序
  * @author lichuangbo
@@ -15,6 +11,7 @@ public class MergeSort {
     /***
      * 时间O(nlogn)
      * 空间O(nlogn)
+     * 稳定排序算法
      * @param arr
      */
     public void mergeSort(int[] arr) {
@@ -29,6 +26,7 @@ public class MergeSort {
         }
 
         int mid = l + (r - l) / 2;
+        // 分治思想
         mergeSort(arr, l, mid);
         mergeSort(arr, mid + 1, r);
         if (arr[mid] > arr[mid + 1]) {// 面对近乎有序的数据时，可以得到优化
@@ -72,12 +70,5 @@ public class MergeSort {
                 merge(arr, i, i + sz - 1, Math.min(i + sz + sz - 1, len - 1));
             }
         }
-    }
-
-    public static void main(String[] args) {
-        int[] arr = RandomUtil.randomInt(10000, 1, 10000);
-
-        new MergeSort().mergeSort2(arr);
-        System.out.println(Arrays.toString(arr));
     }
 }
