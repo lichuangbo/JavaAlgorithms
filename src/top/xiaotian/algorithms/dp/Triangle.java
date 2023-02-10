@@ -1,7 +1,5 @@
 package top.xiaotian.algorithms.dp;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -27,56 +25,83 @@ import java.util.List;
  * @created 2021/2/6
  */
 public class Triangle {
-    public int minimumTotal(List<List<Integer>> triangle) {
-        int len = triangle.size();
-        int[][] dp = new int[len + 1][len + 1];
-        /**
-         *  2
-         *^ 3 4
-         *| 6 5 7
-         *i 4 1 8 3
-         *  0 0 0 0 0
-         *  j ->
-         */
-        for (int i = len - 1; i >= 0; i--) {
-            for (int j = 0; j <= i; j++) {
-                dp[i][j] = Math.min(dp[i + 1][j], dp[i + 1][j + 1]) + triangle.get(i).get(j);
-            }
-        }
-        System.out.println(Arrays.deepToString(dp));
-        return dp[0][0];
+
+  // 自下而上
+  public int minimumTotal(List<List<Integer>> triangle) {
+    int len = triangle.size();
+    int[][] dp = new int[len + 1][len + 1];
+    /**
+     *  0 2
+     *^ 0 3 4
+     *| 0 6 5 7
+     *i 0 4 1 8 3
+     *  0 0 0 0 0
+     *  j ->
+     *
+     *  11
+     *  9  10
+     *  7  6  10
+     *  4  1  8  3
+     *  0  0  0  0  0
+     */
+    for (int i = len - 1; i >= 0; i--) {
+      for (int j = 0; j <= i; j++) {
+        dp[i][j] = Math.min(dp[i + 1][j], dp[i + 1][j + 1]) + triangle.get(i).get(j);
+      }
+    }
+    return dp[0][0];
+  }
+
+  // 自下而上，状态压缩
+  public int minimumTotal2(List<List<Integer>> triangle) {
+    int len = triangle.size();
+    int[] dp = new int[len];
+    // 初始化：最后一行的最小值时自身
+    for (int j = 0; j < len; j++) {
+      dp[j] = triangle.get(len - 1).get(j);
     }
 
-    public int minimumTotal2(List<List<Integer>> triangle) {
-        int len = triangle.size();
-        int []dp = new int[len];
-        // 初始化：最后一行的最小值时自身
-        for (int j = 0; j < len; j++) {
-            dp[j] = triangle.get(len - 1).get(j);
-        }
-        /**
-         *^ 2
-         *| 3 4
-         *i 6 5 7
-         *  4 1 8 3
-         *  j ->
-         */
-        for (int i = len - 2; i >= 0; i--) {
-            for (int j = 0; j <= i; j++) {
-                dp[j] = Math.min(dp[j], dp[j + 1]) + triangle.get(i).get(j);
-            }
-            System.out.println(Arrays.toString(dp));
-        }
-        return dp[0];
+    for (int i = len - 2; i >= 0; i--) {
+      for (int j = 0; j <= i; j++) {
+        dp[j] = Math.min(dp[j], dp[j + 1]) + triangle.get(i).get(j);
+      }
+    }
+    return dp[0];
+  }
+
+  // 自上而下
+  public int minimumTotal3(List<List<Integer>> triangle) {
+    int len = triangle.size();
+    int[][] dp = new int[len][len];
+    /**
+     *  2
+     *  3 4
+     *  6 5 7
+     *  4 1 8 3
+     *
+     *  2
+     *  5  6
+     *  11 10 13
+     *  15 11 18 16
+     */
+    // 初始化：三角形左侧只能通过上一层得到
+    dp[0][0] = triangle.get(0).get(0);
+    // dp推演
+    for (int i = 1; i < len; i++) {
+      // i==0时，只能从正上方得到（如3只能从2过来）
+      dp[i][0] = dp[i - 1][0] + triangle.get(i).get(0);
+      // i在(0, j)区间时，可以从两个地方过来
+      for (int j = 1; j < i; j++) {
+        dp[i][j] = Math.min(dp[i - 1][j - 1], dp[i - 1][j]) + triangle.get(i).get(j);
+      }
+      // i==j时，只能从上一层的末尾得到（如4只能从2过来）
+      dp[i][i] = dp[i - 1][i - 1] + triangle.get(i).get(i);
     }
 
-    public static void main(String[] args) {
-        List<List<Integer>> triangle = new ArrayList<>();
-        triangle.add(Arrays.asList(2));
-        triangle.add(Arrays.asList(3, 4));
-        triangle.add(Arrays.asList(6, 5, 7));
-        triangle.add(Arrays.asList(4, 1, 8, 3));
-        int res = new Triangle().minimumTotal(triangle);
-        System.out.println(res);
+    int min = dp[len - 1][0];
+    for (int j = 1; j < len; j++) {
+      min = Math.min(min, dp[len - 1][j]);
     }
+    return min;
+  }
 }
