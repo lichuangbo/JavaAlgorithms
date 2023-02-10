@@ -88,13 +88,13 @@ public class Triangle {
     dp[0][0] = triangle.get(0).get(0);
     // dp推演
     for (int i = 1; i < len; i++) {
-      // i==0时，只能从正上方得到（如3只能从2过来）
+      // j==0时，只能从正上方得到（如3只能从2过来）
       dp[i][0] = dp[i - 1][0] + triangle.get(i).get(0);
-      // i在(0, j)区间时，可以从两个地方过来
+      // j在(0, i)区间时，可以从两个地方过来
       for (int j = 1; j < i; j++) {
         dp[i][j] = Math.min(dp[i - 1][j - 1], dp[i - 1][j]) + triangle.get(i).get(j);
       }
-      // i==j时，只能从上一层的末尾得到（如4只能从2过来）
+      // j==i时，只能从上一层的末尾得到（如4只能从2过来）
       dp[i][i] = dp[i - 1][i - 1] + triangle.get(i).get(i);
     }
 
