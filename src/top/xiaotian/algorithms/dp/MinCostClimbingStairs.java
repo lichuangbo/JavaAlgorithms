@@ -36,19 +36,36 @@ package top.xiaotian.algorithms.dp;
  * <p>
  * 2 <= cost.length <= 1000
  * 0 <= cost[i] <= 999
+ *
+ * @see ClimbStairs
  */
 public class MinCostClimbingStairs {
+
+  /**
+   *        10, 15, 20
+   * 从0开始
+   *        支付10，爬1阶
+   *            支付15，爬1阶
+   *                支付20，爬1阶    总花费45
+   *        支付10，爬2阶
+   *                支付20，爬1阶    总花费30
+   * 从1开始
+   *            支付15，爬1阶
+   *                支付20，爬1阶    总花费35
+   *            支付15，爬2阶        总花费15
+   */
   public int minCostClimbingStairs(int[] cost) {
     int len = cost.length;
-    // dp[i]记录从下标0的台阶开始，爬到i下标时的最小花费
-    // dp[i]=Math.min(dp[i-1], dp[i-2]) + cost[i]
-    int[] dp = new int[len];
-    dp[0] = cost[0];
-    dp[1] = cost[1];
-    for (int i = 2; i < len; i++) {
-      dp[i] = Math.min(dp[i - 1], dp[i - 2]) + cost[i];
+    // dp[i]记录爬到i下标时的最小花费
+    // 爬到i阶台阶，有两种跳法  从i-1阶跳1阶 或者 从i-2阶跳2阶
+    // dp[i]=Math.min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])
+    int[] dp = new int[len + 1];
+    // 初始化：可以从0或者1下标直接开始，最小花费都是0
+    dp[0] = 0;
+    dp[1] = 0;
+    for (int i = 2; i <= len; i++) {
+      dp[i] = Math.min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
     }
-    // 最后一步可以走一级或者两级，需要比较拿到最小值
-    return Math.min(dp[len - 1], dp[len - 2]);
+    return dp[len];
   }
 }
