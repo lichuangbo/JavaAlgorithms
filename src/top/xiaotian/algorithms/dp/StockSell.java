@@ -11,7 +11,9 @@ package top.xiaotian.algorithms.dp;
 public class StockSell {
 
   /**
-   * 剑指 Offer 63. 股票的最大利润 121. 买卖股票的最佳时机 假设把某股票的价格按照时间先后顺序存储在数组中，请问买卖该股票一次可能获得的最大利润是多少？
+   * 剑指 Offer 63. 股票的最大利润
+   * 121. 买卖股票的最佳时机（买卖一次）
+   * 假设把某股票的价格按照时间先后顺序存储在数组中，请问买卖该股票一次可能获得的最大利润是多少？
    * <p>
    * <p>
    * <p>
@@ -22,54 +24,38 @@ public class StockSell {
    * <p>
    * 输入: [7,6,4,3,1] 输出: 0 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
    */
+  // 贪心法
   public int maxProfitI(int[] prices) {
-    if (prices == null || prices.length == 0) {
-      return 0;
-    }
-    // 状态定义：dp[i]表示以prices[i]为结尾的子数组的最大利润
-    // 状态转移方程：dp[i] = Math.max(dp[i - 1], prices[i] - min[0...i])   贪心思想
-    // 第i天的最大收益 = max (第i天不操作，取第i-1天的最大收益作为结果) (第i天卖出，但是想卖最好的价格，就得从数组中选出最小的元素)
-    int[] dp = new int[prices.length];
-    dp[0] = 0;
-    int minPrice = prices[0];
-    for (int i = 1; i < prices.length; i++) {
-      minPrice = Math.min(prices[i], minPrice);
-      dp[i] = Math.max(dp[i - 1], prices[i] - minPrice);
-    }
-    return dp[prices.length - 1];
-  }
-
-  // 状态压缩
-  public int maxProfitI2(int[] prices) {
-    if (prices == null || prices.length == 0) {
-      return 0;
-    }
+    // 只有一次买卖机会，假如在第i天卖出，只要找到前i天的最小价格（模拟最低价格买入）
     int res = 0;
-    int minPrice = prices[0];
-    for (int i = 1; i < prices.length; i++) {
+    int minPrice = Integer.MAX_VALUE;
+    for (int i = 0; i < prices.length; i++) {
       minPrice = Math.min(prices[i], minPrice);
       res = Math.max(res, prices[i] - minPrice);
     }
     return res;
   }
 
-  public int maxProfitI3(int[] prices) {
-    // 状态定义：dp[i][n]表示在第i天处于状态n时，能够获得的最大钱数
+  public int maxProfitI2(int[] prices) {
+    // 状态定义：dp[i][n]表示在第i天处于状态n（n=0持有状态，n=1不持有状态）时，能够获得的最大钱数
     // dp[i][0] = Math.max(dp[i - 1][0], -prices[i])  之前就持有，继续持有 or 第i天买入（只能买一次）
-    // dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i])  之前不持有，继续不持有 or 第i天卖出
+    // dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i])  之前不持有，继续不持有 or 之前持有，第i天卖出
     int len = prices.length;
     int[][] dp = new int[len][2];
+    // 状态初始化：第0天持有，说明发生买入行为初始化为-prices[0]  第0天不持有，保持现有钱数0
     dp[0][0] = -prices[0];
+    dp[0][1] = 0;
     for (int i = 1; i < len; i++) {
       dp[i][0] = Math.max(dp[i - 1][0], -prices[i]);
       dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i]);
     }
+    // 收益最大是第i天不持有股票
     return dp[len - 1][1];
   }
 
-  public int maxProfitI4(int[] prices) {
+  // 状态压缩
+  public int maxProfitI3(int[] prices) {
     int len = prices.length;
-    // 状态压缩
     int dp0 = -prices[0];
     int dp1 = 0;
     for (int i = 1; i < len; i++) {
@@ -80,7 +66,8 @@ public class StockSell {
   }
 
   /**
-   * 122. 买卖股票的最佳时机 II 给你一个整数数组 prices ，其中 prices[i] 表示某支股票第 i 天的价格。
+   * 122. 买卖股票的最佳时机 II（买卖多次）
+   * 给你一个整数数组 prices ，其中 prices[i] 表示某支股票第 i 天的价格。
    * <p>
    * 在每一天，你可以决定是否购买和/或出售股票。你在任何时候 最多 只能持有 一股 股票。你也可以先购买，然后在 同一天 出售。
    * <p>
@@ -95,17 +82,19 @@ public class StockSell {
    * 。
    */
   public int maxProfitII(int[] prices) {
-    // dp[i][2]表示第i天处于状态n时，能够获得到的最大钱数
-    // dp[i][0]第i天持有股票，dp[i][0]=max(dp[i-1][0], dp[i-1][1] - prices[i]) 之前就有，现在继续持有 or 在第i天买入
-    // dp[i][1]第i天没有股票，dp[i][1]=max(dp[i-1][1], dp[i-1][0] + prices[i]) 之前没有，继续不持有 or 第i天卖出
+    // 状态定义：dp[i][n]表示第i天处于状态n时，能够获得到的最大钱数
+    // dp[i][0]第i天持有股票，dp[i][0]=max(dp[i-1][0], dp[i-1][1] - prices[i]) 之前就持有，现在继续持有 or 之前不持有，在第i天买入（能买卖多次，dp[i-1][1]中可能有利润）
+    // dp[i][1]第i天没有股票，dp[i][1]=max(dp[i-1][1], dp[i-1][0] + prices[i]) 之前不持有，继续不持有 or 之前持有，第i天卖出
     int len = prices.length;
     int[][] dp = new int[len][2];
+    // 初始化：第0天持有，说明发生买入行为初始化为-prices[0]  第0天不持有，保持现有钱数0
     dp[0][0] = -prices[0];
     dp[0][1] = 0;
     for (int i = 1; i < len; i++) {
       dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] - prices[i]);
       dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i]);
     }
+    // 收益最大是第i天不持有股票
     return dp[len - 1][1];
   }
 
@@ -122,7 +111,8 @@ public class StockSell {
   }
 
   /**
-   * 123. 买卖股票的最佳时机 III 给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。
+   * 123. 买卖股票的最佳时机 III（买卖两次）
+   * 给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。
    * <p>
    * 设计一个算法来计算你所能获取的最大利润。你最多可以完成 两笔 交易。
    * <p>
@@ -137,9 +127,9 @@ public class StockSell {
    */
   public int maxProfitIII(int[] prices) {
     int len = prices.length;
-    // dp[i][n]表示第i天处于状态n时，能够获得到的最大钱数
-    // n=0: 没有操作， 1：第一次买入（持有） 2：第一次卖出 3：第二次买入 4：第二次卖出
+    // dp[i][n]表示第i天处于状态n（0不操作 1第一次持有 2第一次不持有 3第二次持有 4第二次不持有）时，能够获得到的最大钱数
     int[][] dp = new int[len][5];
+    // 初始化第0天：不操作=0  第一次持有，说明发生买入行为=-prices[0]  第一次不持有，买-卖=0  第二次持有，买-卖-买=-prices[0]  第二次不持有，买-卖-买-卖=0
     dp[0][0] = 0;
     dp[0][1] = -prices[0];
     dp[0][2] = 0;
@@ -148,10 +138,11 @@ public class StockSell {
     for (int i = 1; i < len; i++) {
       dp[i][0] = dp[i - 1][0];
       dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] - prices[i]); // 之前持有，现在继续持有 or 第i天买入
-      dp[i][2] = Math.max(dp[i - 1][2], dp[i - 1][1] + prices[i]); // 之前不持有，现在继续 or 第i天卖出
+      dp[i][2] = Math.max(dp[i - 1][2], dp[i - 1][1] + prices[i]); // 之前不持有，现在继续不持有 or 第i天卖出
       dp[i][3] = Math.max(dp[i - 1][3], dp[i - 1][2] - prices[i]); // 之前持有，现在继续持有 or 第i天买入
-      dp[i][4] = Math.max(dp[i - 1][4], dp[i - 1][3] + prices[i]); // 之前不持有，现在继续 or 第i天卖出
+      dp[i][4] = Math.max(dp[i - 1][4], dp[i - 1][3] + prices[i]); // 之前不持有，现在继续不持有 or 第i天卖出
     }
+    // 收益最大是第i天第二次不持有股票  如果第一次卖出已经是最大值了，那么我们可以在当天立刻买入再立刻卖出, 也就是第二次不持有状态包含了第一次不持有状态
     return dp[len - 1][4];
   }
 
@@ -172,26 +163,9 @@ public class StockSell {
     return dp4;
   }
 
-  public int maxProfitIII3(int[] prices) {
-    int len = prices.length;
-    int[][] dp = new int[len][5];
-
-    // 初始化
-    for (int j = 1; j < 5; j += 2) {
-      dp[0][j] = -prices[0];
-    }
-
-    for (int i = 1; i < len; i++) {
-      for (int j = 0; j < 3; j += 2) {
-        dp[i][j + 1] = Math.max(dp[i - 1][j + 1], dp[i - 1][j] - prices[i]);// 奇数时为持有股票状态：之前持有，现在继续持有 or 之前没有，今天买入
-        dp[i][j + 2] = Math.max(dp[i - 1][j + 2], dp[i - 1][j + 1] + prices[i]);// 偶数为不持有股票状态：之前不持有，现在继续不持有 or 之前持有，今天卖出
-      }
-    }
-    return dp[len - 1][4];
-  }
-
   /**
-   * 188. 买卖股票的最佳时机 IV 给定一个整数数组 prices ，它的第 i 个元素 prices[i] 是一支给定的股票在第 i 天的价格。
+   * 188. 买卖股票的最佳时机 IV （买卖k次）
+   * 给定一个整数数组 prices ，它的第 i 个元素 prices[i] 是一支给定的股票在第 i 天的价格。
    * <p>
    * 设计一个算法来计算你所能获取的最大利润。你最多可以完成 k 笔交易。
    * <p>
@@ -209,9 +183,9 @@ public class StockSell {
     if (len == 0) {
       return 0;
     }
-    // dp[i][j][n] 第i天用了j笔交易所处状态n，获取到的最大钱数
-    // dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j-1][1]-prices[i]) 之前持有，现在继续持有 or 第i天买入(买入算一笔交易)
-    // dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j][0]+prices[i]) 之前不持有，现在继续 or 第i天卖出
+    // dp[i][j][n] 第i天发生了j笔买卖所处状态n（0持有，1不持有），获取到的最大钱数
+    // dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j-1][1]-prices[i]) 之前持有，现在继续持有 or 之前不持有dp[i-1][][1],第i天买入(买入算一笔交易)
+    // dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j][0]+prices[i]) 之前不持有，现在继续不持有 or 之前持有dp[i-1][][0],第i天卖出(因为买入已经-1了，卖出不用-1)
     int[][][] dp = new int[len][k + 1][2];
     for (int j = 0; j <= k; j++) {
       dp[0][j][0] = -prices[0];
@@ -226,16 +200,15 @@ public class StockSell {
   }
 
   public int maxProfitIV2(int k, int[] prices) {
-    // dp[i][n]表示第i天处于状态n时，获取到的最大钱数
-    // 奇数表示第 k 次交易持有股票, 偶数表示第 k 次交易不持有, 0 表示没有操作
+    // dp[i][n]表示第i天处于状态n（0表示没有操作，奇数表示第k次持有, 偶数表示第k次不持有）时，获取到的最大钱数
     int len = prices.length;
     if (len == 0) {
       return 0;
     }
-    // 最多有k笔交易，买卖各占一次，不操作占一次，存在2*k+1个状态
+    // 最多有k笔交易，持有不持有各占一次，不操作占一次，存在2*k+1个状态
     int[][] dp = new int[len][k * 2 + 1];
 
-    // 初始化
+    // 初始化：奇数状态时是持有，都初始化为-prices[0]   偶数状态时是不持有，都初始化为0
     for (int j = 1; j < k * 2 + 1; j += 2) {
       dp[0][j] = -prices[0];
     }
@@ -246,11 +219,12 @@ public class StockSell {
         dp[i][j + 2] = Math.max(dp[i - 1][j + 2], dp[i - 1][j + 1] + prices[i]);// 偶数为不持有股票状态：之前不持有，现在继续不持有 or 之前持有，今天卖出
       }
     }
+    // 收益最大是第i天第2k次不持有股票
     return dp[len - 1][k * 2];
   }
 
   /**
-   * 309. 最佳买卖股票时机含冷冻期
+   * 309. 最佳买卖股票时机含冷冻期 （多次买卖，但是有卖出冷冻期）
    * 给定一个整数数组prices，其中第  prices[i] 表示第 i 天的股票价格 。​
    * <p>
    * 设计一个算法计算出最大利润。在满足以下约束条件下，你可以尽可能地完成更多的交易（多次买卖一支股票）:
@@ -268,16 +242,19 @@ public class StockSell {
    */
   public int maxProfitV(int[] prices) {
     int len = prices.length;
-    // dp[i][n]表示在第i天，处于状态n时，持有的最大钱数
-    // n=[持有股票，不持有股票两天前卖出，不持有股票今天卖出，冷冻期]
+    // dp[i][n]表示在第i天，处于状态n（0持有股票，1不持有股票两天前卖出然后度过了一天冷冻期，2不持有股票今天卖出，3冷冻期）时，持有的最大钱数
+    // dp[i][0]=max(dp[i-1][0], max(dp[i-1][1]-prices[i], dp[i-1][3]-prices[i])); 之前持有，现在继续持有 or 之前不持有，今天买入 or 昨天处于冷冻期，今天买入
+    // dp[i][1]=max(dp[i-1][1], dp[i-1][3])  之前不持有，现在继续不持有 or 两天前卖出，昨天处于冷冻期
+    // dp[i][2]=dp[i-1][0] + prices[i]  之前持有，今天卖出
+    // dp[i][3]=dp[i-1][2]  冷冻期只有一天，一定是昨天卖出
     int[][] dp = new int[len][4];
     dp[0][0] = -prices[0];
 
     for (int i = 1; i < len; i++) {
-      dp[i][0] = Math.max(dp[i - 1][0], Math.max(dp[i - 1][1] - prices[i], dp[i - 1][3] - prices[i])); // 之前持有，现在继续持有 or 之前不持有，今天买入 or 之前处于冷冻期，今天买入
-      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][3]); // 之前不持有，现在继续不持有 or 两天前卖出，昨天处于冷冻期
-      dp[i][2] = dp[i - 1][0] + prices[i]; // 之前持有，今天卖出
-      dp[i][3] = dp[i - 1][2]; // 昨天卖出
+      dp[i][0] = Math.max(dp[i - 1][0], Math.max(dp[i - 1][1] - prices[i], dp[i - 1][3] - prices[i]));
+      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][3]);
+      dp[i][2] = dp[i - 1][0] + prices[i];
+      dp[i][3] = dp[i - 1][2];
     }
     return Math.max(dp[len - 1][1], Math.max(dp[len - 1][2], dp[len - 1][3]));
   }
@@ -302,7 +279,7 @@ public class StockSell {
   }
 
   /**
-   * 714. 买卖股票的最佳时机含手续费
+   * 714. 买卖股票的最佳时机含手续费 （买卖手续费）
    * 给定一个整数数组 prices，其中 prices[i]表示第 i 天的股票价格 ；整数 fee 代表了交易股票的手续费用。
    *
    * 你可以无限次地完成交易，但是你每笔交易都需要付手续费。如果你已经购买了一个股票，在卖出它之前你就不能再继续购买股票了。
