@@ -26,7 +26,9 @@ package top.xiaotian.algorithms.dp;
  * 3.  2 阶 + 1 阶
  * @author lichuangbo
  * @version 1.0
- * @created 2021/2/6 120 64
+ * @created 2021/2/6
+ *
+ * @see MinCostClimbingStairs
  */
 public class ClimbStairs {
 
