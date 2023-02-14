@@ -1,5 +1,7 @@
 package top.xiaotian.algorithms.dp.edit_distance;
 
+import top.xiaotian.algorithms.dp.sub_sequence.LongestCommonSubsequence;
+
 /**
  * 392. 判断子序列
  * 给定字符串 s 和 t ，判断 s 是否为 t 的子序列。
@@ -26,6 +28,7 @@ package top.xiaotian.algorithms.dp.edit_distance;
 public class IsSubsequence {
     public boolean isSubsequence(String s, String t) {
         /**
+         * 双指针
          * s: abc
          * t: ahbgbc
          * 贪心策略：s串中字符b在t串中出现了两次，匹配第一个是不会影响到结果的判断。
@@ -44,7 +47,11 @@ public class IsSubsequence {
         return i == sLen;
     }
 
-    // 动态规划
+  /**
+   * @see LongestCommonSubsequence
+   * 和最长公共子序列不同的是，最长公共子序列两个序列都可以删除元素，但是这里只能序列2删除，所以也就少了max比较的状态推演
+   * 动态规划
+   */
     public boolean isSubsequence2(String s, String t) {
         // dp[i][j]表示以s[i-1]结尾和以t[j-1]结尾的的相同子序列长度
         char[] chars1 = s.toCharArray();
@@ -61,6 +68,7 @@ public class IsSubsequence {
             }
           }
         }
+        // 相同子序列的长度和序列1的长度一致，说明序列1就是序列2的子序列
         return dp[len1][len2] == len1;
     }
 }
