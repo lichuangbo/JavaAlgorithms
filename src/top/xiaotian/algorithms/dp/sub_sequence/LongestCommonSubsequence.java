@@ -19,7 +19,7 @@ package top.xiaotian.algorithms.dp.sub_sequence;
  * @time 2021/3/18 11:03
  * @Description: 描述:
  */
-public class LCS {
+public class LongestCommonSubsequence {
     private int[][] memo;
     public int longestCommonSubsequence(String text1, String text2) {
         /**
@@ -49,6 +49,7 @@ public class LCS {
         return memo[i][j];
     }
 
+    // 动态规划-多使用一位空间，减少初始化操作
     public int longestCommonSubsequence2(String text1, String text2) {
         int len1 = text1.length(), len2 = text2.length();
         char[] chars1 = text1.toCharArray();
@@ -65,5 +66,47 @@ public class LCS {
             }
         }
         return dp[len1][len2];
+    }
+
+    public int longestCommonSubsequence3(String text1, String text2) {
+        char[] chars1 = text1.toCharArray();
+        char[] chars2 = text2.toCharArray();
+        int len1 = chars1.length;
+        int len2 = chars2.length;
+        // dp[i][j]表示以chars1[i]结尾和以chars2[j]结尾的最长公共子序列的长度
+        /**
+         * [[1, 1, 1],
+         *  [1, 1, 1],
+         *  [1, 2, 2],
+         *  [1, 2, 2],
+         *  [1, 2, 3]]
+         *  text1 = "abcde", text2 = "ace"
+         */
+        int[][] dp = new int[len1][len2];
+        dp[0][0] = (chars1[0] == chars2[0]) ? 1 : 0;
+        for (int j = 1; j < len2; j++) {
+            if (chars1[0] == chars2[j]) {
+                dp[0][j] = 1;
+            } else {
+                dp[0][j] = dp[0][j - 1];
+            }
+        }
+        for (int i = 1; i < len1; i++) {
+            if (chars1[i] == chars2[0]) {
+                dp[i][0] = 1;
+            } else {
+                dp[i][0] = dp[i - 1][0];
+            }
+        }
+        for (int i = 1; i < len1; i++) {
+            for (int j = 1; j < len2; j++) {
+                if (chars1[i] == chars2[j]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[len1 - 1][len2 - 1];
     }
 }
