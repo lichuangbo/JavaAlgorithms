@@ -22,7 +22,7 @@ public class MinDistance {
     char[] chars2 = word2.toCharArray();
     // dp[i][j]表示以chars1[i-1]结尾，chars2[j-1]结尾的两个字符串，要达到相等需要的最小步数
     int[][] dp = new int[len1 + 1][len2 + 1];
-    // 初始化：不管哪一个是空串，想要匹配都需要把另一个字符串全部删完
+    // 初始化：dp[0][j]表示word2可以删除所有字符串,dp[i][0]表示word1可以删除所有字符串,dp[0][0]=0
     for (int i = 1; i <= len1; i++) {
       dp[i][0] = i;
     }
@@ -31,10 +31,11 @@ public class MinDistance {
     }
     for (int i = 1; i <= len1; i++) {
       for (int j = 1; j <= len2; j++) {
-        if (chars1[i - 1] == chars2[j - 1]) {// 相等，直接取子串，因为并没有任何删除操作
+        if (chars1[i - 1] == chars2[j - 1]) {
           dp[i][j] = dp[i - 1][j - 1];
-        } else {// 不相等：删除w1[i]w2[j]再去匹配，删除w1[i]用w1去匹配w2, 删除w2[j]用w2去匹配w1
-          dp[i][j] = Math.min(dp[i - 1][j - 1] + 2, Math.min(dp[i][j - 1], dp[i - 1][j]) + 1);
+        } else {
+          // 删除word2字符来匹配word1，删除word1字符来匹配word2，两者取最小然后因为删除了一次+1
+          dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + 1;
         }
       }
     }
