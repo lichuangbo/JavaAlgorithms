@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.dp.sub_sequence;
+package top.xiaotian.algorithms.dp.palindromic;
 
 /**
  * 516. 最长回文子序列
@@ -29,8 +29,16 @@ public class LongestPalindromicSubsequence {
     for (int i = 0; i < len; i++) {
       dp[i][i] = 1;
     }
+    /**
+     * [[1, 2, 3, 3, 4],
+     *  [0, 1, 2, 2, 3],
+     *  [0, 0, 1, 1, 3],
+     *  [0, 0, 0, 1, 1],
+     *  [0, 0, 0, 0, 1]]
+     */
     for (int i = len - 1; i >= 0; i--) {
-      // 只用遍历赋值矩阵的右上角，所以初始化为j=i+1
+      // 从dp定义来看，j一定是大于等于i的，也就是只需要遍历右上部分
+      // 推演过程中当头尾两个字符相等时，有i+1，不能从反斜线上开始遍历，得从反斜线上方开始   这时候必须要初始化反斜线
       for (int j = i + 1; j < len; j++) {
         if (chars[i] == chars[j]) {
           dp[i][j] = dp[i + 1][j - 1] + 2;
