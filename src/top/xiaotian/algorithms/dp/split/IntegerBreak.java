@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.dp;
+package top.xiaotian.algorithms.dp.split;
 
 /**
  * 343. 整数拆分
@@ -26,6 +26,7 @@ public class IntegerBreak {
     }
     // 将n进行分割（至少分割两部分），得到的最大乘积
     private int help(int target, int[] memo) {
+        // 递归树的最底层就是1，1已经无法再分割了
         if (target == 1) {
             return 1;
         }
@@ -33,11 +34,11 @@ public class IntegerBreak {
         if (memo[target] != 0) {
             return memo[target];
         }
+        // 相当于记录递归树每一层的最大值
         int res = Integer.MIN_VALUE;
-        // [1...target-1]都是可分割的选项
+        // 遍历所有的分割可能性，[1...target-1]都是可分割的选项
         for (int i = 1; i <= target - 1; i++) {
-            // 可以分割为两部分 i  target-i
-            // 第一个参数指 只分割两部分(i, target-i)  第三个参数指继续进行分割， target-i部分继续
+            // 两种选择 1.分割成两个整数i和target-i  2.分割成多个整数i和target-i，其中target-i继续去分割
             res = Math.max(res, Math.max(i * (target - i), i * help(target - i, memo)));
         }
         memo[target] = res;
@@ -46,10 +47,12 @@ public class IntegerBreak {
 
     // 动态规划
     public int integerBreak2(int target) {
+        // dp[i]表示将数字i至少分割两部分后，相乘得到的最大乘积
         int[] dp = new int[target + 1];
-        dp[1] = 1;
-        for (int i = 2; i <= target; i++) {// 求解dp[i]
-            for (int j = 1; j <= i - 1; j++) {// 尝试分割 (j, i-j)
+        // 初始化：2拆分为两部分的最大乘积是1
+        dp[2] = 1;
+        for (int i = 3; i <= target; i++) {// 求解dp[i]
+            for (int j = 1; j <= i - 1; j++) {// 依然是两个选择
                 dp[i] = Math.max(dp[i], Math.max(j * (i - j), j * dp[i - j]));
             }
         }
