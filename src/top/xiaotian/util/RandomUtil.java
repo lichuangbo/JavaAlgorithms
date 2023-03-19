@@ -27,6 +27,7 @@ public class RandomUtil {
         Random random = new Random();
         int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
+            // 随机数规则：nextInt(m) 随机产生[0, m)的数字
             arr[i] = random.nextInt(max) % (max - min + 1) + min;
         }
         return arr;

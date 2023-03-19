@@ -18,56 +18,50 @@ import java.util.Random;
  */
 public class FindNth {
 
-    private Random random;
+  private Random random;
 
+  /**
+   * 寻找nums数组中第n大的数据
+   * 时间O(n)
+   */
+  public int findKthLargest(int[] nums, int k) {
+    random = new Random();
+    return findNth(nums, 0, nums.length - 1, nums.length - k);
+  }
+
+  private int findNth(int[] nums, int l, int r, int k) {
     /**
-     * 寻找nums数组中第n大的数据
-     * 时间O(n)
-     * @param nums
-     * @param k
-     * @return
+     * [3, 2, 1, 5, 6, 4]
+     * [3, 2, 1, 4, 6, 5]
+     * pivot=4，p=3，即表示4是数组中从小到大排列，他排第四，是第四小元素，是第三大元素
+     * 如果我们要找的第k大元素，k>p,只需要继续partition右区间即可
+     *                     k<p,                 左区间
      */
-    public int findKthLargest(int[] nums, int k) {
-        random = new Random();
-        return findNth(nums, 0, nums.length - 1, nums.length - k);
+    int p = partition(nums, l, r);
+    if (k > p) {
+      return findNth(nums, p + 1, r, k);
+    } else if (k < p) {
+      return findNth(nums, l, p - 1, k);
+    } else {
+      return nums[p];
     }
+  }
 
-    private int findNth(int[] nums, int l, int r, int k) {
-        /**
-         * [3, 2, 1, 5, 6, 4]
-         * [3, 2, 1, 4, 6, 5]
-         * pivot=4，p=3，及表示4是数组中从小到大排列，他排第四，也就是第三大元素
-         * 如果我们要找的第k大元素，k>3,只需要继续partition右区间即可
-         *                     k<3,                 左区间
-         */
-        int p = partition(nums, l, r);
-        if (k > p) {
-            return findNth(nums, p + 1, r, k);
-        } else if (k < p){
-            return findNth(nums, l, p - 1, k);
-        } else {
-            return nums[p];
-        }
+  // 一次partition方法调用，会把数组中的一个元素放置到有序排列中它该放的位置上，并返回它有序排列中的索引下标
+  // 这个索引下标可以理解为第p+1小的元素下标，第nums.length-p大的元素下标
+  private int partition(int[] nums, int l, int r) {
+    SwapUtil.swap(nums, l, random.nextInt(r - l + 1) + l);
+    int pivot = nums[l];
+
+    int j = l;
+    for (int i = l + 1; i <= r; i++) {
+      if (nums[i] < pivot) {
+        SwapUtil.swap(nums, i, j + 1);
+        j++;
+      }
     }
+    SwapUtil.swap(nums, l, j);
+    return j;
+  }
 
-    private int partition(int[] nums, int l, int r) {
-        SwapUtil.swap(nums, l, random.nextInt(r) % (r - l + 1) + l);
-        int pivot = nums[l];
-
-        int j = l;
-        for (int i = l + 1; i <= r; i++) {
-            if (nums[i] < pivot) {
-                SwapUtil.swap(nums, i, j + 1);
-                j++;
-            }
-        }
-        SwapUtil.swap(nums, l, j);
-        return j;
-    }
-
-    public static void main(String[] args) {
-        int[] nums = {3,2,1,5,6,4};
-        int res = new FindNth().findKthLargest(nums, 2);
-        System.out.println(res);
-    }
 }

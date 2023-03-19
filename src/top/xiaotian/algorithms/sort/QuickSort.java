@@ -41,7 +41,7 @@ public class QuickSort {
   private int partition(int[] arr, int l, int r) {
     // 避免分区始终一大一小不平均的情况（在近乎有序的数组中退化成O(n2)）
     // 随机选择标定点
-    swap(arr, l, random.nextInt(r) % (r - l + 1) + l);
+    swap(arr, l, random.nextInt(r - l + 1) + l);
     int pivot = arr[l];
 
     // 使arr[l+1...j] < pivot  arr[j+1...i-1] > pivot
