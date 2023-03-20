@@ -5,6 +5,7 @@ import java.util.Queue;
 
 /**
  * 剑指 Offer 41. 数据流中的中位数
+ * 295. 数据流的中位数
  *
  * 如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
  *
@@ -35,19 +36,37 @@ import java.util.Queue;
  * 最多会对 addNum、findMedian 进行 50000 次调用。
  */
 public class MedianFinder {
-  // 小顶堆存储较大的那部分数据，大顶堆存储较小的那部分数据，中位数位于大顶堆和小顶堆的堆顶
-  // 细化：当总数为偶数时，各自存储n/2；当总数为奇数时，小顶堆存储(n+1)/2,大顶堆存储(n-1)/2
   private Queue<Integer> smallHeap, bigHeap;
 
   /** initialize your data structure here. */
   public MedianFinder() {
-    smallHeap = new PriorityQueue<>();
+    // 大顶堆 堆顶元素最大，存放前半部分数据，堆顶元素最趋近于中位数
     bigHeap = new PriorityQueue<>((o1, o2) -> o2 - o1);
+    // 小顶堆 堆顶元素最小，存放后半部分数据，堆顶元素最趋近于中位数
+    smallHeap = new PriorityQueue<>();
   }
 
   public void addNum(int num) {
-    // 为了确保小顶堆存储的是较大的数据，即使两个堆大小相等，新数据应该放小顶堆，也要先加入大顶堆（过一遍），再从大顶堆中拿出最大值放入小顶堆
-    if (smallHeap.size() != bigHeap.size()) {
+    if (smallHeap.size() == bigHeap.size()) {// 应该插入左半边bigHeap
+      if (smallHeap.isEmpty() || num <= smallHeap.peek()) {// 数字比小顶堆堆顶小，不可能出现在右半边，直接插入左半边
+        bigHeap.add(num);
+      } else {// 数字比堆顶大，说明应该放到右半边；此时右边数目多余左边数目需要调整，将右半边的最小值移动到左半边
+        smallHeap.add(num);
+        bigHeap.add(smallHeap.poll());
+      }
+    } else {// 应该插入smallHeap
+      if (num >= bigHeap.peek()) {// 数字比大顶堆堆顶大，不可能出现在左半边，直接插入右半边
+        smallHeap.add(num);
+      } else {
+        bigHeap.add(num);
+        smallHeap.add(bigHeap.poll());
+      }
+    }
+  }
+
+  public void addNum2(int num) {
+    // 为了确保小顶堆存储的是较大的数据，即使两个堆大小相等，新数据应该放大顶堆，也要先加入小顶堆（过一遍），再从小顶堆中拿出最大值放入大顶堆
+    if (bigHeap.size() == smallHeap.size()) {
       smallHeap.add(num);
       bigHeap.add(smallHeap.poll());
     } else {
@@ -57,10 +76,11 @@ public class MedianFinder {
   }
 
   public double findMedian() {
-    if (smallHeap.size() != bigHeap.size()) {
-      return smallHeap.peek();
+    // 维护奇数时左半边比右半边多1；偶数时，左右两边相等
+    if (bigHeap.size() != smallHeap.size()) {
+      return bigHeap.peek();
     } else {
-      return (smallHeap.peek() + bigHeap.peek()) / 2.0;
+      return (bigHeap.peek() + smallHeap.peek()) / 2.0;
     }
   }
 }
