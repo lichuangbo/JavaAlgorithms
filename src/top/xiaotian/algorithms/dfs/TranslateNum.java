@@ -32,7 +32,7 @@ public class TranslateNum {
       return 1;
     }
 
-    char[] chars = (num + "").toCharArray();
+    char[] chars = String.valueOf(num).toCharArray();
     help(chars, 0);
     return count;
   }
@@ -43,9 +43,9 @@ public class TranslateNum {
       return;
     }
 
+    // 逐字计算
     help(chars, index + 1);
-    // 以1打头的都会出现两种含义   以2打头的第二个数字在[1,5]之间的也会出现两种含义
-    // 两种含义都要计算
+    // 组合计算：以1打头的都会出现两种含义   以2打头的第二个数字在[1,5]之间的也会出现两种含义
     if (index + 1 < chars.length && (chars[index] == '1' || (chars[index] == '2' && chars[index + 1] <= '5'))) {
       help(chars, index + 2);
     }
@@ -53,15 +53,17 @@ public class TranslateNum {
 
   // 动态规划
   public int translateNum2(int num) {
-    char[] chars = (num + "").toCharArray();
+    char[] chars = String.valueOf(num).toCharArray();
     int len = chars.length;
+    // dp[i]表示考虑[0, i]数组区间，可以翻译的方式
     int[] dp = new int[len + 1];
     dp[0] = 1;
     dp[1] = 1;
     for (int i = 2; i <= len; i++) {
+      // 当可以组合计算时：逐字翻译的方式 + 组合翻译的方式
       if (chars[i - 2] == '1' || (chars[i - 2] == '2' && chars[i - 1] <= '5')) {
         dp[i] = dp[i - 1] + dp[i - 2];
-      } else {
+      } else {// 只能逐字计算
         dp[i] = dp[i - 1];
       }
     }
