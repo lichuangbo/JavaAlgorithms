@@ -25,40 +25,17 @@ public class CoinChange {
    * 1 <= coins.length <= 12 1 <= coins[i] <= 231 - 1 0 <= amount <= 104
    */
   public int coinChange(int[] coins, int amount) {
-    int len = coins.length;
-    // dp[i][j]含义：从coins[0, i]中选择硬币，凑成和为j的方案数
-    // dp[i][j] = Math.min(dp[i - 1][j], dp[i - 1][j - k * coin] + k)
-    int[][] dp = new int[len + 1][amount + 1];
-    // 初始化：dp[0][0] = 0, dp[0][j] = Integer.MAX_VALUE
-    for (int j = 1; j <= amount; j++) {
-      dp[0][j] = Integer.MAX_VALUE;
-    }
-    for (int i = 1; i <= len; i++) {
-      int coin = coins[i - 1];
-      for (int j = 0; j <= amount; j++) {
-        // dp[i][j]在k的循环中变化了，需要在这里保存
-        dp[i][j] = dp[i - 1][j];
-        for (int k = 1; k * coin <= j; k++) {
-          if (dp[i - 1][j - k * coin] != Integer.MAX_VALUE) {
-            dp[i][j] = Math.min(dp[i][j], dp[i - 1][j - k * coin] + k);
-          }
-        }
-      }
-    }
-    return dp[len][amount] == Integer.MAX_VALUE ? -1 : dp[len][amount];
-  }
-
-  public int coinChange2(int[] coins, int amount) {
     // dp[j]表示凑够总金额为j需要的最少钱币数
+    // coins=[1, 2, 5]  dp[amount]=min(dp[amount-1]+1, dp[amount-2]+1, dp[amount-5]+1)
+    // dp[j] = min(dp[j], dp[j-coins[i]]+1)   i的取值范围是[0, coins.length-1]
     int[] dp = new int[amount + 1];
     // 初始化
     for (int j = 1; j <= amount; j++) {
       dp[j] = Integer.MAX_VALUE;
     }
-    for (int i = 1; i <= coins.length; i++) {
-      int coin = coins[i - 1];
-      //正序遍历：完全背包每个硬币可以选择多次
+    for (int coin : coins) {
       for (int j = coin; j <= amount; j++) {
+        // dp[j-coin]=max值时，说明已经无法凑够之前的子问题了，也没必要更新了
         if (dp[j - coin] != Integer.MAX_VALUE) {
           dp[j] = Math.min(dp[j], dp[j - coin] + 1);
         }
@@ -113,10 +90,11 @@ public class CoinChange {
   public int change2(int amount, int[] coins) {
     // dp[j]表示凑成总金额为j的货币组合数目
     int[] dp = new int[amount + 1];
+    // coins=[1, 2, 5] dp[5]=dp[5-1]+dp[5-2]+dp[5-5]
+    // dp[j]=sum(dp[j-coins[i]])  i取值范围是[0,coins.length-1]
     // 初始化：凑成金额为0的组合只有一种
     dp[0] = 1;
-    for (int i = 1; i <= coins.length; i++) {
-      int coin = coins[i - 1];
+    for (int coin : coins) {
       for (int j = coin; j <= amount; j++) {
         dp[j] += dp[j - coin];
       }
