@@ -1,9 +1,6 @@
 package top.xiaotian.algorithms.sort;
 
-import top.xiaotian.util.RandomUtil;
 import top.xiaotian.util.SwapUtil;
-
-import java.util.Arrays;
 
 /**
  * 堆排序
@@ -19,7 +16,7 @@ public class HeapSort {
         for (int i = len - 1; i >= 0; i--) {
             // 将堆顶元素和数组末尾元素交换（即每次都将最大值放入数组末尾索引处）
             SwapUtil.swap(array, i, 0);
-            // 交换后，堆化i-1到0
+            // 将交换后的首元素下沉（下沉区间是[0, i-1]，避免影响到交换后的有序值）
             siftDown(array, 0, i - 1);
         }
     }
@@ -40,19 +37,13 @@ public class HeapSort {
             if (stIndex * 2 + 2 <= enIndex && array[maxIndex] < array[stIndex * 2 + 2]) {
                 maxIndex = stIndex * 2 + 2;
             }
-            // 没有比自己大的，说明满足完全二叉树要求，堆化完毕
+            // 没有比自己大的，说明满足二叉堆要求，下沉完毕
             if (maxIndex == stIndex) break;
+
             // 找到比自己大的就交换位置
             SwapUtil.swap(array, stIndex, maxIndex);
-            // 走到较小元素处，接着比较，可能比其他元素还小
+            // 走到较小元素处，接着下沉参与循环，因为可能下沉完仍不满足二叉堆性质
             stIndex = maxIndex;
         }
-    }
-
-    public static void main(String[] args) {
-        int[] arr = RandomUtil.randomInt(10000, 1, 10000);
-        HeapSort heapSort = new HeapSort();
-        heapSort.heapSort(arr);
-        System.out.println(Arrays.toString(arr));
     }
 }

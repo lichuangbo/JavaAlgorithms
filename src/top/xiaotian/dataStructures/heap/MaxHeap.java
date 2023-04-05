@@ -27,9 +27,7 @@ public class MaxHeap<E extends Comparable<E>> {
     // 将任意一个数组整理成堆
     public MaxHeap(E[] arr) {
         data = new Array<>(arr);
-        for (int i = parent(arr.length - 1); i >= 0; i--) {
-            siftDown(i);
-        }
+        heapify(arr);
     }
 
     public int size() {
@@ -110,8 +108,9 @@ public class MaxHeap<E extends Comparable<E>> {
                 break;
             }
 
-            // 不符合，进行交换
+            // 不符合，进行交换（该元素下沉到下层）
             data.swap(k, j);
+            // 循环继续，因为下沉完可能仍不满足最大堆性质
             k = j;
         }
     }
@@ -122,6 +121,13 @@ public class MaxHeap<E extends Comparable<E>> {
         data.set(0, e);
         siftDown(0);
         return ret;
+    }
+
+    // 从最后一个非叶子节点开始，开始siftDown操作  时间复杂度O(n)
+    private void heapify(E[] arr) {
+        for (int i = parent(arr.length - 1); i >= 0; i--) {
+            siftDown(i);
+        }
     }
 
     public static void main(String[] args) {
