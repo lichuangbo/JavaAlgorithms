@@ -15,13 +15,17 @@ package top.xiaotian.algorithms.dp.palindromic;
  * 解释：一个可能的最长回文子序列为 "bbbb" 。
  */
 public class LongestPalindromicSubsequence {
+  /**
+   * 典型的区间dp问题：从小区间的回文状态进一步推导大区间的回文状态
+   * 长度为len的回文串，一定是从len-1或者len-2的回文串中扩展来的
+   */
   public int longestPalindromeSubseq(String s) {
     char[] chars = s.toCharArray();
     int len = chars.length;
     /**
      * dp[i][j]表示在chars[i, j]范围内的最长回文子序列长度
      * i在字符串开头处，j在字符串结尾处，
-     * chars[i]==chars[j]: dp[i][j]=dp[i+1][j-1]+2   i和j都向中间移动
+     * chars[i]==chars[j]: dp[i][j]=dp[i+1][j-1]+2   i和j都向中间移动（len是从len-2扩展来的）
      * chars[i]!=chars[j]: dp[i][j]=Math.max(dp[i][j-1], dp[i+1][j])  i移动，j不动 or i不动，j移动
      */
     int[][] dp = new int[len][len];

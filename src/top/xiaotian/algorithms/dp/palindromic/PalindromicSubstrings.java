@@ -52,11 +52,11 @@ public class PalindromicSubstrings {
 
   /**
    * 时间：O(n2)
-   * 递推公式：
+   * 区间dp, 递推公式：
    * 当s[i]与s[j]不相等，dp[i][j]一定是false。
    * 当s[i]与s[j]相等时，有如下三种情况
    *  情况一：下标i 与 j相同，同一个字符例如a，当然是回文子串
-   *  情况二：下标i 与 j相差为1，例如aa，也是文子串
+   *  情况二：下标i 与 j相差为1，例如aa，也是回文子串
    *  情况三：下标i 与 j相差大于1的时候，例如cabac，此时s[i]与s[j]已经相同了，我们看i到j区间是不是回文子串就看aba是不是回文就可以了，也就是看dp[i + 1][j - 1]是否为true
    */
   public int countSubStrings2(String s) {
@@ -72,7 +72,7 @@ public class PalindromicSubstrings {
       for (int j = i; j < len; j++) {
         if (chars[i] != chars[j]) {
           dp[i][j] = false;
-        } else if (i == j || j - 1 == 1 || dp[i + 1][j - 1]) {
+        } else if (i == j || j - i == 1 || dp[i + 1][j - 1]) {
           res++;
           dp[i][j] = true;
         }
