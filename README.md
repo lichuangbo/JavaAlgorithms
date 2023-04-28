@@ -87,4 +87,9 @@
     5. 基于rank优化，元素对应树深度低的的集合合并到深度高的集合上
     6. 路径压缩，在find查找根元素同时将p指向的父节点断开，转而指向p的爷爷节点
     7. 路径压缩II，在数据压缩基础上，将节点一次性指向根节点，树变为两层
+
+### 算法题分类
+
+#### 单调栈
+* [每日温度](top/xiaotian/algorithms/stack/monotone_stack/DailyTemperatures.java)
     
