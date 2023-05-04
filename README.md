@@ -91,11 +91,18 @@
 ### 算法题分类
 
 #### 单调栈
-* [每日温度](src/top/xiaotian/algorithms/stack/monotone_stack/DailyTemperatures.java)
+* [739. 每日温度](src/top/xiaotian/algorithms/stack/monotone_stack/DailyTemperatures.java)
 
 #### 动态规划
-* [回文子串](src/top/xiaotian/algorithms/dp/palindromic/PalindromicSubstrings.java)
+* [647. 回文子串](src/top/xiaotian/algorithms/dp/palindromic/PalindromicSubstrings.java)
 
 #### 贪心
-* [任务调度器](src/top/xiaotian/algorithms/greedy/LeastInterval.java)
-    
+* [621. 任务调度器](src/top/xiaotian/algorithms/greedy/LeastInterval.java)
+
+#### 递归
+
+##### 树
+* [617. 合并二叉树](src/top/xiaotian/algorithms/tree/MergeTrees.java)
+
+#### 双指针
+* [581. 最短无序连续子数组](src/top/xiaotian/algorithms/twoPointer/collisionPointer/UnsortedSubarray.java)
