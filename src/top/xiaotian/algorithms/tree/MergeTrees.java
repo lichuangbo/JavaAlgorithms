@@ -41,18 +41,32 @@ public class MergeTrees {
             return root1;
         }
         TreeNode root = new TreeNode(root1.val + root2.val);
-        TreeNode left = mergeTrees(root1.left, root2.left);
-        TreeNode right = mergeTrees(root1.right, root2.right);
-        root.left = left;
-        root.right = right;
+        root.left = mergeTrees(root1.left, root2.left);
+        root.right = mergeTrees(root1.right, root2.right);
         return root;
+    }
+
+    /**
+     * 原地修改
+     */
+    public TreeNode mergeTrees2(TreeNode root1, TreeNode root2) {
+        if (root1 == null) {
+            return root2;
+        }
+        if (root2 == null) {
+            return root1;
+        }
+        root1.val += root2.val;
+        root1.left = mergeTrees2(root1.left, root2.left);
+        root1.right = mergeTrees2(root1.right, root2.right);
+        return root1;
     }
 
     /**
      *  BFS
      *  时间: O(m+n)
      */
-    public TreeNode mergeTrees2(TreeNode t1, TreeNode t2) {
+    public TreeNode mergeTrees3(TreeNode t1, TreeNode t2) {
         //如果 t1和t2中，只要有一个是null，函数就直接返回
         if(t1 == null || t2 == null) {
             return t1 == null ? t2 : t1;
