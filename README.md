@@ -91,5 +91,11 @@
 ### 算法题分类
 
 #### 单调栈
-* [每日温度](top/xiaotian/algorithms/stack/monotone_stack/DailyTemperatures.java)
+* [每日温度](src/top/xiaotian/algorithms/stack/monotone_stack/DailyTemperatures.java)
+
+#### 动态规划
+* [回文子串](src/top/xiaotian/algorithms/dp/palindromic/PalindromicSubstrings.java)
+
+#### 贪心
+* [任务调度器](src/top/xiaotian/algorithms/greedy/LeastInterval.java)
     
