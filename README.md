@@ -106,3 +106,6 @@
 
 #### 双指针
 * [581. 最短无序连续子数组](src/top/xiaotian/algorithms/twoPointer/collisionPointer/UnsortedSubarray.java)
+
+#### 查找表法
+* [560. 和为 K 的子数组](src/top/xiaotian/algorithms/map/SubarraySum.java)

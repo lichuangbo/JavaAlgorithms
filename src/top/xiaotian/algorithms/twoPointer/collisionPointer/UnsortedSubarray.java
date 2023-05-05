@@ -60,22 +60,22 @@ public class UnsortedSubarray {
    * 空间：O(1)
    */
   public int findUnsortedSubarray2(int[] nums) {
-    int n = nums.length;
+    int len = nums.length;
 
     // 左递增区间
     int l = 0; // l 标记从前往后找到第一个出现降序的下标，nums[l] > nums[l + 1]
-    while (l + 1 < n && nums[l] <= nums[l + 1]) {
+    while (l < len - 1 && nums[l] <= nums[l + 1]) {
       l++;
     }
 
-    // 若l == n - 1, 说明 nums 为升序序列
-    if (l == n - 1) {
+    // 若l == len - 1, 说明 nums 为升序序列
+    if (l == len - 1) {
       return 0;
     }
 
     // 右递增区间
-    int r = n - 1; // r 标记从后往前找到第一个出现升序的下标，nums[r] < nums[r - 1]
-    while (r - 1 >= 0 && nums[r] >= nums[r - 1]) {
+    int r = len - 1; // r 标记从后往前找到第一个出现升序的下标，nums[r] < nums[r - 1]
+    while (r > 0 && nums[r] >= nums[r - 1]) {
       r--;
     }
 
@@ -83,19 +83,19 @@ public class UnsortedSubarray {
     /* 在子区间 [l, r] 中找到最小值 min 和最大值 max*/
     int min = nums[l];
     int max = nums[r];
-    for (int i = l, j = r; i <= r && j >= l; i++, j--) {
+    for (int i = l; i <= r; i++) {
       min = Math.min(min, nums[i]);
-      max = Math.max(max, nums[j]);
+      max = Math.max(max, nums[i]);
     }
 
     // 因为排完序后，中间乱序的最小值是可能出现在左递增区间中的
     /* 从 l 开始向前查找 min 在 nums 中的最终位置 l */
-    while (l - 1 >= 0 && nums[l - 1] > min) {
+    while (l > 0 && nums[l - 1] > min) {
       l--;
     }
 
     /* 从 r 开始向后查找 max 在 nums 中的最终位置 r*/
-    while (r + 1 < n && nums[r + 1] < max) {
+    while (r < len - 1 && nums[r + 1] < max) {
       r++;
     }
 

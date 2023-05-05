@@ -1,15 +1,29 @@
 package top.xiaotian.algorithms.map;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
- * 560. 和为K的子数组 给定一个整数数组和一个整数 k，你需要找到该数组中和为 k 的连续的子数组的个数。
+ * 560. 和为 K 的子数组
+ * 给你一个整数数组 nums 和一个整数 k ，请你统计并返回 该数组中和为 k 的连续子数组的个数 。
  *
- * 示例 1 :
  *
- * 输入:nums = [1,1,1], k = 2 输出: 2 , [1,1] 与 [1,1] 为两种不同的情况。 说明 :
  *
- * 数组的长度为 [1, 20,000]。 数组中元素的范围是 [-1000, 1000] ，且整数 k 的范围是 [-1e7, 1e7]。
+ * 示例 1：
+ *
+ * 输入：nums = [1,1,1], k = 2
+ * 输出：2
+ * 示例 2：
+ *
+ * 输入：nums = [1,2,3], k = 3
+ * 输出：2
+ *
+ *
+ * 提示：
+ *
+ * 1 <= nums.length <= 2 * 104
+ * -1000 <= nums[i] <= 1000
+ * -107 <= k <= 107
  */
 public class SubarraySum {
 
@@ -31,30 +45,35 @@ public class SubarraySum {
   }
 
   /**
-   * 查找表法
+   * 前缀和+查找表法
    * 时间O(n)
    * 空间O(n)
    */
   public int subarraySum2(int[] nums, int k) {
-    int count = 0, pre = 0;
-    // pre[i]表示从0到i区间的元素和，假设某一个区间[m,n]的和为k,那么pre[n]-pre[m-1]=k   ===>   pre[n]-k=pre[m-1]
-    // 键为pre[n]-k,值为出现次数
-    HashMap<Integer, Integer> mp = new HashMap<>();
-    mp.put(0, 1);
+    int count = 0;
+    // pre[i]表示区间[0, i]的元素和，假设某一个区间[m,n]的和为k,那么pre[n]-pre[m-1]=k   ===>   pre[n]-k=pre[m-1]
+    int pre = 0;
+    // 键为前缀和pre[n],值为出现次数
+    Map<Integer, Integer> map = new HashMap<>();
+
+    map.put(0, 1);
     for (int i = 0; i < nums.length; i++) {
+      // pre负责求和，也就是前缀和
       pre += nums[i];
-      if (mp.containsKey(pre - k)) {
-        count += mp.get(pre - k);
+
+      // 如果map包含pre[n]-k，说明找到了一组解，更新count
+      if (map.containsKey(pre - k)) {
+        count += map.get(pre - k);
       }
-      mp.put(pre, mp.getOrDefault(pre, 0) + 1);
+
+      // 更新map中，pre出现的次数
+      map.put(pre, map.getOrDefault(pre, 0) + 1);
     }
     return count;
   }
 
-  public static void main(String[] args) {
-    // (1,-1)  (1,-1,0) (0)
-    int[] nums = {1, -1, 0};
-    int i = new SubarraySum().subarraySum2(nums, 0);
-    System.out.println(i);
-  }
+  /**
+   * 不可以用双指针/滑动窗口的原因：
+   * 因为nums[i]可以小于0，也就是说右指针向后移1位不能保证区间会增大，左指针向后移1位也不能保证区间和会减小
+   */
 }
