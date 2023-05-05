@@ -104,6 +104,8 @@
 ##### 树
 * [617. 合并二叉树](src/top/xiaotian/algorithms/tree/MergeTrees.java)
 
+* [543. 二叉树的直径](src/top/xiaotian/algorithms/tree/DiameterOfBinaryTree.java)
+
 #### 双指针
 * [581. 最短无序连续子数组](src/top/xiaotian/algorithms/twoPointer/collisionPointer/UnsortedSubarray.java)
 
