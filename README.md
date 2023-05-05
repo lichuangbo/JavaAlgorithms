@@ -106,6 +106,8 @@
 
 * [543. 二叉树的直径](src/top/xiaotian/algorithms/tree/DiameterOfBinaryTree.java)
 
+* [538. 把二叉搜索树转换为累加树](src/top/xiaotian/algorithms/tree/binary_search_tree/ConvertBST.java)
+
 #### 双指针
 * [581. 最短无序连续子数组](src/top/xiaotian/algorithms/twoPointer/collisionPointer/UnsortedSubarray.java)
 
