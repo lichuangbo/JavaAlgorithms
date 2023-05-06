@@ -96,6 +96,8 @@
 #### 动态规划
 * [647. 回文子串](src/top/xiaotian/algorithms/dp/palindromic/PalindromicSubstrings.java)
 
+* [494. 目标和](src/top/xiaotian/algorithms/dfs/FindTargetSumWays.java)
+
 #### 贪心
 * [621. 任务调度器](src/top/xiaotian/algorithms/greedy/LeastInterval.java)
 
@@ -113,3 +115,8 @@
 
 #### 查找表法
 * [560. 和为 K 的子数组](src/top/xiaotian/algorithms/map/SubarraySum.java)
+
+#### 数学
+* [461. 汉明距离](src/top/xiaotian/algorithms/math/HammingDistance.java)
+
+* [448. 找到所有数组中消失的数字](src/top/xiaotian/algorithms/math/DisappearedNumbers.java)

@@ -21,7 +21,7 @@ package top.xiaotian.algorithms.math;
  */
 public class HammingWeight {
   /**
-   * 时间复杂度O(32)
+   * 时间复杂度O(1)
    */
   public int hammingWeight(int n) {
     int count1 = 0;
@@ -39,7 +39,6 @@ public class HammingWeight {
   public int hammingWeight2(int n) {
     int count1 = 0;
     while (n != 0) {
-      // n & 1可以得到数字的最后一个二进制位
       if ((n & 1) == 1) {
         count1++;
       }

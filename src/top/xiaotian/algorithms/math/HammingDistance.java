@@ -6,6 +6,8 @@ package top.xiaotian.algorithms.math;
  *
  * 给你两个整数 x 和 y，计算并返回它们之间的汉明距离。
  *
+ *
+ *
  * 示例 1：
  *
  * 输入：x = 1, y = 4
@@ -15,6 +17,15 @@ package top.xiaotian.algorithms.math;
  * 4   (0 1 0 0)
  *        ↑   ↑
  * 上面的箭头指出了对应二进制位不同的位置。
+ * 示例 2：
+ *
+ * 输入：x = 3, y = 1
+ * 输出：1
+ *
+ *
+ * 提示：
+ *
+ * 0 <= x, y <= 231 - 1
  */
 public class HammingDistance {
 
@@ -23,17 +34,18 @@ public class HammingDistance {
    * 空间：O(1)
    */
   public int hammingDistance(int x, int y) {
-    int res = 0;
+    int count = 0;
     for (int i = 0; i < 32; i++) {
-      // 计算最后一位
       int m = x & 1;
       int n = y & 1;
-      // 右移
+
+      if ((m ^ n) == 1) {
+        count++;
+      }
+
       x = x >> 1;
       y = y >> 1;
-      // 判断是否相等
-      res += ((m ^ n) == 0 ) ? 0 : 1;
     }
-    return res;
+    return count;
   }
 }
