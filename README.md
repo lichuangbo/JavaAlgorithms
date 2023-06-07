@@ -98,6 +98,9 @@
 
 * [494. 目标和](src/top/xiaotian/algorithms/dfs/FindTargetSumWays.java)
 
+##### 01背包
+* [416. 分割等和子集](src/top/xiaotian/algorithms/dp/knapsack01/CanPartition.java)
+
 #### 贪心
 * [621. 任务调度器](src/top/xiaotian/algorithms/greedy/LeastInterval.java)
 

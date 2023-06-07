@@ -2,19 +2,27 @@ package top.xiaotian.algorithms.dp.knapsack01;
 
 /**
  * 416. 分割等和子集
- * 给定一个只包含正整数的非空数组。是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。
+ * 给你一个 只包含正整数 的 非空 数组 nums 。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。
  *
- * 注意:
  *
- * 每个数组中的元素不会超过 100
- * 数组的大小不会超过 200
- * 示例 1:
  *
- * 输入: [1, 5, 11, 5]
+ * 示例 1：
  *
- * 输出: true
+ * 输入：nums = [1,5,11,5]
+ * 输出：true
+ * 解释：数组可以分割成 [1, 5, 5] 和 [11] 。
+ * 示例 2：
  *
- * 解释: 数组可以分割成 [1, 5, 5] 和 [11].
+ * 输入：nums = [1,2,3,5]
+ * 输出：false
+ * 解释：数组不能分割成两个元素和相等的子集。
+ *
+ *
+ * 提示：
+ *
+ * 1 <= nums.length <= 200
+ * 1 <= nums[i] <= 100
+ *
  * @author lichuangbo
  * @email lichuangbo@smtp.telek.com.cn
  * @time 2021/2/10 9:58
@@ -25,7 +33,7 @@ public class CanPartition {
     // 0表示未计算， 1表示不可以填充， 2表示可以填充
     private int[][] memo;
 
-    public boolean canPartition(int[] nums) {
+    public boolean canPartition0(int[] nums) {
         int sum = 0;
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
@@ -62,19 +70,22 @@ public class CanPartition {
             sum += num;
         }
 
+        // 不能整除的话，肯定分割不了的
         if (sum % 2 != 0) {
             return false;
         }
-        int target = sum / 2;
+        int capacity = sum / 2;
         int len = nums.length;
-        boolean[][] dp = new boolean[len][target + 1];
-        // 初始化
-        for (int j = 0; j <= target; j++) {
-            dp[0][j] = (j == nums[0]);
+        // 从nums数组中选取物品，来尝试填容量为capacity的背包，问能不能刚好填满？
+        // capacity列要多声明一处，因为容量[0,capacity]用到了最后一个
+        boolean[][] dp = new boolean[len][capacity + 1];
+        // 初始化dp[0][j] 因为递推公式用到了[i-1]
+        for (int j = 0; j <= capacity; j++) {
+            dp[0][j] = (j != nums[0]) ? false : true;
         }
         // 遍历
         for (int i = 1; i < len; i++) {
-            for (int j = 0; j <= target; j++) {
+            for (int j = 0; j <= capacity; j++) {
                 if (j < nums[i]) {
                     dp[i][j] = dp[i - 1][j];
                 } else {
@@ -82,7 +93,7 @@ public class CanPartition {
                 }
             }
         }
-        return dp[len - 1][target];
+        return dp[len - 1][capacity];
     }
 
     public boolean canPartition2(int[] nums) {
@@ -90,51 +101,21 @@ public class CanPartition {
         for (int num : nums) {
             sum += num;
         }
-
         if (sum % 2 != 0) {
             return false;
         }
-        int target = sum / 2;
         int len = nums.length;
-        boolean[][] dp = new boolean[2][target + 1];
-        // 初始化
-        for (int j = 0; j <= target; j++) {
-            dp[0][j] = (j == nums[0]);
+        int capacity = sum / 2;
+        // 滚动数组，dp[j]表示填满容量为j的背包，问能不能刚好填满
+        boolean[] dp = new boolean[capacity + 1];
+        for (int j = 0; j <= capacity; j++) {
+            dp[j] = (j == nums[0]);
         }
-        // 遍历
         for (int i = 1; i < len; i++) {
-            for (int j = 0; j <= target; j++) {
-                int newI = (i - 1) % 2;
-                boolean res;
-                if (j < nums[i]) {
-                    res = dp[newI][j];
-                } else {
-                    res = dp[newI][j] || dp[newI][j - nums[i]];
-                }
-                dp[i % 2][j] = res;
-            }
-        }
-        return dp[(len - 1) % 2][target];
-    }
-
-    public boolean canPartition3(int[] nums) {
-        int sum = 0;
-        for (int i = 0; i < nums.length; i++) {
-            sum += nums[i];
-        }
-        if (sum % 2 != 0) {
-            return false;
-        }
-        int n = nums.length, C = sum / 2;
-        boolean[] dp = new boolean[C + 1];
-        for (int j = 0; j <= C; j++) {
-            dp[j] = (nums[0] == j);
-        }
-        for (int i = 1; i < n; i++) {
-            for (int j = C; j >= nums[i]; j--) {
+            for (int j = capacity; j >= nums[i]; j--) {
                 dp[j] = dp[j] || dp[j - nums[i]];
             }
         }
-        return dp[C];
+        return dp[capacity];
     }
 }
