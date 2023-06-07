@@ -73,14 +73,14 @@ public class PathSumIII {
      */
     public int pathSum2(TreeNode root, int sum) {
         // key是前缀和, value是大小为key的前缀和出现的次数
-        Map<Integer, Integer> prefixSumCount = new HashMap<>();
+        Map<Long, Integer> prefixSumCount = new HashMap<>();
         // 前缀和为0的一条路径
-        prefixSumCount.put(0, 1);
+        prefixSumCount.put(0L, 1);
 
-        return recursionPathSum(root, sum, prefixSumCount, 0);
+        return recursionPathSum(root, sum, prefixSumCount, 0L);
     }
 
-    private int recursionPathSum(TreeNode root, int sum, Map<Integer, Integer> prefixSumCount, int currSum) {
+    private int recursionPathSum(TreeNode root, int sum, Map<Long, Integer> prefixSumCount, Long currSum) {
         if (root == null) {
             return 0;
         }
