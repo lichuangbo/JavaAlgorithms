@@ -90,7 +90,10 @@
 
 ### 算法题分类
 
-#### 单调栈
+#### 栈
+* [394. 字符串解码](src/top/xiaotian/algorithms/stack/DecodeString.java)
+
+##### 单调栈
 * [739. 每日温度](src/top/xiaotian/algorithms/stack/monotone_stack/DailyTemperatures.java)
 
 #### 动态规划
