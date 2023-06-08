@@ -102,6 +102,8 @@
 * [416. 分割等和子集](src/top/xiaotian/algorithms/dp/knapsack01/CanPartition.java)
 
 #### 贪心
+* [406. 根据身高重建队列](src/top/xiaotian/algorithms/greedy/ReconstructQueue.java)
+
 * [621. 任务调度器](src/top/xiaotian/algorithms/greedy/LeastInterval.java)
 
 #### 递归
