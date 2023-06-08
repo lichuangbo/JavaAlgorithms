@@ -102,9 +102,9 @@
 * [347. 前 K 个高频元素](src/top/xiaotian/algorithms/queue/priority_queue/TopKFrequent.java)
 
 #### 动态规划
-* [647. 回文子串](src/top/xiaotian/algorithms/dp/palindromic/PalindromicSubstrings.java)
-
 * [494. 目标和](src/top/xiaotian/algorithms/dfs/FindTargetSumWays.java)
+
+* [647. 回文子串](src/top/xiaotian/algorithms/dp/palindromic/PalindromicSubstrings.java)
 
 ##### 01背包
 * [416. 分割等和子集](src/top/xiaotian/algorithms/dp/knapsack01/CanPartition.java)
@@ -117,11 +117,11 @@
 #### 递归
 
 ##### 树
-* [617. 合并二叉树](src/top/xiaotian/algorithms/tree/MergeTrees.java)
+* [538. 把二叉搜索树转换为累加树](src/top/xiaotian/algorithms/tree/binary_search_tree/ConvertBST.java)
 
 * [543. 二叉树的直径](src/top/xiaotian/algorithms/tree/DiameterOfBinaryTree.java)
 
-* [538. 把二叉搜索树转换为累加树](src/top/xiaotian/algorithms/tree/binary_search_tree/ConvertBST.java)
+* [617. 合并二叉树](src/top/xiaotian/algorithms/tree/MergeTrees.java)
 
 #### 双指针
 
@@ -129,17 +129,19 @@
 * [581. 最短无序连续子数组](src/top/xiaotian/algorithms/twoPointer/collisionPointer/UnsortedSubarray.java)
 
 ##### 滑动窗口
-* [438. 找到字符串中所有字母异位词](src/top/xiaotian/algorithms/twoPointer/slidingWindow/FindAnagrams.java)
-
 * [3. 无重复字符的最长子串](src/top/xiaotian/algorithms/twoPointer/slidingWindow/LongestSubstring.java)
+
+* [438. 找到字符串中所有字母异位词](src/top/xiaotian/algorithms/twoPointer/slidingWindow/FindAnagrams.java)
 
 #### 查找表法
 * [560. 和为 K 的子数组](src/top/xiaotian/algorithms/map/SubarraySum.java)
 
 #### 数学
-* [461. 汉明距离](src/top/xiaotian/algorithms/math/HammingDistance.java)
+* [338. 比特位计数](src/top/xiaotian/algorithms/math/CountBits.java)
 
 * [448. 找到所有数组中消失的数字](src/top/xiaotian/algorithms/math/DisappearedNumbers.java)
+
+* [461. 汉明距离](src/top/xiaotian/algorithms/math/HammingDistance.java)
 
 #### 前缀和
 * [437. 路径总和 III](src/top/xiaotian/algorithms/prefixSum/PathSumIII.java)
