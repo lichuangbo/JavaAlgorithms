@@ -96,6 +96,11 @@
 ##### 单调栈
 * [739. 每日温度](src/top/xiaotian/algorithms/stack/monotone_stack/DailyTemperatures.java)
 
+#### 队列
+
+##### 优先队列
+* [347. 前 K 个高频元素](src/top/xiaotian/algorithms/queue/priority_queue/TopKFrequent.java)
+
 #### 动态规划
 * [647. 回文子串](src/top/xiaotian/algorithms/dp/palindromic/PalindromicSubstrings.java)
 
