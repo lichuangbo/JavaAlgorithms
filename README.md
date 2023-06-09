@@ -102,6 +102,8 @@
 * [347. 前 K 个高频元素](src/top/xiaotian/algorithms/queue/priority_queue/TopKFrequent.java)
 
 #### 动态规划
+* [198./213./337. 打家劫舍问题](src/top/xiaotian/algorithms/dp/HouseRobber.java)
+
 * [494. 目标和](src/top/xiaotian/algorithms/dfs/FindTargetSumWays.java)
 
 * [647. 回文子串](src/top/xiaotian/algorithms/dp/palindromic/PalindromicSubstrings.java)
