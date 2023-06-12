@@ -104,12 +104,17 @@
 #### 动态规划
 * [198./213./337. 打家劫舍问题](src/top/xiaotian/algorithms/dp/HouseRobber.java)
 
+* [309. 股票买卖问题](src/top/xiaotian/algorithms/dp/StockSell.java)
+
 * [494. 目标和](src/top/xiaotian/algorithms/dfs/FindTargetSumWays.java)
 
 * [647. 回文子串](src/top/xiaotian/algorithms/dp/palindromic/PalindromicSubstrings.java)
 
 ##### 01背包
 * [416. 分割等和子集](src/top/xiaotian/algorithms/dp/knapsack01/CanPartition.java)
+
+##### 完全背包
+* [322. 零钱兑换](src/top/xiaotian/algorithms/dp/knapsacktotal/CoinChange.java)
 
 #### 贪心
 * [406. 根据身高重建队列](src/top/xiaotian/algorithms/greedy/ReconstructQueue.java)

@@ -1,9 +1,12 @@
 package top.xiaotian.algorithms.dp.knapsacktotal;
 
+import java.util.Arrays;
+
 public class CoinChange {
 
   /**
-   * 322. 零钱兑换 给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
+   * 322. 零钱兑换
+   * 给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
    *
    * 计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回 -1 。
    *
@@ -13,26 +16,33 @@ public class CoinChange {
    *
    * 示例 1：
    *
-   * 输入：coins = [1, 2, 5], amount = 11 输出：3 解释：11 = 5 + 5 + 1 示例 2：
+   * 输入：coins = [1, 2, 5], amount = 11
+   * 输出：3
+   * 解释：11 = 5 + 5 + 1
+   * 示例 2：
    *
-   * 输入：coins = [2], amount = 3 输出：-1 示例 3：
+   * 输入：coins = [2], amount = 3
+   * 输出：-1
+   * 示例 3：
    *
-   * 输入：coins = [1], amount = 0 输出：0
+   * 输入：coins = [1], amount = 0
+   * 输出：0
    *
    *
    * 提示：
    *
-   * 1 <= coins.length <= 12 1 <= coins[i] <= 231 - 1 0 <= amount <= 104
+   * 1 <= coins.length <= 12
+   * 1 <= coins[i] <= 231 - 1
+   * 0 <= amount <= 104
    */
   public int coinChange(int[] coins, int amount) {
     // dp[j]表示凑够总金额为j需要的最少钱币数
-    // coins=[1, 2, 5]  dp[amount]=min(dp[amount-1]+1, dp[amount-2]+1, dp[amount-5]+1)
-    // dp[j] = min(dp[j], dp[j-coins[i]]+1)   i的取值范围是[0, coins.length-1]
+    // 凑足总额为j - coins[i]的最少钱币数为dp[j - coins[i]]，那么只需要加上一个钱币coins[i]即dp[j - coins[i]] + 1就是dp[j]
+    // 那么只需要从所有的可能中取出最小的就行，dp[j] = min(dp[j], dp[j-coins[i]]+1)   i的取值范围是[0, len-1]
     int[] dp = new int[amount + 1];
-    // 初始化
-    for (int j = 1; j <= amount; j++) {
-      dp[j] = Integer.MAX_VALUE;
-    }
+    // 初始化:凑足总金额为0所需钱币的个数一定是0；其次由于涉及到min的比较，应该设置为较大值避免被覆盖
+    Arrays.fill(dp, Integer.MAX_VALUE);
+    dp[0] = 0;
     for (int coin : coins) {
       for (int j = coin; j <= amount; j++) {
         // dp[j-coin]=max值时，说明已经无法凑够之前的子问题了，也没必要更新了

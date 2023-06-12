@@ -242,18 +242,25 @@ public class StockSell {
    */
   public int maxProfitV(int[] prices) {
     int len = prices.length;
-    // dp[i][n]表示在第i天，处于状态n（0持有股票，1不持有股票两天前卖出然后度过了一天冷冻期，2不持有股票今天卖出，3冷冻期）时，持有的最大钱数
-    // dp[i][0]=max(dp[i-1][0], max(dp[i-1][1]-prices[i], dp[i-1][3]-prices[i])); 之前持有，现在继续持有 or 之前不持有，今天买入 or 昨天处于冷冻期，今天买入
-    // dp[i][1]=max(dp[i-1][1], dp[i-1][3])  之前不持有，现在继续不持有 or 两天前卖出，昨天处于冷冻期
-    // dp[i][2]=dp[i-1][0] + prices[i]  之前持有，今天卖出
-    // dp[i][3]=dp[i-1][2]  冷冻期只有一天，一定是昨天卖出
+    /**
+     * dp[i][n]表示在第i天，处于状态n（0持有股票，1不持有股票，今天卖出，
+     * 2不持有股票,并且不是今天卖出的（包含了两个情况：1.两天前卖出了股票，度过一天冷冻期 2. 前一天就是卖出股票状态，一直没操作），3冷冻期）时，持有的最大钱数
+     * dp[i][0]=max(dp[i-1][0], max(dp[i-1][2]-prices[i], dp[i-1][3]-prices[i])); 之前持有，现在继续持有 or 之前不持有，今天买入（小2状态） or 昨天处于冷冻期，今天买入（小1状态）
+     * dp[i][1]=dp[i-1][0] + prices[i]  之前持有，今天卖出
+     * dp[i][2]=max(dp[i-1][1], dp[i-1][3])  之前不持有，现在继续不持有 or 两天前卖出，昨天处于冷冻期
+     * dp[i][3]=dp[i-1][2]  冷冻期只有一天，一定是昨天卖出
+     */
     int[][] dp = new int[len][4];
     dp[0][0] = -prices[0];
+    /**
+     * 不持有股票，并且不是今天卖出的，从定义来说，很难明确应该初始多少，这种情况我们就看递推公式需要我们给他初始成什么数值。
+     * 如果i为1，dp[i-1][2]-prices[i]，即dp[0][2]-prices[1]，那么大家感受一下 dp[0][2]应该初始成多少，只能初始为0。想一想如果初始为其他数值，是我们第1天买入股票后 手里还剩的现金数量是不是就不对了
+     */
 
     for (int i = 1; i < len; i++) {
-      dp[i][0] = Math.max(dp[i - 1][0], Math.max(dp[i - 1][1] - prices[i], dp[i - 1][3] - prices[i]));
-      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][3]);
-      dp[i][2] = dp[i - 1][0] + prices[i];
+      dp[i][0] = Math.max(dp[i - 1][0], Math.max(dp[i - 1][2] - prices[i], dp[i - 1][3] - prices[i]));
+      dp[i][1] = dp[i - 1][0] + prices[i];
+      dp[i][2] = Math.max(dp[i - 1][1], dp[i - 1][3]);
       dp[i][3] = dp[i - 1][2];
     }
     return Math.max(dp[len - 1][1], Math.max(dp[len - 1][2], dp[len - 1][3]));
