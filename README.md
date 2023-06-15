@@ -116,6 +116,9 @@
 ##### 完全背包
 * [322. 零钱兑换](src/top/xiaotian/algorithms/dp/knapsacktotal/CoinChange.java)
 
+##### 子序列
+* [300. 最长递增子序列](src/top/xiaotian/algorithms/dp/sub_sequence/LongestIncreaseSubsequence.java)
+
 #### 贪心
 * [406. 根据身高重建队列](src/top/xiaotian/algorithms/greedy/ReconstructQueue.java)
 
