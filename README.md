@@ -101,6 +101,9 @@
 ##### 优先队列
 * [347. 前 K 个高频元素](src/top/xiaotian/algorithms/queue/priority_queue/TopKFrequent.java)
 
+#### 树
+* [297. 二叉树的序列化与反序列化](src/top/xiaotian/algorithms/tree/SerialDeserialBinaryTree.java)
+
 #### 动态规划
 * [198./213./337. 打家劫舍问题](src/top/xiaotian/algorithms/dp/HouseRobber.java)
 
