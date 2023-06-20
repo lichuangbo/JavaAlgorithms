@@ -1,8 +1,5 @@
 package top.xiaotian.algorithms.binarySearch;
 
-import java.util.Arrays;
-import java.util.Random;
-
 /**
  * 二分查找法实现
  * @author lichuangbo
