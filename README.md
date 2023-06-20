@@ -141,6 +141,10 @@
 ##### 对撞指针
 * [581. 最短无序连续子数组](src/top/xiaotian/algorithms/twoPointer/collisionPointer/UnsortedSubarray.java)
 
+#### 快慢指针
+* [283. 移动零](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/MoveZeros.java)
+
+
 ##### 滑动窗口
 * [3. 无重复字符的最长子串](src/top/xiaotian/algorithms/twoPointer/slidingWindow/LongestSubstring.java)
 
