@@ -1,6 +1,7 @@
 package top.xiaotian.algorithms.binarySearch;
 
 /**
+ * 240. 搜索二维矩阵 II
  * 剑指 Offer 04. 二维数组中的查找
  * 在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个高效的函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
  * <p>
@@ -61,10 +62,8 @@ public class NumberIn2DArray {
     // 以右上角节点为根
     int i = 0, j = matrix[0].length - 1;
     while (i < matrix.length && j >= 0) {
-      // 当前值小于目标值（如7<8），只可能在当前位置的下边
       if (matrix[i][j] < target) {
         i++;
-        // 当前值大于目标值（如7>4），只可能在当前位置的左边
       } else if (matrix[i][j] > target) {
         j--;
       } else {
