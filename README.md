@@ -122,6 +122,9 @@
 ##### 子序列
 * [300. 最长递增子序列](src/top/xiaotian/algorithms/dp/sub_sequence/LongestIncreaseSubsequence.java)
 
+##### 分割问题
+* [279. 完全平方数](src/top/xiaotian/algorithms/dp/split/NumSquares.java)
+
 #### 贪心
 * [406. 根据身高重建队列](src/top/xiaotian/algorithms/greedy/ReconstructQueue.java)
 
