@@ -48,6 +48,7 @@ public class LowestCommonAncestor {
       return root;
     }
 
+    // 后序遍历，模拟从下向上的顺序
     // 在左子树中寻找最近公共祖先
     TreeNode left = lowestCommonAncestorII(root.left, p, q);
     // 在右子树中寻找最近公共祖先
