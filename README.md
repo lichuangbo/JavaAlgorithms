@@ -156,6 +156,8 @@
 * [581. 最短无序连续子数组](src/top/xiaotian/algorithms/twoPointer/collisionPointer/UnsortedSubarray.java)
 
 ##### 快慢指针
+* [234. 回文链表](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/Palindrome4LinkedNode.java)
+
 * [283. 移动零](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/MoveZeros.java)
 
 ##### 滑动窗口
