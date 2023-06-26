@@ -111,6 +111,8 @@
 
 
 #### 树
+* [226. 翻转二叉树](src/top/xiaotian/algorithms/tree/InvertTree.java)
+
 * [236. 二叉树的最近公共祖先](src/top/xiaotian/algorithms/tree/LowestCommonAncestor.java)
 
 * [297. 二叉树的序列化与反序列化](src/top/xiaotian/algorithms/tree/SerialDeserialBinaryTree.java)

@@ -35,17 +35,18 @@ import java.util.Deque;
  * -100 <= Node.val <= 100
  */
 public class InvertTree {
-  // 方法语义：翻转以root为根的二叉树
+  // 方法语义：翻转以root为根的二叉树，并返回翻转后的根节点
   public TreeNode invertTree(TreeNode root) {
     if (root == null) {
       return null;
     }
 
-    invertTree(root.left);
-    invertTree(root.right);
-    TreeNode tmpNode = root.left;
-    root.left = root.right;
-    root.right = tmpNode;
+    // 中序遍历，分别翻转以root.left和root.right为根的二叉树
+    TreeNode left = invertTree(root.left);
+    TreeNode right = invertTree(root.right);
+    // 当前层要做的是：交换其左右子节点
+    root.left = right;
+    root.right = left;
     return root;
   }
 
