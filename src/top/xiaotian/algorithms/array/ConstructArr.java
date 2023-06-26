@@ -1,87 +1,85 @@
 package top.xiaotian.algorithms.array;
 
+import java.util.Arrays;
+
 /**
+ * 238. 除自身以外数组的乘积
  * 剑指 Offer 66. 构建乘积数组
- * 给定一个数组 A[0,1,…,n-1]，请构建一个数组 B[0,1,…,n-1]，其中 B[i] 的值是数组 A 中除了下标 i 以外的元素的积,
- * 即 B[i]=A[0]×A[1]×…×A[i-1]×A[i+1]×…×A[n-1]。不能使用除法。
- * <p>
- * <p>
- * <p>
- * 示例:
- * <p>
- * 输入: [1,2,3,4,5]
- * 输出: [120,60,40,30,24]
+ * 给你一个整数数组 nums，返回 数组 answer ，其中 answer[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积 。
+ *
+ * 题目数据 保证 数组 nums之中任意元素的全部前缀元素和后缀的乘积都在  32 位 整数范围内。
+ *
+ * 请不要使用除法，且在 O(n) 时间复杂度内完成此题。
+ *
+ *
+ *
+ * 示例 1:
+ *
+ * 输入: nums = [1,2,3,4]
+ * 输出: [24,12,8,6]
+ * 示例 2:
+ *
+ * 输入: nums = [-1,1,0,-3,3]
+ * 输出: [0,0,9,0,0]
+ *
+ *
+ * 提示：
+ *
+ * 2 <= nums.length <= 105
+ * -30 <= nums[i] <= 30
+ * 保证 数组 nums之中任意元素的全部前缀元素和后缀的乘积都在  32 位 整数范围内
+ *
+ *
+ * 进阶：你可以在 O(1) 的额外空间复杂度内完成这个题目吗？（ 出于对空间复杂度分析的目的，输出数组不被视为额外空间。）
  */
 public class ConstructArr {
 
-  // 超时
-  public int[] constructArr(int[] a) {
-    int len = a.length;
-    int[] res = new int[len];
-    for (int i = 0; i < len; i++) {
-      int multi = 1;
-      for (int j = 0; j < len; j++) {
-        if (i != j) {
-          multi *= a[j];
+    /**
+     * 时间O(n)
+     * 空间O(n)
+     * 1 | 1  2  3  4  5  | 120
+     * 1 | 1  1  3  4  5  | 60
+     * 2 | 1  2  1  4  5  | 20
+     * 6 | 1  2  3  1  5  | 5
+     *24 | 1  2  3  4  1  | 1
+     */
+    public int[] productExceptSelf(int[] nums) {
+        int len = nums.length;
+        // 求解右侧
+        int[] tmp1 = new int[len];
+        Arrays.fill(tmp1, 1);
+        for (int i = len - 1; i > 0; i--) {
+            tmp1[i - 1] = nums[i] * tmp1[i];
         }
-      }
-      res[i] = multi;
-    }
-    return res;
-  }
-
-  /**
-   * 1 | 1  2  3  4  5  | 120
-   * 1 | 1  1  3  4  5  | 60
-   * 2 | 1  2  1  4  5  | 20
-   * 6 | 1  2  3  1  5  | 5
-   *24 | 1  2  3  4  1  | 1
-   */
-  // 动态规划
-  public int[] constructArr2(int[] a) {
-    if (a == null || a.length == 0) {
-      return a;
-    }
-    int len = a.length;
-    int[] left = new int[len];
-    int[] right = new int[len];
-    left[0] = right[len - 1] = 1;
-
-    for (int i = 1; i < len; i++) {
-      left[i] = left[i - 1] * a[i - 1];
-    }
-    for (int i = len - 2; i >= 0; i--) {
-      right[i] = right[i + 1] * a[i + 1];
+        // 求解左侧
+        int[] tmp2 = new int[len];
+        Arrays.fill(tmp2, 1);
+        for (int i = 0; i < len - 1; i++) {
+            tmp2[i + 1] = nums[i] * tmp2[i];
+        }
+        // 左右两侧相乘
+        for (int i = 0; i < len; i++) {
+            tmp1[i] = tmp1[i] * tmp2[i];
+        }
+        return tmp1;
     }
 
-    int[] res = new int[len];
-    for (int i = 0; i < len; i++) {
-      res[i] = left[i] * right[i];
+    /**
+     * 空间O(1)
+     */
+    public int[] productExceptSelf2(int[] nums) {
+        int len = nums.length;
+        int[] res = new int[len];
+        int left = 1;
+        int right = 1;
+        for (int i = 0; i < len; i++) {
+            res[i] = left;
+            left *= nums[i];
+        }
+        for (int i = len - 1; i >= 0; i--) {
+            res[i] *= right;
+            right *= nums[i];
+        }
+        return res;
     }
-    return res;
-  }
-
-  // 状态压缩
-  public int[] constructArr3(int[] a) {
-    if (a == null || a.length == 0) {
-      return new int[0];
-    }
-
-    int len = a.length;
-    int[] res = new int[len];
-    res[0] = 1;
-    // 计算左下三角
-    for (int i = 1; i < len; i++) {
-      res[i] = a[i - 1] * res[i - 1];
-    }
-    // 计算右上三角
-    int tmpRes = 1;
-    for (int i = len - 2; i >= 0; i--) {
-      tmpRes = tmpRes * a[i + 1];
-      // 同时计算结果，放入结果集
-      res[i] = res[i] * tmpRes;
-    }
-
-    return res;
-  }
 }

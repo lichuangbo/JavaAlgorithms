@@ -90,6 +90,9 @@
 
 ### 算法题分类
 
+#### 数组
+* [238. 除自身以外数组的乘积](src/top/xiaotian/algorithms/array/ConstructArr.java)
+
 #### 栈
 * [394. 字符串解码](src/top/xiaotian/algorithms/stack/DecodeString.java)
 
