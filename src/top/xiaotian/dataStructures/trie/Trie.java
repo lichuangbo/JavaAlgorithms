@@ -107,7 +107,7 @@ public class Trie {
     }
 
     // 查询是否在trie中有单词以prefix为前缀的单词
-    public boolean isPrefix (String prefix) {
+    public boolean isPrefix(String prefix) {
         Node curr = root;
         for (int i = 0; i < prefix.length(); i++) {
             char c = prefix.charAt(i);
@@ -134,11 +134,5 @@ public class Trie {
             return false;
         }
         return isPrefixR(node.next.get(c), prefix, index + 1);
-    }
-
-    public static void main(String[] args) {
-        Trie trie = new Trie();
-        trie.add("panda");
-        trie.add("pan");
     }
 }
