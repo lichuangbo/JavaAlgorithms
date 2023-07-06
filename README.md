@@ -94,6 +94,10 @@
 * [238. 除自身以外数组的乘积](src/top/xiaotian/algorithms/array/ConstructArr.java)
 
 
+#### 链表
+* [206. 反转链表](src/top/xiaotian/algorithms/linkedList/ReverseList.java)
+
+
 #### 栈
 * [394. 字符串解码](src/top/xiaotian/algorithms/stack/DecodeString.java)
 
