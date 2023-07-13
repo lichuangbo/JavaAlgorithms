@@ -179,6 +179,8 @@
 
 
 #### 数学
+* [169. 多数元素](src/top/xiaotian/algorithms/math/MajorityElement.java)
+
 * [338. 比特位计数](src/top/xiaotian/algorithms/math/CountBits.java)
 
 * [448. 找到所有数组中消失的数字](src/top/xiaotian/algorithms/math/DisappearedNumbers.java)
