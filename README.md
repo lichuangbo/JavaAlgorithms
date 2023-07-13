@@ -144,6 +144,11 @@
 
 ##### 完全背包
 * [322. 零钱兑换](src/top/xiaotian/algorithms/dp/knapsacktotal/CoinChange.java)
+a + c = s
+b + c = s
+
+a + c + b 
+b + c + a
 
 ##### 子序列
 * [300. 最长递增子序列](src/top/xiaotian/algorithms/dp/sub_sequence/LongestIncreaseSubsequence.java)
