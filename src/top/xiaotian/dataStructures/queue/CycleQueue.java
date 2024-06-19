@@ -24,8 +24,7 @@ public class CycleQueue<E> implements Queue<E>{
 
     @SuppressWarnings("unchecked")
     public CycleQueue(int capacity) {
-        // 为解决队满和队空判断条件，要浪费一个空间；此处+1是保证容量够用
-        data = (E[])new Object[capacity + 1];
+        data = (E[])new Object[capacity];
         front = 0;
         tail = 0;
         size = 0;
@@ -33,25 +32,13 @@ public class CycleQueue<E> implements Queue<E>{
 
     @Override
     public void enQueue(E e) {
-        // 队列满了,进行扩容
-        if ((tail + 1) % data.length == front) {
-            resize(2 * getCapacity());
+        if (isFull()) {
+            throw new IllegalArgumentException("队列满了");
         }
+
         data[tail] = e;
         tail = (tail + 1) % data.length;
         size++;
-    }
-
-    private void resize(int newCapacity) {
-        @SuppressWarnings("unchecked")
-        E[] newData = (E[]) new Object[newCapacity + 1];
-        // 循环队列遍历方式1
-        for (int i = 0; i < size; i++) {
-            newData[i] = data[(i + front) % data.length];
-        }
-        data = newData;
-        front = 0;
-        tail = size;
     }
 
     @Override
@@ -59,13 +46,11 @@ public class CycleQueue<E> implements Queue<E>{
         if (isEmpty()) {
             throw new IllegalArgumentException("队列为空");
         }
+
         E ret = data[front];
         data[front] = null;
         front = (front + 1) % data.length;
         size--;
-        if (size == getCapacity() / 4 && getCapacity() / 2 != 0) {
-            resize(getCapacity() / 2);
-        }
         return ret;
     }
 
@@ -74,7 +59,17 @@ public class CycleQueue<E> implements Queue<E>{
         if (isEmpty()) {
             throw new IllegalArgumentException("队列为空");
         }
+
         return data[front];
+    }
+
+    public E getRear() {
+        if (isEmpty()) {
+            throw new IllegalArgumentException("队列为空");
+        }
+
+        // tail - 1，获取队尾，因为tail下标是待填充位置；+ data.length是保证计算下边为一个正数（考虑一种情况，队列放满，tail=0，计算出来下标是-1，数组越界了）
+        return data[(tail - 1 + data.length) % data.length];
     }
 
     @Override
@@ -83,24 +78,26 @@ public class CycleQueue<E> implements Queue<E>{
     }
 
     public int getCapacity() {
-        // 初始化时候多创建了一个，现在要减掉
-        return data.length - 1;
+        return data.length;
     }
 
     @Override
     public boolean isEmpty() {
-        return front == tail;
+        return size == 0;
+    }
+
+    public boolean isFull() {
+        return size == data.length;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Queue: size %d, capacity %d\n", size, getCapacity()));
-        sb.append("Queue: front [");
-        // 循环队列遍历方式2
-        for (int i = front; i != tail; i = (i + 1) % data.length) {
-            sb.append(data[i]);
-            if ((i + 1) % data.length != tail) {
+        sb.append(String.format("Queue: size %d, capacity %d", size, getCapacity()));
+        sb.append("\nQueue: front [");
+        for (int i = 0; i < size; i++) {
+            sb.append(data[(i + front) % data.length]);
+            if (i != size - 1) {
                 sb.append(", ");
             }
         }
@@ -110,9 +107,10 @@ public class CycleQueue<E> implements Queue<E>{
 
     public static void main(String[] args) {
         CycleQueue<Integer> cycleQueue = new CycleQueue<>(4);
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 4; i++) {
             cycleQueue.enQueue(i);
             System.out.println(cycleQueue);
+            System.out.println(cycleQueue.getFront() + " " + cycleQueue.getRear());
         }
 
         System.out.println(cycleQueue.deQueue());
@@ -120,5 +118,9 @@ public class CycleQueue<E> implements Queue<E>{
 
         cycleQueue.enQueue(10);
         System.out.println(cycleQueue);
+
+        System.out.println(cycleQueue.getFront() + " " + cycleQueue.getRear());
+
+        System.out.println((0 - 1) % 4);
     }
 }
