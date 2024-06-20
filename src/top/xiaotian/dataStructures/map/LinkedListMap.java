@@ -50,6 +50,10 @@ public class LinkedListMap<K, V> implements Map<K, V> {
         return size == 0;
     }
 
+    /**
+     * 没有考虑哈希冲突问题，在查找键时也只是按照键值来检索
+     * 理论上并不算是哈希表
+     */
     @Override
     public void add(K key, V value) {
         Node node = getNode(key);
