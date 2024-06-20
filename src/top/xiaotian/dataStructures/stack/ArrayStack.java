@@ -41,11 +41,17 @@ public class ArrayStack<E> implements Stack<E> {
 
     @Override
     public E pop() {
+        if (isEmpty())
+            throw new IllegalArgumentException("stack is empty");
+
         return array.removeLast();
     }
 
     @Override
     public E peek() {
+        if (isEmpty())
+            throw new IllegalArgumentException("stack is empty");
+
         return array.getFirst();
     }
 

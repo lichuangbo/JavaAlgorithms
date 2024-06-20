@@ -23,7 +23,7 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        int opCount = 1000000;
+        int opCount = 10000000;
         ArrayStack<Integer> arrayStack = new ArrayStack<>();
         double time1 = testStack(arrayStack, opCount);
         System.out.println("ArrayStack, time: " + time1 + " s");

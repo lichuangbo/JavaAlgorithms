@@ -54,9 +54,9 @@ public class LinkedQueue<E> implements Queue<E> {
 
     @Override
     public E deQueue() {
-        if (isEmpty()) {
-            throw new IllegalArgumentException("deQueue failed");
-        }
+        if (isEmpty())
+            throw new IllegalArgumentException("queue is empty");
+
         Node retNode = head;
         head = head.next;
         retNode.next = null;
@@ -70,9 +70,9 @@ public class LinkedQueue<E> implements Queue<E> {
 
     @Override
     public E getFront() {
-        if (isEmpty()) {
+        if (isEmpty())
             throw new IllegalArgumentException("queue is empty");
-        }
+
         return head.e;
     }
 

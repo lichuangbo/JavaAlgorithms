@@ -252,8 +252,8 @@ public class Array<E> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Array: size= %d , capacity= %d\n", size, data.length));
-        sb.append("[");
+        sb.append(String.format("Array: size= %d , capacity= %d", size, data.length));
+        sb.append("\n[");
         for (int i = 0; i < size; i++) {
             sb.append(data[i]);
             if (i != size - 1) {

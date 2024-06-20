@@ -50,12 +50,12 @@ public class LinkedList<E> {
     public void add(int index, E e) {
         if (index < 0 || index > size)
             throw new IllegalArgumentException("Add failed");
-        Node prev = dummyHead;
         /*
          * dummy -> 1 -> 2 -> 3 -> nil    index=1,e=0,size=3
          *         prev
          *          1 -> 0 -> 2 -> 3 -> nil
          */
+        Node prev = dummyHead;
         for (int i = 0; i < index; i++) {
             prev = prev.next;
         }
@@ -64,7 +64,7 @@ public class LinkedList<E> {
         size++;
     }
 
-    // 递归写法
+    // 递归写法（链表题目多数是可以使用递归方法求解的）
     public void addR(int index, E e) {
         if (index < 0 || index > size)
             throw new IllegalArgumentException("Add failed");
@@ -164,13 +164,33 @@ public class LinkedList<E> {
         return retNode.e;
     }
 
+    public E removeR(int index) {
+        if (index < 0 || index > size)
+            throw new IllegalArgumentException("Get failed");
+
+        return removeR(dummyHead, 0, index).e;
+    }
+
+    private Node removeR(Node curr, int currIndex, int index) {
+        if (currIndex == index) {
+            Node retNode = curr.next;
+            curr.next = retNode.next;
+            retNode.next = null;
+
+            size--;
+            return retNode;
+        }
+
+        return removeR(curr.next, currIndex + 1, index);
+    }
+
     public E removeFirst() {
-        return remove(0);
+        return removeR(0);
     }
 
     public E removeLast() {
         // prev指针指向倒数第二个节点
-        return remove(size - 1);
+        return removeR(size - 1);
     }
 
     public void removeElement(E e) {

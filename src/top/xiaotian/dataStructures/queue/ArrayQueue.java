@@ -10,7 +10,7 @@ import top.xiaotian.dataStructures.array.Array;
  * @Description: 描述:
  */
 public class ArrayQueue<E> implements Queue<E> {
-    private Array<E> array;
+    private final Array<E> array;
 
     public ArrayQueue(int capacity) {
         array = new Array<>(capacity);
@@ -28,15 +28,22 @@ public class ArrayQueue<E> implements Queue<E> {
     /***
      * 出队时间复杂度O(n)
      * 每次出队，都要将后边的数组元素向前移动
+     * 由此引进了环形队列来优化时间复杂度
      * @return
      */
     @Override
     public E deQueue() {
+        if (isEmpty())
+            throw new IllegalArgumentException("queue is empty");
+
         return array.removeFirst();
     }
 
     @Override
     public E getFront() {
+        if (isEmpty())
+            throw new IllegalArgumentException("queue is empty");
+
         return array.getFirst();
     }
 

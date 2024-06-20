@@ -34,11 +34,17 @@ public class LinkedStack<E> implements Stack<E> {
 
     @Override
     public E pop() {
+        if (isEmpty())
+            throw new IllegalArgumentException("stack is empty");
+
         return linkedList.removeFirst();
     }
 
     @Override
     public E peek() {
+        if (isEmpty())
+            throw new IllegalArgumentException("stack is empty");
+
         return linkedList.getFirst();
     }
 
