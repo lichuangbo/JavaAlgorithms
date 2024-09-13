@@ -183,6 +183,10 @@
 
 * [283. 移动零](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/MoveZeros.java)
 
+* [26. 删除有序数组中的重复项](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/RemoveDuplicates.java)
+
+* [80. 删除有序数组中的重复项 II](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/RemoveDuplicatesII.java)
+
 ##### 滑动窗口
 * [3. 无重复字符的最长子串](src/top/xiaotian/algorithms/twoPointer/slidingWindow/LongestSubstring.java)
 
