@@ -208,6 +208,8 @@
 
 
 #### 二分法
+* [704. 二分查找](src/top/xiaotian/algorithms/binarySearch/BinarySearch.java)
+* 
 * [240. 搜索二维矩阵 II](src/top/xiaotian/algorithms/binarySearch/NumberIn2DArray.java)
 
 * [287. 寻找重复数](src/top/xiaotian/algorithms/binarySearch/FindDuplicate.java)
