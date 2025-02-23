@@ -3,7 +3,7 @@ package top.xiaotian.algorithms.sort;
 /**
  * 冒泡排序
  */
-public class BubbleSort {
+public class  BubbleSort {
 
   /**
    * 时间O(n2)
