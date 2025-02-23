@@ -212,6 +212,8 @@
 
 * [35. 搜索插入位置](src/top/xiaotian/algorithms/binarySearch/SearchInsert.java)
 
+* [34. 在排序数组中查找元素的第一个和最后一个位置](src/top/xiaotian/algorithms/binarySearch/FindFirstAndLastPositionOfElementInSortedArray.java)
+
 * [240. 搜索二维矩阵 II](src/top/xiaotian/algorithms/binarySearch/NumberIn2DArray.java)
 
 * [287. 寻找重复数](src/top/xiaotian/algorithms/binarySearch/FindDuplicate.java)
