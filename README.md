@@ -218,6 +218,11 @@
 
 * [287. 寻找重复数](src/top/xiaotian/algorithms/binarySearch/FindDuplicate.java)
 
+#### 二分法在非数组中的变种
+* [69. x 的平方根](src/top/xiaotian/algorithms/binarySearch/MySqrt.java)
+
+* [367. 有效的完全平方数](src/top/xiaotian/algorithms/binarySearch/ValidPerfectSquare.java)
+
 
 #### 排序算法
 * [215. 数组中的第K个最大元素](src/top/xiaotian/algorithms/sort/practice/FindNth.java)
