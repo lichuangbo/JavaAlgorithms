@@ -209,7 +209,9 @@
 
 #### 二分法
 * [704. 二分查找](src/top/xiaotian/algorithms/binarySearch/BinarySearch.java)
-* 
+
+* [35. 搜索插入位置](src/top/xiaotian/algorithms/binarySearch/SearchInsert.java)
+
 * [240. 搜索二维矩阵 II](src/top/xiaotian/algorithms/binarySearch/NumberIn2DArray.java)
 
 * [287. 寻找重复数](src/top/xiaotian/algorithms/binarySearch/FindDuplicate.java)
