@@ -2,29 +2,70 @@ package top.xiaotian.algorithms.twoPointer.fastSlowPointer;
 
 /**
  * 27. 移除元素
- * 给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。
+ * 给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素。元素的顺序可能发生改变。然后返回 nums 中与 val 不同的元素的数量。
  * <p>
- * 不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。
+ * 假设 nums 中不等于 val 的元素数量为 k，要通过此题，您需要执行以下操作：
  * <p>
- * 元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。
+ * 更改 nums 数组，使 nums 的前 k 个元素包含不等于 val 的元素。nums 的其余元素和 nums 的大小并不重要。
+ * 返回 k。
+ * 用户评测：
+ * <p>
+ * 评测机将使用以下代码测试您的解决方案：
+ * <p>
+ * int[] nums = [...]; // 输入数组
+ * int val = ...; // 要移除的值
+ * int[] expectedNums = [...]; // 长度正确的预期答案。
+ * // 它以不等于 val 的值排序。
+ * <p>
+ * int k = removeElement(nums, val); // 调用你的实现
+ * <p>
+ * assert k == expectedNums.length;
+ * sort(nums, 0, k); // 排序 nums 的前 k 个元素
+ * for (int i = 0; i < actualLength; i++) {
+ * assert nums[i] == expectedNums[i];
+ * }
+ * 如果所有的断言都通过，你的解决方案将会 通过。
+ * <p>
+ * <p>
+ * <p>
+ * 示例 1：
+ * <p>
+ * 输入：nums = [3,2,2,3], val = 3
+ * 输出：2, nums = [2,2,_,_]
+ * 解释：你的函数函数应该返回 k = 2, 并且 nums 中的前两个元素均为 2。
+ * 你在返回的 k 个元素之外留下了什么并不重要（因此它们并不计入评测）。
+ * 示例 2：
+ * <p>
+ * 输入：nums = [0,1,2,2,3,0,4,2], val = 2
+ * 输出：5, nums = [0,1,4,0,3,_,_,_]
+ * 解释：你的函数应该返回 k = 5，并且 nums 中的前五个元素为 0,0,1,3,4。
+ * 注意这五个元素可以任意顺序返回。
+ * 你在返回的 k 个元素之外留下了什么并不重要（因此它们并不计入评测）。
+ * <p>
+ * <p>
+ * 提示：
+ * <p>
+ * 0 <= nums.length <= 100
+ * 0 <= nums[i] <= 50
+ * 0 <= val <= 100
  */
 public class RemoveElement {
-  /**
-   * fast指针指向和val不相等的元素，slow指向维护的新数组的最后一个元素，两个不断发生交换
-   * 3 2 2 3   val=3
-   * f=0,s=0 continue
-   * f=1,s=0 2 2 2 3
-   * f=2,s=1 2 2 2 3
-   * f=3,s=2 continue
-   * f=4     break
-   */
-  public int removeElement(int[] nums, int val) {
-    int slow = 0;
-    for (int fast = 0; fast < nums.length; fast++) {
-      if (val != nums[fast]) {
-        nums[slow++] = nums[fast];
-      }
+    /**
+     * fast指针指向和val不相等的元素，slow指向维护的新数组的最后一个元素，两个不断发生交换
+     * 3 2 2 3   val=3
+     * f0,s0
+     * f1,s0    2 2 2 3 swap
+     * f2,s1    2 2 2 3 swap
+     * f3,s2
+     * f4
+     */
+    public int removeElement(int[] nums, int val) {
+        int slow = 0;
+        for (int fast = 0; fast < nums.length; fast++) {
+            if (val != nums[fast]) {
+                nums[slow++] = nums[fast];
+            }
+        }
+        return slow;
     }
-    return slow;
-  }
 }

@@ -26,23 +26,23 @@ package top.xiaotian.algorithms.binarySearch;
  * 0 <= x <= 231 - 1
  */
 public class MySqrt {
-  public int mySqrt(int x) {
-    int left = 1;
-    int right = x;
-    int res = 0;
-    while (left <= right) {
-      int mid = left + (right - left) / 2;
-      // mid * mid = x，这种写法在x比较大的时候会发生溢出（+和*最好转化为-和/）
-      if (mid == x / mid) {
-        return mid;
-      } else if (mid > x / mid) {
-        right = mid - 1;
-      } else {
-        left = mid + 1;
-        // 核心点，记录左移
-        res = mid;
-      }
+    public int mySqrt(int x) {
+        int left = 1;
+        int right = x;
+        int res = 0;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            // mid * mid = x，这种写法在x比较大的时候会发生溢出（+和*最好转化为-和/）
+            if (mid == x / mid) {
+                return mid;
+            } else if (mid > x / mid) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+                // 核心点，记录左移
+                res = mid;
+            }
+        }
+        return res;
     }
-    return res;
-  }
 }

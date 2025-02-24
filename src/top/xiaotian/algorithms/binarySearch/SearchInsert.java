@@ -30,49 +30,49 @@ package top.xiaotian.algorithms.binarySearch;
  * -104 <= target <= 104
  */
 public class SearchInsert {
-  public int searchInsert(int[] nums, int target) {
-    // 左闭右闭区间
-    int left = 0, right = nums.length - 1;
-    while (left <= right) {
-      int mid = left + (right - left) / 2;
-      if (nums[mid] > target) {
-        right = mid - 1;
-      } else if (nums[mid] < target) {
-        left = mid + 1;
-      } else {
-        // 目标值等于数组中某一个元素  return mid;
-        return mid;
-      }
+    public int searchInsert(int[] nums, int target) {
+        int l = 0;
+        int r = nums.length - 1;// [l...r]
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] < target) {// [mid+1...r]
+                l = mid + 1;
+            } else {// [l...mid-1]
+                r = mid - 1;
+            }
+        }
+        /**
+         * 1, 3, 5, 6   2
+         *         (l,r)0,3
+         * (m)1 3>2     0,0
+         *    0 1<2     1,0
+         * break 1
+         *
+         * 1, 3, 5, 6   7
+         *              0,3
+         *    1 3<7     1,3
+         *    2 5<7     3,3
+         *    3 6<7     4,3
+         * break 4
+         */
+        return l;
     }
-    /**
-     * 分别处理如下三种情况
-     *  目标值在数组所有元素之前  [0, -1]
-     *  目标值插入数组中的位置 [left, right]，right + 1
-     *  目标值在数组所有元素之后的情况 [left, right]， right + 1
-     */
-    return right + 1;
-  }
 
-  public int searchInsert2(int[] nums, int target) {
-    // 左闭右开区间
-    int left = 0, right = nums.length;
-    while (left < right) {
-      int mid = left + (right - left) / 2;
-      if (nums[mid] > target) {
-        right = mid;
-      } else if (nums[mid] < target) {
-        left = mid + 1;
-      } else {
-        // 目标值等于数组中某一个元素  return mid;
-        return mid;
-      }
+    public int searchInsert2(int[] nums, int target) {
+        int l = 0;
+        int r = nums.length;// [l...r)
+        while (l < r) {
+            int mid = (l + r) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] < target) {// [mid+1...r)
+                l = mid + 1;
+            } else {// [l...mid)
+                r = mid;
+            }
+        }
+        return l;
     }
-    /**
-     * 分别处理如下三种情况
-     *  目标值在数组所有元素之前  [0, 0)
-     *  目标值插入数组中的位置 [left, right)，right
-     *  目标值在数组所有元素之后的情况 [left, right)， right
-     */
-    return right;
-  }
 }

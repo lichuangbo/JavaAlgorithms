@@ -183,7 +183,9 @@
 
 * [283. 移动零](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/MoveZeros.java)
 
-* [26. 删除有序数组中的重复项](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/RemoveDuplicates.java)
+* [27. 移除元素](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/RemoveElement.java)
+
+* [26. 删除有序数组中的重复项](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/RemoveDuplicatesFromSortedArray.java)
 
 * [80. 删除有序数组中的重复项 II](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/RemoveDuplicatesII.java)
 
@@ -212,9 +214,20 @@
 
 
 #### 二分法
+* [704. 二分查找](src/top/xiaotian/algorithms/binarySearch/BinarySearch.java)
+
+* [35. 搜索插入位置](src/top/xiaotian/algorithms/binarySearch/SearchInsert.java)
+
+* [34. 在排序数组中查找元素的第一个和最后一个位置](src/top/xiaotian/algorithms/binarySearch/FindFirstAndLastPositionOfElementInSortedArray.java)
+
 * [240. 搜索二维矩阵 II](src/top/xiaotian/algorithms/binarySearch/NumberIn2DArray.java)
 
 * [287. 寻找重复数](src/top/xiaotian/algorithms/binarySearch/FindDuplicate.java)
+
+#### 二分法在非数组中的变种
+* [69. x 的平方根](src/top/xiaotian/algorithms/binarySearch/MySqrt.java)
+
+* [367. 有效的完全平方数](src/top/xiaotian/algorithms/binarySearch/ValidPerfectSquare.java)
 
 
 #### 排序算法
