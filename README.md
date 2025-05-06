@@ -180,6 +180,8 @@
 ##### 对撞指针
 * [581. 最短无序连续子数组](src/top/xiaotian/algorithms/twoPointer/collisionPointer/UnsortedSubarray.java)
 
+* [977. 有序数组的平方](src/top/xiaotian/algorithms/twoPointer/collisionPointer/SortedSquares.java)
+
 ##### 快慢指针
 * [234. 回文链表](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/Palindrome4LinkedNode.java)
 

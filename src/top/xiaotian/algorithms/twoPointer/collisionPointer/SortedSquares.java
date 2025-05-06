@@ -27,40 +27,39 @@ import java.util.Arrays;
  * nums 已按 非递减顺序 排序
  */
 public class SortedSquares {
-  /**
-   * 时间O(nlogn) 空间O(1)
-   */
-  public int[] sortedSquares(int[] nums) {
-    int k = 0;
-    for (int num : nums) {
-      nums[k++] = num * num;
-    }
-    Arrays.sort(nums);
-    return nums;
-  }
-
-  /**
-   * 时间O(n) 空间O(n)
-   * 最大值始终在最外层，最小值始终在内层
-   */
-  public int[] sortedSquares2(int[] nums) {
-    int len = nums.length;
-    int[] res = new int[len];
-    int low = 0;
-    int high = len - 1;
-    int k = len - 1;
-    while (low <= high) {
-      int leftRes = nums[low] * nums[low];
-      int rightRes = nums[high] * nums[high];
-      if (leftRes > rightRes) {
-        res[k--] = leftRes;
-        low++;
-      } else {
-        res[k--] = rightRes;
-        high--;
-      }
+    /**
+     * 时间O(nlogn) 空间O(1)
+     */
+    public int[] sortedSquares(int[] nums) {
+        int k = 0;
+        for (int num : nums) {
+            nums[k++] = num * num;
+        }
+        Arrays.sort(nums);
+        return nums;
     }
 
-    return res;
-  }
+    /**
+     * 碰撞指针
+     * 时间O(n) 空间O(n)
+     * 最大值始终在最外层，最小值始终在内层
+     */
+    public int[] sortedSquares2(int[] nums) {
+        int low = 0;
+        int high = nums.length - 1;
+        int k = nums.length - 1;
+        int[] res = new int[nums.length];
+        while (low <= high) {
+            int m = nums[low] * nums[low];
+            int n = nums[high] * nums[high];
+            if (m > n) {
+                res[k--] = m;
+                low++;
+            } else {
+                res[k--] = n;
+                high--;
+            }
+        }
+        return res;
+    }
 }
