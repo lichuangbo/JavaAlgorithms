@@ -46,47 +46,71 @@ import java.util.Map;
  * 0 <= fruits[i] < fruits.length
  */
 public class TotalFruit {
+    /**
+     * 题目解析
+     * 1. fruits[i]表示这棵树水果种类，一棵树只有一种水果类型   说明[1,2,1]这个示例中，总共有2种水果，水果1和水果2
+     * 2. 走到某棵树前，但水果不符合篮子的水果类型，那么就必须停止采摘。  说明出现两个类型之外的类型就要停止
+     * 说明我们要找的是最长连续的子数组，并且子数组中得包含两种不同的元素
+     */
 
-  public int totalFruit(int[] fruits) {
-    // 滑动窗口内维护两个类型的水果
-    Map<Integer, Integer> map = new HashMap<>();
-    int res = 0, left = 0, right = 0;
-    while (right < fruits.length) {
-      map.put(fruits[right], map.getOrDefault(fruits[right], 0) + 1);
-      while (map.size() > 2) {
-        map.put(fruits[left], map.get(fruits[left]) - 1);
-        if (map.get(fruits[left]) == 0) {
-          map.remove(fruits[left]);
+    /**
+     * 滑动窗口
+     * 时间 O(n)
+     * 空间 O(1)
+     */
+    public int totalFruit(int[] fruits) {
+        // 滑动窗口内维护两个类型的水果   key是水果种类，value是能采集这种水果的个数
+        Map<Integer, Integer> map = new HashMap<>();
+        int res = 0, left = 0, right = 0;
+        while (right < fruits.length) {
+            // 扩展右边界    确定采摘这棵树，并且采摘一个
+            int rightFruit = fruits[right];
+            map.put(rightFruit, map.getOrDefault(rightFruit, 0) + 1);
+            // 收缩左边界
+            while (map.size() > 2) {
+                // 窗口范围内最左边那棵树刨除掉，最左边那个水果也就不要了
+                int leftFruit = fruits[left];
+                map.put(leftFruit, map.get(leftFruit) - 1);
+                // 窗口范围内最左边那棵树刨除掉，采集这个水果的个数变为0，就不要这种水果了，为后续的水果种类留下一个篮子的位置
+                if (map.get(leftFruit) == 0) {
+                    map.remove(leftFruit);
+                }
+                left++;
+            }
+            res = Math.max(res, right - left + 1);
+            right++;
         }
-        left++;
-      }
-      right++;
-      res = Math.max(res, right - left);
+        return res;
     }
-    return res;
-  }
 
-  public int totalFruit2(int[] fruits) {
-    // 利用题目中的 0 <= fruits[i] < fruits.length 条件，用一个freq数组来统计元素的频率
-    int[] freq = new int[fruits.length];
-    int count = 0;
-    int res = 0, left = 0, right = 0;
-    while (right < fruits.length) {
-      freq[fruits[right]]++;
-      if (freq[fruits[right]] == 1) {
-        count++;
-      }
-      while (count > 2) {
-        freq[fruits[left]]--;
-        if (freq[fruits[left]] == 0) {
-          count--;
+    /**
+     * 滑动窗口，优化
+     */
+    public int totalFruit2(int[] fruits) {
+        // 利用题目中的 0 <= fruits[i] < fruits.length 条件，用一个freq数组来统计元素的频率
+        int[] freq = new int[fruits.length];
+        // 水果种类
+        int fruitCategory = 0;
+        int res = 0, left = 0, right = 0;
+        while (right < fruits.length) {
+            int rightFruit = fruits[right];
+            freq[rightFruit]++;
+            // 这个水果第一次出现，水果种类自增1
+            if (freq[rightFruit] == 1) {
+                fruitCategory++;
+            }
+            while (fruitCategory > 2) {
+                int leftFruit = fruits[left];
+                freq[leftFruit]--;
+                if (freq[leftFruit] == 0) {
+                    fruitCategory--;
+                }
+                left++;
+            }
+            res = Math.max(res, right - left + 1);
+            right++;
         }
-        left++;
-      }
-      right++;
-      res = Math.max(res, right - left);
+        return res;
     }
-    return res;
-  }
 
 }

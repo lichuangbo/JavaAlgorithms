@@ -200,6 +200,8 @@
 
 * [209. 长度最小的子数组](src/top/xiaotian/algorithms/twoPointer/slidingWindow/MinSubArrayLen.java)
 
+* [904. 水果成篮](src/top/xiaotian/algorithms/twoPointer/slidingWindow/TotalFruit.java)
+
 
 #### 查找表法
 * [560. 和为 K 的子数组](src/top/xiaotian/algorithms/map/SubarraySum.java)

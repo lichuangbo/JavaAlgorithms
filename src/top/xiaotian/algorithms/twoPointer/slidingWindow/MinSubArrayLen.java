@@ -100,7 +100,7 @@ public class MinSubArrayLen {
             // 扩展右边界
             sum += nums[r];
             // 收缩左边界
-            // while的必要性, sum减完最左侧窗口元素后，有可能仍然大于s，满足条件，必须继续移动才能找到更小的子数组
+            // while的必要性, sum减完最左侧窗口元素后，有可能仍然大于等于s，满足条件，必须继续移动才能找到更小的子数组（更新res）
             while (sum >= s) {
                 res = Math.min(res, r - l + 1);
                 sum -= nums[l];
