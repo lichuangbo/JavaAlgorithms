@@ -116,6 +116,10 @@
 
 * [203. 移除链表元素](src/top/xiaotian/algorithms/linkedList/RemoveElements.java)
 
+* [24. 两两交换链表中的节点](src/top/xiaotian/algorithms/linkedList/SwapPairs.java)
+
+* [25. K 个一组翻转链表](src/top/xiaotian/algorithms/linkedList/ReverseKGroup.java)
+
 
 #### 栈
 * [394. 字符串解码](src/top/xiaotian/algorithms/stack/DecodeString.java)

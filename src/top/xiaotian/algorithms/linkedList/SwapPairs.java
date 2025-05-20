@@ -4,14 +4,29 @@ import top.xiaotian.util.ListNode;
 
 /**
  * 24. 两两交换链表中的节点
- * 给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
- *
- * 你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
- *
+ * 给你一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。你必须在不修改节点内部的值的情况下完成本题（即，只能进行节点交换）。
+ * <p>
+ * <p>
+ * <p>
  * 示例 1：
- *
+ * <p>
+ * <p>
  * 输入：head = [1,2,3,4]
  * 输出：[2,1,4,3]
+ * 示例 2：
+ * <p>
+ * 输入：head = []
+ * 输出：[]
+ * 示例 3：
+ * <p>
+ * 输入：head = [1]
+ * 输出：[1]
+ * <p>
+ * <p>
+ * 提示：
+ * <p>
+ * 链表中节点的数目在范围 [0, 100] 内
+ * 0 <= Node.val <= 100
  *
  * @author lichuangbo
  * @email lichuangbo@smtp.telek.com.cn
@@ -21,62 +36,25 @@ import top.xiaotian.util.ListNode;
 public class SwapPairs {
     /**
      * 时间: O(n)
-     * @param head
-     * @return
      */
     public ListNode swapPairs(ListNode head) {
-        ListNode dummyHead = new ListNode(-1);
-        dummyHead.next = head;
+        ListNode dummyHead = new ListNode(-1, head);
 
         ListNode prev = dummyHead;
+        // 需要标记四个节点（-1,1,2,3），至少要保证prev.next prev.next.next不为空   prev.next.next.next可以为空，因为在循环内部没有用他的next值，不会空指针异常
         while (prev.next != null && prev.next.next != null) {
             ListNode node1 = prev.next;
             ListNode node2 = node1.next;
             ListNode next = node2.next;
 
-            // 调整连接关系
+            // 调整连接关系（-1连2,2连1,1连3 1在循环内部没有想着直接去连4，因为连了4后循环不起来了）
             prev.next = node2;
             node2.next = node1;
             node1.next = next;
 
-            // 挪动到下一对待处理节点的前一个节点位置上
+            // 挪动到下一对待处理节点的前一个节点位置上（p应该直系那个1，链表拉直来看）
             prev = node1;
         }
         return dummyHead.next;
-    }
-
-    // 25. K 个一组翻转链表
-    public ListNode reverseKGroup(ListNode head, int k) {
-        ListNode dummyHead = new ListNode(-1);
-        dummyHead.next = head;
-
-        ListNode prev = dummyHead;
-        while (true) {
-            ListNode node1 = prev.next;// 指向第一个节点
-            // 定位第k个节点位置
-            ListNode nodek = prev;
-            for (int i = 0; i < k; i++) {
-                nodek = nodek.next;
-                if (nodek == null) {// 不够k，不再继续循环，直接返回结果
-                    return dummyHead.next;
-                }
-            }
-            ListNode next = nodek.next;// 指向第k个节点
-
-            prev.next = nodek;
-            // 局部翻转链表
-            ListNode tPrev = next;
-            ListNode curr = node1;
-            while (curr != next) {
-                ListNode tNext = curr.next;
-
-                curr.next = tPrev;
-                tPrev = curr;
-                curr = tNext;
-            }
-
-            // 重新指向，循环
-            prev = node1;
-        }
     }
 }
