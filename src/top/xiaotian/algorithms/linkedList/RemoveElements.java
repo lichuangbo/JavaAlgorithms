@@ -1,9 +1,33 @@
-package top.xiaotian.dataStructures.linkedlist.practice;
+package top.xiaotian.algorithms.linkedList;
+
+import top.xiaotian.util.ListNode;
 
 /**
- * 删除链表中等于给定值 val 的所有节点
- * 1->2->6->3->4->5->6, val = 6
- * 1->2->3->4->5
+ * 203. 移除链表元素
+ * 给你一个链表的头节点 head 和一个整数 val ，请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。
+ * <p>
+ * <p>
+ * 示例 1：
+ * <p>
+ * <p>
+ * 输入：head = [1,2,6,3,4,5,6], val = 6
+ * 输出：[1,2,3,4,5]
+ * 示例 2：
+ * <p>
+ * 输入：head = [], val = 1
+ * 输出：[]
+ * 示例 3：
+ * <p>
+ * 输入：head = [7,7,7,7], val = 7
+ * 输出：[]
+ * <p>
+ * <p>
+ * 提示：
+ * <p>
+ * 列表中的节点数目在范围 [0, 104] 内
+ * 1 <= Node.val <= 50
+ * 0 <= val <= 50
+ *
  * @author lichuangbo
  * @email lichuangbo@smtp.telek.com.cn
  * @time
@@ -13,64 +37,57 @@ public class RemoveElements {
     /***
      * 时间：遍历一遍链表，O(n)
      * 空间：O(1)
-     * @param head
-     * @param val
-     * @return
      */
-    public Node removeElements(Node head, int val) {
-        // 处理头节点匹配情况
-        while (head != null && head.value.equals(val)) {
-            Node delNode = head;
+    public ListNode removeElements(ListNode head, int val) {
+        // 处理头结点匹配情况
+        while (head != null && head.val == val) {
             head = head.next;
-            delNode.next = null;
         }
 
-        // 节点全匹配时，说明while循环已经处理完了，返回
+        // 全匹配情况，直接返回
         if (head == null) {
             return head;
         }
 
-        // 处理中间节点
-        Node prev = head;
-        while (prev.next != null) {
-            if (prev.next.value.equals(val)) {
-                Node delNode = prev.next;
-                prev.next = delNode.next;
-                delNode.next = null;
-                // 此时不能移动prev，因为prev也可能是匹配的
+        ListNode curr = head;
+        while (curr.next != null) {
+            if (curr.next.val == val) {
+                curr.next = curr.next.next;
+                // 此时不可以移动curr指针，因为curr.next.next也可能等于val(如166)，移动后就会漏掉元素
             } else {
-                prev = prev.next;
+                curr = curr.next;
             }
         }
         return head;
     }
 
-    public Node removeElements2(Node head, int val) {
-        // 使用虚拟头节点可以简化处理逻辑
-        Node dummy = new Node(-1, null);
-        dummy.next = head;
+    public ListNode removeElements2(ListNode head, int val) {
+        // 使用虚拟头节点，可以简化处理逻辑，不用特殊考虑头节点匹配情况
+        // 虚拟节点值设置为-1，因为题目中 1 <= Node.val <= 50，-1刚好是一个无效值
+        ListNode dummyHead = new ListNode(-1, head);
 
-        Node prev = dummy;
-        while (prev.next != null) {
-            if (prev.next.value.equals(val)) {
-                prev.next = prev.next.next;
+        ListNode curr = dummyHead;
+        while (curr.next != null) {
+            if (curr.next.val == val) {
+                curr.next = curr.next.next;
             } else {
-                prev = prev.next;
+                curr = curr.next;
             }
         }
-        return dummy.next;
+        return dummyHead.next;
     }
 
     // 递归解法
-    public Node removeElements3(Node head, int val) {
+    public ListNode removeElements3(ListNode head, int val) {
         // 最基本的问题：链表为空时，返回null
         if (head == null) {
             return null;
         }
+
         // 基于递归宏观语义处理子问题，拿到了基于子问题的一个头结点
-        Node res = removeElements3(head.next, val);
+        ListNode res = removeElements3(head.next, val);
         // 判断头结点和val是否相等，处理连接关系
-        if (head.value.equals(val)) {
+        if (head.val == val) {
             return res;
         } else {
             head.next = res;
@@ -79,7 +96,7 @@ public class RemoveElements {
     }
 
 
-    public Node removeElements4(Node head, int val, int depth) {
+    public ListNode removeElements4(ListNode head, int val, int depth) {
         String depthString = generateDepthString(depth);
         System.out.print(depthString);
         System.out.println("Call remove " + val + " in: " + head);
@@ -89,12 +106,12 @@ public class RemoveElements {
             return null;
         }
 
-        Node res = removeElements4(head.next, val, depth + 1);
+        ListNode res = removeElements4(head.next, val, depth + 1);
 
         System.out.print(depthString);
         System.out.println("After remove " + val + ":" + res);
-        Node ret = null;
-        if (head.value.equals(val)) {
+        ListNode ret;
+        if (head.val == val) {
             ret = res;
         } else {
             head.next = res;
@@ -139,7 +156,8 @@ public class RemoveElements {
          * After remove 6:2->3->4->5->NULL
          * Return: 1->2->3->4->5->NULL
          */
-        Node head1 = new Node("1", new Node("2", new Node("6", new Node("3", new Node("4", new Node("5", new Node("6", null)))))));
-        new RemoveElements().removeElements4(head1, 6, 0);
+        ListNode head = new ListNode(new int[]{1, 2, 6, 6, 4, 5, 6});
+        ListNode node = new RemoveElements().removeElements4(head, 6, 0);
+        System.out.println();
     }
 }

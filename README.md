@@ -114,6 +114,8 @@
 #### 链表
 * [206. 反转链表](src/top/xiaotian/algorithms/linkedList/ReverseList.java)
 
+* [203. 移除链表元素](src/top/xiaotian/algorithms/linkedList/RemoveElements.java)
+
 
 #### 栈
 * [394. 字符串解码](src/top/xiaotian/algorithms/stack/DecodeString.java)
