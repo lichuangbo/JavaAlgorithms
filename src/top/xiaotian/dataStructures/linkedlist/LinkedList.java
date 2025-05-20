@@ -93,7 +93,7 @@ public class LinkedList<E> {
     }
 
     public E get(int index) {
-        if (index < 0 || index > size)
+        if (index < 0 || index >= size)
             throw new IllegalArgumentException("Get failed");
         Node curr = dummyHead.next;
         for (int i = 0; i < index; i++) {
@@ -149,7 +149,7 @@ public class LinkedList<E> {
     }
 
     public E remove(int index) {
-        if (index < 0 || index > size)
+        if (index < 0 || index >= size)
             throw new IllegalArgumentException("Remove failed");
         Node prev = dummyHead;
         for (int i = 0; i < index; i++) {

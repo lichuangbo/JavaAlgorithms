@@ -256,3 +256,5 @@
 
 #### 设计
 * [208. 实现 Trie (前缀树)](src/top/xiaotian/dataStructures/trie/practice/ImplementTrie.java)
+
+* [707. 设计链表](src/top/xiaotian/dataStructures/linkedlist/practice/MyLinkedList.java)
