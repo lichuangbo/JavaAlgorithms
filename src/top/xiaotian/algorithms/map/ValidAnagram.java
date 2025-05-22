@@ -6,59 +6,64 @@ import java.util.Map.Entry;
 
 /**
  * 242. 有效的字母异位词
- *
- * 给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。
- *
- * 注意：若 s 和 t 中每个字符出现的次数都相同，则称 s 和 t 互为字母异位词。
- *
- *
- *
+ * 给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的 字母异位词。
+ * <p>
+ * <p>
+ * <p>
  * 示例 1:
- *
- * 输入: s = "anagram", t = "nagaram" 输出: true
+ * <p>
+ * 输入: s = "anagram", t = "nagaram"
+ * 输出: true
+ * 示例 2:
+ * <p>
+ * 输入: s = "rat", t = "car"
+ * 输出: false
+ * <p>
+ * <p>
+ * 提示:
+ * <p>
+ * 1 <= s.length, t.length <= 5 * 104
+ * s 和 t 仅包含小写字母
+ * <p>
+ * <p>
+ * 进阶: 如果输入字符串包含 unicode 字符怎么办？你能否调整你的解法来应对这种情况？
  *
  * @author lichuangbo
  * @date 2022/9/27
  */
 public class ValidAnagram {
 
-  public boolean isAnagram(String s, String t) {
-    int[] freq = new int[26];
-    char[] chars1 = s.toCharArray();
-    for (char ch : chars1) {
-      freq[ch - 'a']++;
+    public boolean isAnagram(String s, String t) {
+        int[] freq = new int[26];
+        for (char ch : s.toCharArray()) {
+            freq[ch - 'a']++;
+        }
+        for (char ch : t.toCharArray()) {
+            freq[ch - 'a']--;
+        }
+
+        for (int item : freq) {
+            if (item != 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    char[] chars2 = t.toCharArray();
-    for (char ch : chars2) {
-      freq[ch - 'a']--;
+    public boolean isAnagram2(String s, String t) {
+        Map<Character, Integer> freqMap = new HashMap<>();
+        for (char ch : s.toCharArray()) {
+            freqMap.put(ch, freqMap.getOrDefault(ch, 0) + 1);
+        }
+        for (char ch : t.toCharArray()) {
+            freqMap.put(ch, freqMap.getOrDefault(ch, 0) - 1);
+        }
+        for (Entry<Character, Integer> entry : freqMap.entrySet()) {
+            if (entry.getValue() != 0) {
+                return false;
+            }
+        }
+        return true;
     }
-
-    for (int item : freq) {
-      if (item != 0) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  public boolean isAnagram2(String s, String t) {
-    Map<Character, Integer> freqMap = new HashMap<>();
-    char[] chars1 = s.toCharArray();
-    char[] chars2 = t.toCharArray();
-    for (char ch : chars1) {
-      freqMap.put(ch, freqMap.getOrDefault(ch, 0) + 1);
-    }
-
-    for (char ch : chars2) {
-      freqMap.put(ch, freqMap.getOrDefault(ch, 0) - 1);
-    }
-    for (Entry<Character, Integer> entry : freqMap.entrySet()) {
-      if (entry.getValue() != 0) {
-        return false;
-      }
-    }
-    return true;
-  }
 
 }

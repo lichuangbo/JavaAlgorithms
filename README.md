@@ -120,6 +120,8 @@
 
 * [25. K 个一组翻转链表](src/top/xiaotian/algorithms/linkedList/ReverseKGroup.java)
 
+* [19. 删除链表的倒数第 N 个结点](src/top/xiaotian/algorithms/linkedList/RemoveNthFromEnd.java)
+
 
 #### 栈
 * [394. 字符串解码](src/top/xiaotian/algorithms/stack/DecodeString.java)
@@ -190,6 +192,8 @@
 
 * [977. 有序数组的平方](src/top/xiaotian/algorithms/twoPointer/collisionPointer/SortedSquares.java)
 
+* [160. 相交链表](src/top/xiaotian/algorithms/twoPointer/collisionPointer/IntersectionNode.java)
+
 ##### 快慢指针
 * [234. 回文链表](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/Palindrome4LinkedNode.java)
 
@@ -200,6 +204,10 @@
 * [26. 删除有序数组中的重复项](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/RemoveDuplicatesFromSortedArray.java)
 
 * [80. 删除有序数组中的重复项 II](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/RemoveDuplicatesII.java)
+
+* [19. 删除链表的倒数第 N 个结点](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/RemoveNthFromEnd.java)
+
+* [141. 环形链表/142. 环形链表 II](src/top/xiaotian/algorithms/twoPointer/fastSlowPointer/CycleList.java)
 
 ##### 滑动窗口
 * [3. 无重复字符的最长子串](src/top/xiaotian/algorithms/twoPointer/slidingWindow/LongestSubstring.java)
@@ -216,6 +224,13 @@
 #### 查找表法
 * [560. 和为 K 的子数组](src/top/xiaotian/algorithms/map/SubarraySum.java)
 
+* [242. 有效的字母异位词](src/top/xiaotian/algorithms/map/ValidAnagram.java)
+
+* [383. 赎金信](src/top/xiaotian/algorithms/map/RansomNote.java)
+
+* [49. 字母异位词分组](src/top/xiaotian/algorithms/map/GroupAnagrams.java)
+
+* [349. 两个数组的交集/350. 两个数组的交集 II](src/top/xiaotian/algorithms/map/Intersection.java)
 
 #### 数学
 * [169. 多数元素](src/top/xiaotian/algorithms/math/MajorityElement.java)
