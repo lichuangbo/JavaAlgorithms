@@ -5,20 +5,34 @@ import java.util.Map;
 
 /**
  * 454. 四数相加 II
- * 给定四个包含整数的数组列表 A , B , C , D ,计算有多少个元组 (i, j, k, l) ，使得 A[i] + B[j] + C[k] + D[l] = 0。
+ * 给你四个整数数组 nums1、nums2、nums3 和 nums4 ，数组长度都是 n ，请你计算有多少个元组 (i, j, k, l) 能满足：
  * <p>
- * 为了使问题简单化，所有的 A, B, C, D 具有相同的长度 N，且 0 ≤ N ≤ 500 。所有整数的范围在 -228 到 228 - 1 之间，最终结果不会超过 231 - 1 。
+ * 0 <= i, j, k, l < n
+ * nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
  * <p>
- * 例如:
  * <p>
- * 输入:
- * A = [ 1, 2]
- * B = [-2,-1]
- * C = [-1, 2]
- * D = [ 0, 2]
+ * 示例 1：
  * <p>
- * 输出:
- * 2
+ * 输入：nums1 = [1,2], nums2 = [-2,-1], nums3 = [-1,2], nums4 = [0,2]
+ * 输出：2
+ * 解释：
+ * 两个元组如下：
+ * 1. (0, 0, 0, 1) -> nums1[0] + nums2[0] + nums3[0] + nums4[1] = 1 + (-2) + (-1) + 2 = 0
+ * 2. (1, 1, 0, 0) -> nums1[1] + nums2[1] + nums3[0] + nums4[0] = 2 + (-1) + (-1) + 0 = 0
+ * 示例 2：
+ * <p>
+ * 输入：nums1 = [0], nums2 = [0], nums3 = [0], nums4 = [0]
+ * 输出：1
+ * <p>
+ * <p>
+ * 提示：
+ * <p>
+ * n == nums1.length
+ * n == nums2.length
+ * n == nums3.length
+ * n == nums4.length
+ * 1 <= n <= 200
+ * -228 <= nums1[i], nums2[i], nums3[i], nums4[i] <= 228
  *
  * @author lichuangbo
  * @version 1.0
@@ -27,32 +41,27 @@ import java.util.Map;
 public class FourSumCount {
     /**
      * 时间：O(n2)
+     * 空间：O(n2) 存储所有 nums1[i] + nums2[j] 的可能值及其出现次数
      * 查找表法，减低时间复杂度
      * 同时stream流操作也可以减少执行时长
      */
-    public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+    public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
         Map<Integer, Integer> map = new HashMap<>();
-        int len = A.length;
-        // 将c[i]+d[j]的和作为键，出现的次数作为值，缓存起来
-        for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
-//                if (map.containsKey(C[i] + D[j])) {
-//                    map.put(C[i] + D[j], map.get(C[i] + D[j]) + 1);
-//                } else {
-//                    map.put(C[i] + D[j], 1);
-//                }
-                map.compute(C[i] + D[j], (k , v) -> v == null ? 1 : v + 1);
+        int n = nums1.length;
+        // 将nums1[i]+nums2[j]的和作为键，出现的次数作为值，缓存起来
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                map.compute(nums1[i] + nums2[j], (k, v) -> (v == null) ? 1 : v + 1);
             }
         }
 
         int res = 0;
-        // 遍历a[i]和b[j]，从缓存中查找是否存在能够组合为0的情况，统计出来
-        for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
-//                if (map.containsKey(0 - A[i] - B[j])) {
-//                    res += map.get(0 - A[i] - B[j]);
-//                }
-                res += map.getOrDefault(0 - A[i] - B[j], 0);
+        // 遍历nums3[i]和nums4[j]，从缓存中查找是否存在能够组合为0的情况，统计出来
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (map.containsKey(-nums3[i] - nums4[j])) {
+                    res += map.get(-nums3[i] - nums4[j]);
+                }
             }
         }
         return res;

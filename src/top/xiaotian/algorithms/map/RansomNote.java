@@ -65,14 +65,10 @@ public class RansomNote {
         }
 
         for (char ch : ransomNote.toCharArray()) {
-            if (freq[ch - 'a'] > 0) {
-                freq[ch - 'a']--;
-                if (freq[ch - 'a'] < 0) {
-                    return false;
-                }
-            } else {
+            if (freq[ch - 'a'] == 0) {
                 return false;
             }
+            freq[ch - 'a']--;
         }
         return true;
     }

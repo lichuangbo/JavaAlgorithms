@@ -22,51 +22,56 @@ import java.util.Deque;
  * @Description: 描述:
  */
 public class MinDepth {
-  // 方法语义：查找以root节点为根节点的二叉树的最小深度
-  public int minDepth(TreeNode root) {
-    if (root == null) {
-      return 0;
-    }
-
-    int leftMinDepth = minDepth(root.left);
-    int rightMinDepth = minDepth(root.right);
     /**
-     *    3
-     *   / \
-     * nil  5
-     * 根节点到叶子节点的最短路径，他必须得是一个叶子节点,所以遇到这种情况只能在右侧的树中选择最短路径
+     * 时间 O(n)  每个节点访问一次
+     * 空间 0(h)  h为树高，最坏情况下退化为链表,树高为n
      */
-    if (root.left == null) {
-      return 1 + rightMinDepth;
-    } else if (root.right == null) {
-      return 1 + leftMinDepth;
-    } else {
-      return Math.min(leftMinDepth, rightMinDepth) + 1;
-    }
-  }
-
-  // 层序遍历
-  public int minDepth2(TreeNode root) {
-    if (root == null)
-      return 0;
-
-    Deque<TreeNode> queue = new ArrayDeque<>();
-    queue.addLast(root);
-    int res = 0;
-    while (!queue.isEmpty()) {
-      res++;
-      int size = queue.size();
-      for (int i = 0; i < size; i++) {
-        TreeNode tmpNode = queue.pollFirst();
-        if (tmpNode.left == null && tmpNode.right == null) {
-          return res;
+    // 方法语义：查找以root节点为根节点的二叉树的最小深度
+    public int minDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
         }
-        if (tmpNode.left != null)
-          queue.addLast(tmpNode.left);
-        if (tmpNode.right != null)
-          queue.addLast(tmpNode.right);
-      }
+
+        int leftMinDepth = minDepth(root.left);
+        int rightMinDepth = minDepth(root.right);
+        /**
+         *    3
+         *   / \
+         * nil  5
+         * 根节点到叶子节点的最短路径，他必须得是一个叶子节点,所以遇到这种情况只能在右侧的树中选择最短路径
+         */
+        if (root.left == null) {
+            return 1 + rightMinDepth;
+        } else if (root.right == null) {
+            return 1 + leftMinDepth;
+        } else {
+            return Math.min(leftMinDepth, rightMinDepth) + 1;
+        }
     }
-    return res;
-  }
+
+    /**
+     * 层序遍历
+     * 时间 O(n)  每个节点访问一次
+     * 空间 O(w)  w是树最大宽度
+     */
+    public int minDepth2(TreeNode root) {
+        if (root == null) return 0;
+
+        Deque<TreeNode> queue = new ArrayDeque<>();
+        queue.addLast(root);
+        int res = 0;
+        while (!queue.isEmpty()) {
+            res++;
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode tmpNode = queue.pollFirst();
+                if (tmpNode.left == null && tmpNode.right == null) {
+                    return res;
+                }
+                if (tmpNode.left != null) queue.addLast(tmpNode.left);
+                if (tmpNode.right != null) queue.addLast(tmpNode.right);
+            }
+        }
+        return res;
+    }
 }

@@ -28,96 +28,100 @@ import java.util.Queue;
  * @Description: 描述:
  */
 public class BinaryTreePaths {
-  // 方法语义：返回以root为根节点的二叉树的所有路径
-  // 时间复杂度O(n2), 每个节点遍历一次，同时每个路径也遍历了一次
-  public List<String> binaryTreePaths(TreeNode root) {
-    List<String> res = new ArrayList<>();
-    if (root == null) {
-      return res;
-    }
-    // 递归终止条件：将根节点值添加到集合中
-    if (root.left == null && root.right == null) {
-      res.add(String.valueOf(root.val));
-      return res;
-    }
 
-    // 递归遍历左子树，拿到左子树的结果集，如["2->5"]
-    List<String> leftStr = binaryTreePaths(root.left);
-    // 把root节点拼接进左子树的路径中
-    for (String path : leftStr) {
-      StringBuilder sb = new StringBuilder();
-      sb.append(root.val).append("->").append(path);
-      res.add(sb.toString());
-    }
-    // 递归遍历右子树，拿到右子树的结果集，如["3"]
-    List<String> rightStr = binaryTreePaths(root.right);
-    for (String path : rightStr) {
-      StringBuilder sb = new StringBuilder();
-      sb.append(root.val).append("->").append(path);
-      res.add(sb.toString());
-    }
-    return res;
-  }
+    /**
+     * 时间   O(n^2)  每个节点遍历一次，路径字符串拼接操作O(n)
+     * 空间   O(n^2)  递归操作取决于递归栈深度，最坏情况下树退化为单链表  存储路径的空间开销O(n)
+     */
+    // 方法语义：返回以root为根节点的二叉树的所有路径
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        // 递归终止条件：将根节点值添加到集合中
+        if (root.left == null && root.right == null) {
+            res.add(String.valueOf(root.val));
+            return res;
+        }
 
-  // 层序遍历
-  public List<String> binaryTreePaths2(TreeNode root) {
-    List<String> paths = new ArrayList<>();
-    if (root == null) {
-      return paths;
-    }
-    Queue<TreeNode> nodeQueue = new LinkedList<>();
-    Queue<String> pathQueue = new LinkedList<>();
-
-    nodeQueue.offer(root);
-    pathQueue.offer(String.valueOf(root.val));
-
-    while (!nodeQueue.isEmpty()) {
-      TreeNode node = nodeQueue.poll();
-      String path = pathQueue.poll();
-
-      if (node.left == null && node.right == null) {
-        paths.add(path);
-      }
-      if (node.left != null) {
-        nodeQueue.offer(node.left);
-        pathQueue.offer(path + "->" + node.left.val);
-      }
-
-      if (node.right != null) {
-        nodeQueue.offer(node.right);
-        pathQueue.offer(path + "->" + node.right.val);
-      }
-    }
-    return paths;
-  }
-
-  // 回溯
-  private List<String> res;
-
-  public List<String> binaryTreePaths3(TreeNode root) {
-    res = new ArrayList<>();
-    if (root == null) {
-      return res;
+        // 递归遍历左子树，拿到左子树的结果集，如["2->5"]
+        List<String> leftStr = binaryTreePaths(root.left);
+        // 把root节点拼接进左子树的路径中
+        for (String path : leftStr) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(root.val).append("->").append(path);
+            res.add(sb.toString());
+        }
+        // 递归遍历右子树，拿到右子树的结果集，如["3"]
+        List<String> rightStr = binaryTreePaths(root.right);
+        for (String path : rightStr) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(root.val).append("->").append(path);
+            res.add(sb.toString());
+        }
+        return res;
     }
 
-    help(root, new LinkedList<>());
-    return res;
-  }
+    // 层序遍历
+    public List<String> binaryTreePaths2(TreeNode root) {
+        List<String> paths = new ArrayList<>();
+        if (root == null) {
+            return paths;
+        }
+        Queue<TreeNode> nodeQueue = new LinkedList<>();
+        Queue<String> pathQueue = new LinkedList<>();
 
-  private void help(TreeNode root, LinkedList<String> curr) {
-    curr.add(String.valueOf(root.val));
-    if (root.left == null && root.right == null) {
-      res.add(String.join("->", curr));
-      return;
+        nodeQueue.offer(root);
+        pathQueue.offer(String.valueOf(root.val));
+
+        while (!nodeQueue.isEmpty()) {
+            TreeNode node = nodeQueue.poll();
+            String path = pathQueue.poll();
+
+            if (node.left == null && node.right == null) {
+                paths.add(path);
+            }
+            if (node.left != null) {
+                nodeQueue.offer(node.left);
+                pathQueue.offer(path + "->" + node.left.val);
+            }
+
+            if (node.right != null) {
+                nodeQueue.offer(node.right);
+                pathQueue.offer(path + "->" + node.right.val);
+            }
+        }
+        return paths;
     }
 
-    if (root.left != null) {
-      help(root.left, curr);
-      curr.removeLast();
+    // 回溯
+    private List<String> res;
+
+    public List<String> binaryTreePaths3(TreeNode root) {
+        res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+
+        help(root, new LinkedList<>());
+        return res;
     }
-    if (root.right != null) {
-      help(root.right, curr);
-      curr.removeLast();
+
+    private void help(TreeNode root, LinkedList<String> curr) {
+        curr.add(String.valueOf(root.val));
+        if (root.left == null && root.right == null) {
+            res.add(String.join("->", curr));
+            return;
+        }
+
+        if (root.left != null) {
+            help(root.left, curr);
+            curr.removeLast();
+        }
+        if (root.right != null) {
+            help(root.right, curr);
+            curr.removeLast();
+        }
     }
-  }
 }
