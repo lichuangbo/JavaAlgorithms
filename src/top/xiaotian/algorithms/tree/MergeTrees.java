@@ -31,15 +31,13 @@ import java.util.Deque;
 public class MergeTrees {
     /**
      * DFS
-     * 时间：O(min(m,n)),m和n分别为两树节点数目
+     * 时间   O(max(m,n)),m和n分别为两树节点数目  最坏情况下两棵树结构类似，需要遍历两棵树所有节点
+     * 空间   O(m+n) 递归栈O(max(m,n) 创建节点数m+n个
      */
     public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
-        if (root1 == null) {
-            return root2;
-        }
-        if (root2 == null) {
-            return root1;
-        }
+        if (root1 == null)  return root2;
+        if (root2 == null)  return root1;
+
         TreeNode root = new TreeNode(root1.val + root2.val);
         root.left = mergeTrees(root1.left, root2.left);
         root.right = mergeTrees(root1.right, root2.right);
@@ -48,17 +46,16 @@ public class MergeTrees {
 
     /**
      * 原地修改
+     * 时间 不变
+     * 空间 O(max(m,n)
      */
     public TreeNode mergeTrees2(TreeNode root1, TreeNode root2) {
-        if (root1 == null) {
-            return root2;
-        }
-        if (root2 == null) {
-            return root1;
-        }
+        if (root1 == null)  return root2;
+        if (root2 == null)  return root1;
+
         root1.val += root2.val;
-        root1.left = mergeTrees2(root1.left, root2.left);
-        root1.right = mergeTrees2(root1.right, root2.right);
+        root1.left = mergeTrees(root1.left, root2.left);
+        root1.right = mergeTrees(root1.right, root2.right);
         return root1;
     }
 

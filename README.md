@@ -156,11 +156,9 @@
 
 * [226. 翻转二叉树](src/top/xiaotian/algorithms/tree/InvertTree.java)
 
-* [236. 二叉树的最近公共祖先](src/top/xiaotian/algorithms/tree/LowestCommonAncestor.java)
+* [617. 合并二叉树](src/top/xiaotian/algorithms/tree/MergeTrees.java)
 
 * [297. 二叉树的序列化与反序列化](src/top/xiaotian/algorithms/tree/SerialDeserialBinaryTree.java)
-
-* [538. 把二叉搜索树转换为累加树](src/top/xiaotian/algorithms/tree/binary_search_tree/ConvertBST.java)
 
 * [543. 二叉树的直径](src/top/xiaotian/algorithms/tree/DiameterOfBinaryTree.java)
 
@@ -184,6 +182,25 @@
 
 * [112. 路径总和/113. 路径总和 II](src/top/xiaotian/algorithms/tree/PathSum.java)
 
+* [106. 从中序与后序遍历序列构造二叉树/105. 从前序与中序遍历序列构造二叉树](src/top/xiaotian/algorithms/tree/ConstructBinaryTree.java)
+
+* [654. 最大二叉树](src/top/xiaotian/algorithms/tree/MaximumBinaryTree.java)
+
+* [98. 验证二叉搜索树](src/top/xiaotian/algorithms/tree/binary_search_tree/ValidBST.java)
+
+* [501. 二叉搜索树中的众数](src/top/xiaotian/algorithms/tree/binary_search_tree/FindMode.java)
+
+* [235. 二叉搜索树的最近公共祖先/236. 二叉树的最近公共祖先](src/top/xiaotian/algorithms/tree/LowestCommonAncestor.java)
+
+* [701. 二叉搜索树中的插入操作](src/top/xiaotian/algorithms/tree/binary_search_tree/InsertIntoBST.java)
+
+* [450. 删除二叉搜索树中的节点](src/top/xiaotian/algorithms/tree/binary_search_tree/DeleteNode.java)
+
+* [669. 修剪二叉搜索树](src/top/xiaotian/algorithms/tree/binary_search_tree/TrimBST.java)
+
+* [108. 将有序数组转换为二叉搜索树](src/top/xiaotian/algorithms/tree/binary_search_tree/SortedArrayToBST.java)
+
+* [538. 把二叉搜索树转换为累加树](src/top/xiaotian/algorithms/tree/binary_search_tree/ConvertBST.java)
 
 #### 动态规划
 * [198./213./337. 打家劫舍问题](src/top/xiaotian/algorithms/dp/HouseRobber.java)

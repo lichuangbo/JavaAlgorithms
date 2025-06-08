@@ -15,21 +15,29 @@ import top.xiaotian.util.TreeNode;
  */
 public class TrimBST {
 
-  // 方法语义：修剪以root为根节点的bst，让整棵树的节点值都在[low, high]区间内，并返回修剪后的根节点
-  public TreeNode trimBST(TreeNode root, int low, int high) {
-    if (root == null) {
-      return null;
-    }
+    // 方法语义：修剪以root为根节点的bst，让整棵树的节点值都在[low, high]区间内，并返回修剪后的根节点
+    public TreeNode trimBST(TreeNode root, int low, int high) {
+        if (root == null) {
+            return null;
+        }
 
-    // 当前层处理
-    if (root.val < low) {// 需要修剪左区间，当前层将当前节点及左子树全部去除,将它的[修剪过的右子树]返回；如修剪0，把1和2返回
-      return trimBST(root.right, low, high);
-    } else if (root.val > high) {// 需要修剪右区间，同上
-      return trimBST(root.left, low, high);
-    } else {// root在[low,high]范围内, 当前节点保留，分别修剪其左子树与右子树
-      root.left = trimBST(root.left, low, high);
-      root.right = trimBST(root.right, low, high);
-      return root;
+        /**
+         *          3                   3                 3
+         *        /   \               /   \             /   \
+         *       0     4    =>             4    =>     2     4
+         *        \                                   /
+         *         2                   2             1
+         *       /                   /
+         *      1                   1
+         */
+        if (root.val < low) {// 需要修剪左区间，当前层将当前节点及左子树全部去除,将它的[修剪过的右子树]返回；如修剪0，把1和2返回
+            return trimBST(root.right, low, high);
+        } else if (root.val > high) {// 需要修剪右区间，同上
+            return trimBST(root.left, low, high);
+        } else {// root在[low,high]范围内, 当前节点保留，分别修剪其左子树与右子树
+            root.left = trimBST(root.left, low, high);
+            root.right = trimBST(root.right, low, high);
+            return root;
+        }
     }
-  }
 }
