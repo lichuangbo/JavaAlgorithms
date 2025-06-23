@@ -203,18 +203,26 @@
 * [538. 把二叉搜索树转换为累加树](src/top/xiaotian/algorithms/tree/binary_search_tree/ConvertBST.java)
 
 #### 动态规划
+* [509. 斐波那契数](src/top/xiaotian/algorithms/dp/FibonacciNumber.java)
+
+* [70. 爬楼梯](src/top/xiaotian/algorithms/dp/ClimbStairs.java)
+
+* [746. 使用最小花费爬楼梯](src/top/xiaotian/algorithms/dp/MinCostClimbingStairs.java)
+
 * [198./213./337. 打家劫舍问题](src/top/xiaotian/algorithms/dp/HouseRobber.java)
 
 * [221. 最大正方形](src/top/xiaotian/algorithms/dp/MaximalSquare.java)
 
 * [309. 股票买卖问题](src/top/xiaotian/algorithms/dp/StockSell.java)
 
-* [494. 目标和](src/top/xiaotian/algorithms/dfs/FindTargetSumWays.java)
-
 * [647. 回文子串](src/top/xiaotian/algorithms/dp/palindromic/PalindromicSubstrings.java)
 
 ##### 01背包
 * [416. 分割等和子集](src/top/xiaotian/algorithms/dp/knapsack01/CanPartition.java)
+
+* [1049. 最后一块石头的重量 II](src/top/xiaotian/algorithms/dp/knapsack01/LastStoneWeight.java)
+
+* [494. 目标和](src/top/xiaotian/algorithms/dfs/FindTargetSumWays.java)
 
 ##### 完全背包
 * [322. 零钱兑换](src/top/xiaotian/algorithms/dp/knapsacktotal/CoinChange.java)
@@ -223,7 +231,14 @@
 * [300. 最长递增子序列](src/top/xiaotian/algorithms/dp/sub_sequence/LongestIncreaseSubsequence.java)
 
 ##### 分割问题
+* [343. 整数拆分](src/top/xiaotian/algorithms/dp/split/IntegerBreak.java)
+
 * [279. 完全平方数](src/top/xiaotian/algorithms/dp/split/NumSquares.java)
+
+* [96. 不同的二叉搜索树](src/top/xiaotian/algorithms/dp/split/NumTrees.java)
+
+##### 路径问题
+* [62. 不同路径/63. 不同路径 II](src/top/xiaotian/algorithms/dp/path/UniquePaths.java)
 
 
 #### 贪心

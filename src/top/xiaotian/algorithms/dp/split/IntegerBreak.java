@@ -19,7 +19,11 @@ package top.xiaotian.algorithms.dp.split;
  * @created 2021/2/6 279 91 62 63
  */
 public class IntegerBreak {
-    // 递归+记忆化
+    /**
+     * 递归+记忆化
+     * 时间   O(n^2)
+     * 空间   O(n)+递归栈O(n)，从n递归到1
+     */
     public int integerBreak(int target) {
         int[] memo = new int[target + 1];
         return help(target, memo);
@@ -45,14 +49,19 @@ public class IntegerBreak {
         return res;
     }
 
-    // 动态规划
+    /**
+     * 动态规划
+     * 时间   O(n^2)
+     * 空间   O(n)
+     */
     public int integerBreak2(int target) {
         // dp[i]表示将数字i至少分割两部分后，相乘得到的最大乘积
+        // dp[i]=max(j*(i-j), j*dp[i-j]) 拆分成j和i-j    拆分成j，剩下的i-j继续拆分
         int[] dp = new int[target + 1];
         // 初始化：2拆分为两部分的最大乘积是1
         dp[2] = 1;
         for (int i = 3; i <= target; i++) {// 求解dp[i]
-            for (int j = 1; j <= i - 1; j++) {// 依然是两个选择
+            for (int j = 1; j <= i - 1; j++) {// [1, i-1]区间内的都是可拆分项
                 dp[i] = Math.max(dp[i], Math.max(j * (i - j), j * dp[i - j]));
             }
         }
