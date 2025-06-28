@@ -218,6 +218,8 @@
 * [647. 回文子串](src/top/xiaotian/algorithms/dp/palindromic/PalindromicSubstrings.java)
 
 ##### 01背包
+* [01背包问题](src/top/xiaotian/algorithms/dp/knapsack01/Knapsack01.java)
+
 * [416. 分割等和子集](src/top/xiaotian/algorithms/dp/knapsack01/CanPartition.java)
 
 * [1049. 最后一块石头的重量 II](src/top/xiaotian/algorithms/dp/knapsack01/LastStoneWeight.java)

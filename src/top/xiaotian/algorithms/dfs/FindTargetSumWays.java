@@ -157,12 +157,15 @@ public class FindTargetSumWays {
         }
         // 边界情况检查
         if ((target + sum) % 2 != 0) return 0;
+        // target绝对值大于sum，无解，不可能凑出来
         if (target > sum || target < -sum) return 0;
 
         int cap = (target + sum) / 2;
-        cap = Math.abs(cap);
+        if (cap < 0) return 0;
+
         int[] dp = new int[cap + 1];
-        // 和为0的有一种方式
+        // 和为0的有一种方式，什么都不选；在方案数问题中，关注的是"恰好等于目标"的方案数，空集方案只对j=0有效，其他位置自然为0
+        // 在标准背包问题中，关注的是"不超过容量"的最大价值，因此需要完整初始化所有容量状态
         dp[0] = 1;
         for (int i = 0; i < nums.length; i++) {
             for (int j = cap; j >= nums[i]; j--) {
