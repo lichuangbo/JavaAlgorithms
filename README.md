@@ -226,7 +226,11 @@
 
 * [494. 目标和](src/top/xiaotian/algorithms/dfs/FindTargetSumWays.java)
 
+* [474. 一和零](src/top/xiaotian/algorithms/dp/knapsack01/OneAndZeroes.java)
+
 ##### 完全背包
+* [完全背包](src/top/xiaotian/algorithms/dp/knapsacktotal/KnapsackTotal.java)
+
 * [322. 零钱兑换](src/top/xiaotian/algorithms/dp/knapsacktotal/CoinChange.java)
 
 ##### 子序列

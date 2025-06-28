@@ -76,8 +76,9 @@ public class CanPartition {
         }
         int capacity = sum / 2;
         int len = nums.length;
-        // 从nums数组中选取物品，来尝试填容量为capacity的背包，问能不能刚好填满？
-        // capacity列要多声明一处，因为容量[0,capacity]用到了最后一个
+        // dp[i][j]: 从nums数组前i个元素中选取物品，来尝试填容量为j的背包，问能不能刚好填满？
+        // 递推公式：dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i]]
+        // capacity列要多声明一处，因为背包容量需要覆盖从0到capacity的所有情况[0,capacity]
         boolean[][] dp = new boolean[len][capacity + 1];
         // 初始化dp[0][j] 因为递推公式用到了[i-1]
         for (int j = 0; j <= capacity; j++) {
@@ -117,5 +118,41 @@ public class CanPartition {
             }
         }
         return dp[capacity];
+    }
+
+    // 间接求解
+    public boolean canPartition3(int[] nums) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if (sum % 2 != 0) return false;
+
+        int len = nums.length;
+        int cap = sum / 2;
+//        // 考虑前i个值，他选择数字总和不超过j的最大价值
+//        // dp[i][j] = max(dp[i-1][j], dp[i-1][j-nums[i]]+nums[i])
+//        int[][] dp = new int[len][cap + 1];
+//        for (int j = 0; j <= cap; j++) {
+//            dp[0][j] = (j >= nums[0]) ? nums[0] : 0;
+//        }
+//        for (int i = 1; i < len; i++) {
+//            for (int j = cap; j >= nums[i]; j--) {
+//                dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - nums[i]] + nums[i]);
+//            }
+//        }
+//        return dp[len - 1][cap] == cap;
+
+        // 一维数组
+        int[] dp = new int[cap + 1];
+        for (int j = 0; j <= cap; j++) {
+            dp[j] = (j >= nums[0]) ? nums[0] : 0;
+        }
+        for (int i = 1; i < len; i++) {
+            for (int j = cap; j >= nums[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - nums[i]] + nums[i]);
+            }
+        }
+        return dp[cap] == cap;
     }
 }
