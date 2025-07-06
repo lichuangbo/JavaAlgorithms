@@ -209,8 +209,6 @@
 
 * [746. 使用最小花费爬楼梯](src/top/xiaotian/algorithms/dp/MinCostClimbingStairs.java)
 
-* [198./213./337. 打家劫舍问题](src/top/xiaotian/algorithms/dp/HouseRobber.java)
-
 * [221. 最大正方形](src/top/xiaotian/algorithms/dp/MaximalSquare.java)
 
 * [309. 股票买卖问题](src/top/xiaotian/algorithms/dp/StockSell.java)
@@ -231,7 +229,7 @@
 ##### 完全背包
 * [完全背包](src/top/xiaotian/algorithms/dp/knapsacktotal/KnapsackTotal.java)
 
-* [322. 零钱兑换](src/top/xiaotian/algorithms/dp/knapsacktotal/CoinChange.java)
+* [322. 零钱兑换/518. 零钱兑换 II](src/top/xiaotian/algorithms/dp/knapsacktotal/CoinChange.java)
 
 ##### 子序列
 * [300. 最长递增子序列](src/top/xiaotian/algorithms/dp/sub_sequence/LongestIncreaseSubsequence.java)
@@ -242,6 +240,15 @@
 * [279. 完全平方数](src/top/xiaotian/algorithms/dp/split/NumSquares.java)
 
 * [96. 不同的二叉搜索树](src/top/xiaotian/algorithms/dp/split/NumTrees.java)
+
+* [139. 单词拆分](src/top/xiaotian/algorithms/dp/split/WordBreak.java)
+
+##### 打家劫舍问题
+* [198. 打家劫舍](src/top/xiaotian/algorithms/dp/house_robber/HouseRobber.java)
+
+* [213. 打家劫舍 II](src/top/xiaotian/algorithms/dp/house_robber/HouseRobberII.java)
+* 
+* [337. 打家劫舍 III](src/top/xiaotian/algorithms/dp/house_robber/HouseRobberIII.java)
 
 ##### 路径问题
 * [62. 不同路径/63. 不同路径 II](src/top/xiaotian/algorithms/dp/path/UniquePaths.java)
@@ -355,6 +362,9 @@
 
 #### DFS深度优先遍历
 * [200. 岛屿数量](src/top/xiaotian/algorithms/dfs/LandNum.java)
+
+* [377. 组合总和 Ⅳ](src/top/xiaotian/algorithms/backtrack/combination_sum/CombinationSumIV.java)
+
 
 #### BFS广度优先遍历
 

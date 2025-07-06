@@ -1,6 +1,10 @@
 package top.xiaotian.algorithms.dp.split;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 279. 完全平方数
  * 给你一个整数 n ，返回 和为 n 的完全平方数的最少数量 。
@@ -76,6 +80,82 @@ public class NumSquares {
                 dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
             }
         }
+        return dp[n];
+    }
+
+    /**
+     * 完全背包
+     * 转化为：给定了若干个数字，每个数字可以被使用无限次，求凑出目标值  所需要用到的是最少数字个数是多少
+     * 物品是不超过n的完全平方数，价值是1（现在是在求计数，每个物品价值都为1），成本是完全平方数本身，背包容量是n
+     * dp[i][j] 为考虑前 i个数字，凑出数字总和 j 所需要用到的最少数字数量
+     * dp[i][j] = min(dp[i-1][j-k*t] + k)   k表示是取k个完全平方数
+     * 时间   O(n^2*sqrt(n))  sqrt(n)是平方数个数，共有 n*sqrt(n)个状态需要转移，每个状态转移最多遍历 n 次
+     * 空间   O(n*sqrt(n))
+     */
+    public int numSquares3(int n) {
+        // 预处理出所有可能用到的「完全平方数」
+        int maxSquareRoot = (int) Math.sqrt(n);
+        int[] squares = new int[maxSquareRoot];
+        for (int i = 1; i <= maxSquareRoot; i++) {
+            squares[i - 1] = i * i;
+        }
+
+        // dp[i][j] 代表考虑前 i 个物品，凑出 j 所使用到的最小元素个数
+        int len = squares.length;
+        int[][] dp = new int[len][n + 1];
+
+        // 考虑第一个物品来凑满n
+        for (int j = 0; j <= n; j++) {
+            int k = j / squares[0];
+            if (k * squares[0] == j) { // 只有容量为第一个数的整数倍的才能凑出
+                dp[0][j] = k;
+            } else { // 其余则为无效值
+                dp[0][j] = Integer.MAX_VALUE;
+            }
+        }
+
+        // 处理剩余数的情况
+        for (int i = 1; i < len; i++) {
+            for (int j = 0; j <= n; j++) {
+                // 对于不选第 i 个数的情况，使用前i-1个平方数凑成j
+                int no = dp[i - 1][j];
+
+                // 对于选第 i 个数的情况,他可以选择k次，从中比较拿到最小值
+                int yes = Integer.MAX_VALUE;
+                for (int k = 1; k * squares[i] <= j; k++) {
+                    // 能够选择 k 个 t 的前提是剩余的数字 j - k * t 也能被凑出
+                    if (dp[i - 1][j - k * squares[i]] != Integer.MAX_VALUE) {
+                        yes = Math.min(yes, dp[i - 1][j - k * squares[i]] + k);
+                    }
+                }
+                dp[i][j] = Math.min(no, yes);
+            }
+        }
+        return dp[len - 1][n];
+    }
+
+    public int numSquares4(int n) {
+        // 生成所有不超过 n 的完全平方数
+        int maxSquareRoot = (int) Math.sqrt(n);
+        int[] squares = new int[maxSquareRoot];
+        for (int i = 1; i <= maxSquareRoot; i++) {
+            squares[i - 1] = i * i;
+        }
+
+        // 初始化 dp 数组，dp[j] 表示组成 j 的最少平方数数量
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0; // 基础情况
+
+        // 完全背包动态规划
+        for (int s : squares) { // 遍历每个平方数（物品）
+            for (int j = s; j <= n; j++) { // 遍历容量从 s 到 n
+                if (dp[j - s] != Integer.MAX_VALUE) { // 防止溢出
+                    dp[j] = Math.min(dp[j], dp[j - s] + 1);
+                }
+            }
+        }
+
         return dp[n];
     }
 }
