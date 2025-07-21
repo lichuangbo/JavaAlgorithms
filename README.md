@@ -215,7 +215,7 @@
 
 * [647. 回文子串](src/top/xiaotian/algorithms/dp/palindromic/PalindromicSubstrings.java)
 
-##### 01背包
+##### 01背包问题
 * [01背包问题](src/top/xiaotian/algorithms/dp/knapsack01/Knapsack01.java)
 
 * [416. 分割等和子集](src/top/xiaotian/algorithms/dp/knapsack01/CanPartition.java)
@@ -226,13 +226,21 @@
 
 * [474. 一和零](src/top/xiaotian/algorithms/dp/knapsack01/OneAndZeroes.java)
 
-##### 完全背包
+##### 完全背包问题
 * [完全背包](src/top/xiaotian/algorithms/dp/knapsacktotal/KnapsackTotal.java)
 
 * [322. 零钱兑换/518. 零钱兑换 II](src/top/xiaotian/algorithms/dp/knapsacktotal/CoinChange.java)
 
-##### 子序列
+##### 子序列问题
 * [300. 最长递增子序列](src/top/xiaotian/algorithms/dp/sub_sequence/LongestIncreaseSubsequence.java)
+
+* [674. 最长连续递增序列](src/top/xiaotian/algorithms/dp/sub_sequence/LongestContinueIncreaseSubsequence.java)
+
+* [718. 最长重复子数组](src/top/xiaotian/algorithms/dp/sub_sequence/MaxLenOfRepeatedSubArray.java)
+
+* [1143. 最长公共子序列](src/top/xiaotian/algorithms/dp/sub_sequence/LongestCommonSubsequence.java)
+
+* [1035. 不相交的线](src/top/xiaotian/algorithms/dp/sub_sequence/UncrossedLine.java)
 
 ##### 分割问题
 * [343. 整数拆分](src/top/xiaotian/algorithms/dp/split/IntegerBreak.java)
