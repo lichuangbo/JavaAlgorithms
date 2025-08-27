@@ -110,6 +110,8 @@
 
 * [59. 螺旋矩阵II/54. 螺旋矩阵](src/top/xiaotian/algorithms/array/SpiralMatrix.java)
 
+* [118. 杨辉三角](src/top/xiaotian/algorithms/array/PascalsTriangle.java)
+
 
 #### 链表
 * [206. 反转链表](src/top/xiaotian/algorithms/linkedList/ReverseList.java)
@@ -125,6 +127,12 @@
 
 #### 栈
 * [394. 字符串解码](src/top/xiaotian/algorithms/stack/DecodeString.java)
+
+* [20. 有效的括号](src/top/xiaotian/algorithms/stack/ValidParentheses.java)
+
+* [1047. 删除字符串中的所有相邻重复项](src/top/xiaotian/algorithms/stack/RemoveDuplicates.java)
+
+* [150. 逆波兰表达式求值](src/top/xiaotian/algorithms/stack/EvalRPN.java)
 
 ##### 单调栈
 * [739. 每日温度](src/top/xiaotian/algorithms/stack/monotone_stack/DailyTemperatures.java)
@@ -405,3 +413,7 @@
 * [208. 实现 Trie (前缀树)](src/top/xiaotian/dataStructures/trie/practice/ImplementTrie.java)
 
 * [707. 设计链表](src/top/xiaotian/dataStructures/linkedlist/practice/MyLinkedList.java)
+
+* [232. 用栈实现队列](src/top/xiaotian/dataStructures/queue/practice/MyQueue.java)
+
+* [225. 用队列实现栈](src/top/xiaotian/dataStructures/stack/practice/MyStack.java)
