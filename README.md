@@ -112,6 +112,8 @@
 
 * [118. 杨辉三角](src/top/xiaotian/algorithms/array/PascalsTriangle.java)
 
+* [3446. 按对角线进行矩阵排序](src/top/xiaotian/algorithms/array/SortMatrixByDiagonals.java)
+
 
 #### 链表
 * [206. 反转链表](src/top/xiaotian/algorithms/linkedList/ReverseList.java)
