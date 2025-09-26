@@ -143,7 +143,11 @@
 #### 队列
 
 ##### 优先队列
+* [面试题 17.14. 最小K个数](src/top/xiaotian/algorithms/queue/priority_queue/SmallestK.java)
+
 * [347. 前 K 个高频元素](src/top/xiaotian/algorithms/queue/priority_queue/TopKFrequent.java)
+
+* [295. 数据流的中位数](src/top/xiaotian/algorithms/queue/priority_queue/MedianFinder.java)
 
 ##### 单调队列
 * [239. 滑动窗口最大值](src/top/xiaotian/algorithms/queue/monotone_queue/MaxSlidingWindow.java)
