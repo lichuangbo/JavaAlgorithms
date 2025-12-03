@@ -65,17 +65,19 @@ public class DistinctSubsequences {
     }
 
     public int numDistinct2(String s, String t) {
-        int sLen = s.length(), tLen = t.length();
-        // dp状态：以i-1为结尾的s子串中出现以j-1为结尾的t字符串的个数
-        int[][] dp = new int[sLen + 1][tLen + 1];
-        // 初始化：dp[i][0]表示s子串可以任意删除字符去匹配t空子串，1    dp[0][j]表示s子串为空，但是t子串不空，无法操作0
-        for (int i = 0; i <= sLen; i++) {
+        char[] chars1 = s.toCharArray(), chars2 = t.toCharArray();
+        int len1 = chars1.length, len2 = chars2.length;
+        // 以s[i-1]为结尾的字符串包含以t[j-1]为结尾的字符串个数
+        int[][] dp = new int[len1 + 1][len2 + 1];
+        // 初始化 dp[i][0] 不管s串有多少个字符，全部删除掉来匹配t空字符串，只有一种
+        for (int i = 1; i <= len1; i++) {
             dp[i][0] = 1;
         }
-        char[] chars1 = s.toCharArray();
-        char[] chars2 = t.toCharArray();
-        for (int i = 1; i <= sLen; i++) {
-            for (int j = 1; j <= tLen; j++) {
+        // 初始化 dp[0][j] s空字符串无法匹配t
+        // 初始化 dp[0][0] 空字符串对空字符串，一种解
+        dp[0][0] = 1;
+        for (int i = 1; i <= len1; i++) {
+            for (int j = 1; j <= len2; j++) {
                 if (chars1[i - 1] == chars2[j - 1]) {
                     dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
                 } else {
@@ -83,6 +85,6 @@ public class DistinctSubsequences {
                 }
             }
         }
-        return dp[sLen][tLen];
+        return dp[len1][len2];
     }
 }

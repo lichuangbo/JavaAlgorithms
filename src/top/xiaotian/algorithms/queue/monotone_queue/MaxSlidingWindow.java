@@ -30,54 +30,70 @@ import java.util.PriorityQueue;
  * 你可以假设 k 总是有效的，在输入数组不为空的情况下，1 ≤ k ≤ 输入数组的大小。
  */
 public class MaxSlidingWindow {
-    // 暴力解法：提交超时
+    /**
+     * 暴力解法：提交超时
+     * 时间   O(n*k)
+     * 空间   O(1)
+     */
     public int[] maxSlidingWindow(int[] nums, int k) {
-        int[] res = new int[nums.length - k + 1];
-        for (int i = 0; i < nums.length - k + 1; i++) {
-            int tmp = Integer.MIN_VALUE;
+        int len = nums.length;
+        int[] res = new int[len - k + 1];
+        for (int i = 0; i < len - k + 1; i++) {
+            int max = Integer.MIN_VALUE;
             for (int j = i; j < i + k; j++) {
-                if (tmp < nums[j]) {
-                    tmp = nums[j];
+                if (nums[j] > max) {
+                    max = nums[j];
                 }
             }
-            res[i] = tmp;
+            res[i] = max;
         }
         return res;
     }
 
-    // 使用双端队列，来维护一个单调递减队列
+    /**
+     * 使用双端队列，来维护一个单调递减队列
+     * 时间   O(n)
+     * 空间   O(k)，长度为k的双端队列
+     */
     public int[] maxSlidingWindow2(int[] nums, int k) {
+        /**
+         * 滑动窗口的位置                      deque          操作原因                     结果
+         * ---------------                 首-----尾
+         * 1^  3  -1 -3  5  3  6  7         0
+         * 1  3^  -1 -3  5  3  6  7         1           3大于队尾元素1，移除
+         * 1  3  -1^ -3  5  3  6  7         1 2         2-3+1>=0,采集结果                 [3]
+         * 1  3  -1 -3^  5  3  6  7         1 2 3       3-3+1>=0,采集结果                 [3,3]
+         * 1  3  -1 -3  5^  3  6  7         4       5大于队尾元素-3，循环移除               [3,3,5]
+         */
         Deque<Integer> deque = new LinkedList<>();
-        int[] res = new int[nums.length - k + 1];
-        // 未形成窗口：只管入队
-        for (int i = 0; i < k; i++) {
-            // 针对新加入窗口的元素num：需要将队列中小于num的都出队来保证队列的递减；从尾部遍历是因为队列是递减的
-            while (!deque.isEmpty() && deque.peekLast() < nums[i]) {
-                deque.removeLast();
+        int len = nums.length;
+        int[] res = new int[len - k + 1];
+        for (int i = 0; i < len; i++) {
+            // 移除过期索引：检查队首索引是不是已经不在当前窗口范围内了，i-k+1代表的是窗口的最左端
+            if (!deque.isEmpty() && deque.peekFirst() < i - k + 1) {
+                deque.pollFirst();
             }
-            deque.addLast(nums[i]);
-        }
-        res[0] = deque.peekFirst();
-        // 形成窗口后：随着移动一边入队一边出队
-        for (int i = k; i < nums.length; i++) {
-            // 针对移出窗口的元素num：num就是队首元素，需要将队列中该元素也移除，在这里就是队首出队
-            // 也可以参照方法3中，队列里存储的是元素下标，通过下标来定位是否位于滑动窗口中
-            if (deque.peekFirst() == nums[i - k]) {
-                deque.removeFirst();
+
+            // 维护单调递减性，移除不可能成为最大值的索引：移除队尾所有小于当前元素的索引，因为当前元素nums[i]比它们大且位置更新，被移除的索引不可能再成为后续窗口的最大值
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                deque.pollLast();
             }
-            while (!deque.isEmpty() && deque.peekLast() < nums[i]) {
-                deque.removeLast();
+
+            // 将当前索引加入队尾
+            deque.offerLast(i);
+
+            // 当窗口形成时（i >= k-1），记录当前窗口最大值，也就是队首下标对应的元素
+            if (i - k + 1 >= 0) {
+                res[i - k + 1] = nums[deque.peekFirst()];
             }
-            deque.addLast(nums[i]);
-            res[i - k + 1] = deque.peekFirst();
         }
         return res;
     }
 
     /**
      * 优先队列
-     * 时间O(nlogn)
-     * 空间O(n)
+     * 时间   O(nlogn)
+     * 空间   O(n)
      */
     public int[] maxSlidingWindow3(int[] nums, int k) {
         PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> o2[0] - o1[0]);

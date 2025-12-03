@@ -1,7 +1,6 @@
 package top.xiaotian.algorithms.stack;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.Stack;
 
 /**
  * 1047. 删除字符串中的所有相邻重复项
@@ -21,42 +20,35 @@ import java.util.Deque;
  * 例如，在 "abbaca" 中，我们可以删除 "bb" 由于两字母相邻且相同，这是此时唯一可以执行删除操作的重复项。之后我们得到字符串 "aaca"，其中又只有 "aa" 可以执行重复项删除操作，所以最后的字符串为 "ca"。
  */
 public class RemoveDuplicates {
-  public String removeDuplicates(String s) {
-    char[] chars = s.toCharArray();
-    Deque<Character> stack = new ArrayDeque<>();
-    for (int i = 0; i < chars.length; i++) {
-      char ch = chars[i];
-      if (!stack.isEmpty() && stack.peek() == ch) {
-        stack.pop();
-      } else {
-        stack.push(ch);
-      }
+    public String removeDuplicates(String s) {
+        char[] chars = s.toCharArray();
+        Stack<Character> stack = new Stack<>();
+        for (char ch : chars) {
+            if (!stack.isEmpty() && stack.peek() == ch) {
+                stack.pop();
+            } else {
+                stack.push(ch);
+            }
+        }
+        char[] res = new char[stack.size()];
+        int i = stack.size() - 1;
+        while (!stack.isEmpty()) {
+            res[i--] = stack.pop();
+        }
+        return new String(res);
     }
 
-    String res = "";
-    while (!stack.isEmpty()) {
-      res = stack.pop() + res;
+    public String removeDuplicates2(String s) {
+        // 使用StringBuilder既作为栈也作为结果容器
+        StringBuilder sb = new StringBuilder();
+        char[] chars = s.toCharArray();
+        for (char ch : chars) {
+            if (sb.length() > 0 && sb.charAt(sb.length() - 1) == ch) {
+                sb.deleteCharAt(sb.length() - 1);
+            } else {
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
     }
-    return res;
-  }
-
-  public String removeDuplicates2(String s) {
-    // 将 res 当做栈
-    StringBuilder res = new StringBuilder();
-    // top为 res 的长度
-    int top = -1;
-    char[] chars = s.toCharArray();
-    for (char ch : chars) {
-      // 当 top >= 0,即栈中有字符时，当前字符如果和栈中字符相等，弹出栈顶字符，同时 top--
-      if (top >= 0 && res.charAt(top) == ch) {
-        res.deleteCharAt(top);
-        top--;
-        // 否则，将该字符 入栈，同时top++
-      } else {
-        res.append(ch);
-        top++;
-      }
-    }
-    return res.toString();
-  }
 }

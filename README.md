@@ -110,6 +110,10 @@
 
 * [59. 螺旋矩阵II/54. 螺旋矩阵](src/top/xiaotian/algorithms/array/SpiralMatrix.java)
 
+* [118. 杨辉三角](src/top/xiaotian/algorithms/array/PascalsTriangle.java)
+
+* [3446. 按对角线进行矩阵排序](src/top/xiaotian/algorithms/array/SortMatrixByDiagonals.java)
+
 
 #### 链表
 * [206. 反转链表](src/top/xiaotian/algorithms/linkedList/ReverseList.java)
@@ -126,6 +130,12 @@
 #### 栈
 * [394. 字符串解码](src/top/xiaotian/algorithms/stack/DecodeString.java)
 
+* [20. 有效的括号](src/top/xiaotian/algorithms/stack/ValidParentheses.java)
+
+* [1047. 删除字符串中的所有相邻重复项](src/top/xiaotian/algorithms/stack/RemoveDuplicates.java)
+
+* [150. 逆波兰表达式求值](src/top/xiaotian/algorithms/stack/EvalRPN.java)
+
 ##### 单调栈
 * [739. 每日温度](src/top/xiaotian/algorithms/stack/monotone_stack/DailyTemperatures.java)
 
@@ -133,7 +143,11 @@
 #### 队列
 
 ##### 优先队列
+* [面试题 17.14. 最小K个数](src/top/xiaotian/algorithms/queue/priority_queue/SmallestK.java)
+
 * [347. 前 K 个高频元素](src/top/xiaotian/algorithms/queue/priority_queue/TopKFrequent.java)
+
+* [295. 数据流的中位数](src/top/xiaotian/algorithms/queue/priority_queue/MedianFinder.java)
 
 ##### 单调队列
 * [239. 滑动窗口最大值](src/top/xiaotian/algorithms/queue/monotone_queue/MaxSlidingWindow.java)
@@ -211,25 +225,17 @@
 
 * [221. 最大正方形](src/top/xiaotian/algorithms/dp/MaximalSquare.java)
 
-* [309. 股票买卖问题](src/top/xiaotian/algorithms/dp/StockSell.java)
+##### 路径问题
+* [62. 不同路径/63. 不同路径 II](src/top/xiaotian/algorithms/dp/path/UniquePaths.java)
 
-* [647. 回文子串](src/top/xiaotian/algorithms/dp/palindromic/PalindromicSubstrings.java)
+##### 分割问题
+* [343. 整数拆分](src/top/xiaotian/algorithms/dp/split/IntegerBreak.java)
 
-##### 01背包问题
-* [01背包问题](src/top/xiaotian/algorithms/dp/knapsack01/Knapsack01.java)
+* [279. 完全平方数](src/top/xiaotian/algorithms/dp/split/NumSquares.java)
 
-* [416. 分割等和子集](src/top/xiaotian/algorithms/dp/knapsack01/CanPartition.java)
+* [96. 不同的二叉搜索树](src/top/xiaotian/algorithms/dp/split/NumTrees.java)
 
-* [1049. 最后一块石头的重量 II](src/top/xiaotian/algorithms/dp/knapsack01/LastStoneWeight.java)
-
-* [494. 目标和](src/top/xiaotian/algorithms/dfs/FindTargetSumWays.java)
-
-* [474. 一和零](src/top/xiaotian/algorithms/dp/knapsack01/OneAndZeroes.java)
-
-##### 完全背包问题
-* [完全背包](src/top/xiaotian/algorithms/dp/knapsacktotal/KnapsackTotal.java)
-
-* [322. 零钱兑换/518. 零钱兑换 II](src/top/xiaotian/algorithms/dp/knapsacktotal/CoinChange.java)
+* [139. 单词拆分](src/top/xiaotian/algorithms/dp/split/WordBreak.java)
 
 ##### 子序列问题
 * [300. 最长递增子序列](src/top/xiaotian/algorithms/dp/sub_sequence/LongestIncreaseSubsequence.java)
@@ -244,14 +250,19 @@
 
 * [53. 最大子数组和](src/top/xiaotian/algorithms/dp/sub_sequence/MaxSubArray.java)
 
-##### 分割问题
-* [343. 整数拆分](src/top/xiaotian/algorithms/dp/split/IntegerBreak.java)
+##### 编辑距离问题
+* [392. 判断子序列](src/top/xiaotian/algorithms/dp/edit_distance/IsSubsequence.java)
 
-* [279. 完全平方数](src/top/xiaotian/algorithms/dp/split/NumSquares.java)
+* [115. 不同的子序列](src/top/xiaotian/algorithms/dp/edit_distance/DistinctSubsequences.java)
 
-* [96. 不同的二叉搜索树](src/top/xiaotian/algorithms/dp/split/NumTrees.java)
+* [583. 两个字符串的删除操作](src/top/xiaotian/algorithms/dp/edit_distance/MinDistance.java)
 
-* [139. 单词拆分](src/top/xiaotian/algorithms/dp/split/WordBreak.java)
+* [72. 编辑距离](src/top/xiaotian/algorithms/dp/edit_distance/EditDistance.java)
+
+##### 区间动规问题
+* [647. 回文子串](src/top/xiaotian/algorithms/dp/interval/PalindromicSubstrings.java)
+
+* [516. 最长回文子序列](src/top/xiaotian/algorithms/dp/interval/LongestPalindromicSubsequence.java)
 
 ##### 打家劫舍问题
 * [198. 打家劫舍](src/top/xiaotian/algorithms/dp/house_robber/HouseRobber.java)
@@ -271,8 +282,22 @@
 
 * [714. 买卖股票的最佳时机含手续费](src/top/xiaotian/algorithms/dp/stock/StockSellVI.java)
 
-##### 路径问题
-* [62. 不同路径/63. 不同路径 II](src/top/xiaotian/algorithms/dp/path/UniquePaths.java)
+##### 01背包问题
+* [01背包问题](src/top/xiaotian/algorithms/dp/knapsack01/Knapsack01.java)
+
+* [416. 分割等和子集](src/top/xiaotian/algorithms/dp/knapsack01/CanPartition.java)
+
+* [1049. 最后一块石头的重量 II](src/top/xiaotian/algorithms/dp/knapsack01/LastStoneWeight.java)
+
+* [494. 目标和](src/top/xiaotian/algorithms/dfs/FindTargetSumWays.java)
+
+* [474. 一和零](src/top/xiaotian/algorithms/dp/knapsack01/OneAndZeroes.java)
+
+##### 完全背包问题
+* [完全背包](src/top/xiaotian/algorithms/dp/knapsacktotal/KnapsackTotal.java)
+
+* [322. 零钱兑换/518. 零钱兑换 II](src/top/xiaotian/algorithms/dp/knapsacktotal/CoinChange.java)
+
 
 
 #### 贪心
@@ -396,3 +421,7 @@
 * [208. 实现 Trie (前缀树)](src/top/xiaotian/dataStructures/trie/practice/ImplementTrie.java)
 
 * [707. 设计链表](src/top/xiaotian/dataStructures/linkedlist/practice/MyLinkedList.java)
+
+* [232. 用栈实现队列](src/top/xiaotian/dataStructures/queue/practice/MyQueue.java)
+
+* [225. 用队列实现栈](src/top/xiaotian/dataStructures/stack/practice/MyStack.java)

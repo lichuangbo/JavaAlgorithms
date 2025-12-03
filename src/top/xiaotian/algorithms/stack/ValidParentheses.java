@@ -16,27 +16,59 @@ import java.util.Stack;
  * 示例 1：
  * <p>
  * 输入：s = "()"
+ * <p>
  * 输出：true
+ * <p>
+ * 示例 2：
+ * <p>
+ * 输入：s = "()[]{}"
+ * <p>
+ * 输出：true
+ * <p>
+ * 示例 3：
+ * <p>
+ * 输入：s = "(]"
+ * <p>
+ * 输出：false
+ * <p>
+ * 示例 4：
+ * <p>
+ * 输入：s = "([])"
+ * <p>
+ * 输出：true
+ * <p>
+ * 示例 5：
+ * <p>
+ * 输入：s = "([)]"
+ * <p>
+ * 输出：false
+ * <p>
+ * <p>
+ * <p>
+ * 提示：
+ * <p>
+ * 1 <= s.length <= 104
+ * s 仅由括号 '()[]{}' 组成
  */
 public class ValidParentheses {
-  public boolean isValid(String s) {
-    s = s.trim();
-    char[] chars = s.toCharArray();
-    Stack<Character> stack = new Stack<>();
-    for (int i = 0; i < chars.length; i++) {
-      char ch = chars[i];
-      if (ch == '(' || ch == '[' || ch == '{') {
-        stack.push(ch);
-      } else if (ch == ')' && !stack.isEmpty() && stack.peek() == '(') {
-        stack.pop();
-      } else if (ch == ']' && !stack.isEmpty() && stack.peek() == '[') {
-        stack.pop();
-      } else if (ch == '}' && !stack.isEmpty() && stack.peek() == '{') {
-        stack.pop();
-      } else {
-        return false;
-      }
+
+    public boolean isValid(String s) {
+        char[] chars = s.toCharArray();
+        Stack<Character> stack = new Stack<>();
+        for (char ch : chars) {
+            if (ch == '(' || ch == '[' || ch == '{') {
+                stack.push(ch);
+            } else if (stack.isEmpty()) {
+                return false;
+            } else {
+                char peek = stack.peek();
+                if ((peek == '(' && ch == ')') || (peek == '[' && ch == ']') || (peek == '{' && ch == '}')) {
+                    stack.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
     }
-    return stack.isEmpty();
-  }
 }

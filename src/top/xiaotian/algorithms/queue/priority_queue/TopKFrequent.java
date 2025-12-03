@@ -1,6 +1,8 @@
 package top.xiaotian.algorithms.queue.priority_queue;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.PriorityQueue;
 
 /**
  * 347. 前 K 个高频元素
@@ -64,52 +66,6 @@ public class TopKFrequent {
         int i = 0;
         while (!pq.isEmpty()) {
             res[i++] = pq.poll()[0];
-        }
-        return res;
-    }
-
-    /**
-     * 桶排序
-     */
-    public int[] topKFrequent2(int[] nums, int k) {
-        int max = Integer.MIN_VALUE;
-        int min = Integer.MAX_VALUE;
-        for (int num : nums) {
-            max = Math.max(max, num);
-            min = Math.min(min, num);
-        }
-        if (max == min) return new int[]{nums[0]};
-        // freqs数组记录每个元素出现的频次
-        int[] freqs = new int[max - min + 1];
-        for (int num : nums) {
-            freqs[num - min]++;//记录各个数出现的次数
-        }
-        // 最小到最大出现频次依次为：3 3 1
-
-        // 把频率展开看，下标为3的桶存储的是频率为3的元素
-        int len = freqs.length;
-        ArrayList<Integer>[] buckets = new ArrayList[len + 1];
-        for (int i = 0; i < len; i++) {
-            int freq = freqs[i];
-            if (freq == 0) continue;
-
-            if (buckets[freq] == null) {
-                buckets[freq] = new ArrayList();
-            }
-            // 相同次数的放在同一个桶里，如1, 1, 1, 2, 2, 2, 3  1和2都放在3号桶中
-            // i+min是为了还原偏移量，得到num本身
-            buckets[freq].add(i + min);
-        }
-
-        // 从后向前遍历桶，拿到k个结果就终止
-        int[] res = new int[k];
-        for (int i = len, j = 0; i >= 0 && j < k; i--) {
-            ArrayList<Integer> bucket = buckets[i];
-            if (bucket == null) continue;
-
-            while (!bucket.isEmpty()) {
-                res[j++] = bucket.remove(bucket.size() - 1);
-            }
         }
         return res;
     }
