@@ -242,6 +242,8 @@
 
 * [1035. 不相交的线](src/top/xiaotian/algorithms/dp/sub_sequence/UncrossedLine.java)
 
+* [53. 最大子数组和](src/top/xiaotian/algorithms/dp/sub_sequence/MaxSubArray.java)
+
 ##### 分割问题
 * [343. 整数拆分](src/top/xiaotian/algorithms/dp/split/IntegerBreak.java)
 
