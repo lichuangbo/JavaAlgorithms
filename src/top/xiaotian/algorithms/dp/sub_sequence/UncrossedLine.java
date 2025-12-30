@@ -37,6 +37,11 @@ package top.xiaotian.algorithms.dp.sub_sequence;
  * 1 <= nums1[i], nums2[j] <= 2000
  */
 public class UncrossedLine {
+    /**
+     * 动态规划
+     * 时间   O(m*n)
+     * 空间   O(n)
+     */
     public int maxUncrossedLines(int[] nums1, int[] nums2) {
         // 直线不能相交，这就是说明在字符串A中 找到一个与字符串B相同的子序列，且这个子序列不能改变相对顺序，只要相对顺序不改变，连接相同数字的直线就不会相交
         // 问题转化为：求两个字符串的最长公共子序列的长度
@@ -53,5 +58,28 @@ public class UncrossedLine {
             }
         }
         return dp[len1][len2];
+    }
+
+    /**
+     * 状态压缩
+     * 时间   O(m^n)
+     * 空间   O(n)
+     */
+    public int maxUncrossedLines2(int[] nums1, int[] nums2) {
+        int len1 = nums1.length, len2 = nums2.length;
+        int[] dp = new int[len2 + 1];
+        for (int i = 1; i <= len1; i++) {
+            int leftUp = 0;
+            for (int j = 1; j <= len2; j++) {
+                int tmp = dp[j];
+                if (nums1[i - 1] == nums2[j - 1]) {
+                    dp[j] = leftUp + 1;
+                } else {
+                    dp[j] = Math.max(dp[j], dp[j - 1]);
+                }
+                leftUp = tmp;
+            }
+        }
+        return dp[len2];
     }
 }

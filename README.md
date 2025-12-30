@@ -248,6 +248,8 @@
 
 * [1035. 不相交的线](src/top/xiaotian/algorithms/dp/sub_sequence/UncrossedLine.java)
 
+* [53. 最大子数组和](src/top/xiaotian/algorithms/dp/sub_sequence/MaxSubArray.java)
+
 ##### 编辑距离问题
 * [392. 判断子序列](src/top/xiaotian/algorithms/dp/edit_distance/IsSubsequence.java)
 
