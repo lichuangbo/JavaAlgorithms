@@ -299,6 +299,8 @@
 * [322. 零钱兑换/518. 零钱兑换 II](src/top/xiaotian/algorithms/dp/knapsacktotal/CoinChange.java)
 
 #### 回溯
+
+##### 组合问题
 * [77. 组合](src/top/xiaotian/algorithms/backtrack/combination/Combination.java)
 
 * [216. 组合总和 III](src/top/xiaotian/algorithms/backtrack/combination/CombinationSumIII.java)
@@ -308,6 +310,21 @@
 * [39. 组合总和](src/top/xiaotian/algorithms/backtrack/combination/CombinationSum.java)
 
 * [40. 组合总和 II](src/top/xiaotian/algorithms/backtrack/combination/CombinationSumII.java)
+
+##### 排列问题
+* [46. 全排列](src/top/xiaotian/algorithms/backtrack/permutation/Permutation.java)
+
+* [47. 全排列 II](src/top/xiaotian/algorithms/backtrack/permutation/PermutationII.java)
+
+##### 子集问题
+* [78. 子集](src/top/xiaotian/algorithms/backtrack/subset/SubSet.java)
+
+* [90. 子集 II](src/top/xiaotian/algorithms/backtrack/subset/SubSetII.java)
+
+##### 分割问题
+* [131. 分割回文串](src/top/xiaotian/algorithms/backtrack/split/Partition.java)
+
+* [93. 复原IP地址](src/top/xiaotian/algorithms/backtrack/split/RestoreIPAddress.java)
 
 #### 贪心
 * [121. 买卖股票的最佳时机](src/top/xiaotian/algorithms/dp/stock/StockSell.java)

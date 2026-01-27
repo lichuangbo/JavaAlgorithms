@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.backtrack;
+package top.xiaotian.algorithms.backtrack.split;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,6 +25,10 @@ import java.util.List;
 public class RestoreIPAddress {
     private List<String> resList;
 
+    /**
+     * 时间   O(3^4) 深度最大为4层，每层最多尝试3中分割
+     * 空间   O(4)
+     */
     public List<String> restoreIpAddresses(String s) {
         resList = new ArrayList<>();
         if (s.length() < 4 || s.length() > 12) {
