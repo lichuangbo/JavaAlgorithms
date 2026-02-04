@@ -1,4 +1,4 @@
-package top.xiaotian.algorithms.backtrack.combination_sum;
+package top.xiaotian.algorithms.dp.knapsacktotal;
 
 import java.util.Arrays;
 

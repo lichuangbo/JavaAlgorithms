@@ -24,16 +24,14 @@ package top.xiaotian.algorithms.backtrack;
  */
 public class WordSearch {
     private boolean[][] visited;
-    private int rows;
-    private int cols;
+    private final int[][] d = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public boolean exist(char[][] board, String word) {
-        rows = board.length;
-        cols = board[0].length;
+        int rows = board.length;
+        int cols = board[0].length;
         visited = new boolean[rows][cols];
-        // 每一个二维点都有可能作为起点，所以要遍历每一个二维点坐标
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+            for (int j = 0; j < board[i].length; j++) {
                 if (help(board, i, j, word, 0)) {
                     return true;
                 }
@@ -43,29 +41,21 @@ public class WordSearch {
     }
 
     private boolean help(char[][] board, int i, int j, String word, int index) {
-        // 探测到board边界时，返回
-        if (i < 0 || i >= rows || j < 0 || j >= cols) {
-            return false;
-        }
-        // 访问过的路径 或者 当前路径的字符和字符串中待寻找的字符不相同 返回
-        if (visited[i][j] || board[i][j] != word.charAt(index)) {
-            return false;
-        }
-        // 已经寻找得到字符串最后一个字符，说明得到一条正确路径，返回true
-        if (index == word.length() - 1) {
+        if (index == word.length()) {
             return true;
         }
 
-        visited[i][j] = true;
-        // 在四个方向探测
-        if (help(board, i, j + 1, word, index + 1) ||// 右
-                help(board, i + 1, j, word, index + 1) ||// 下
-                help(board, i, j - 1, word, index + 1) ||// 左
-                help(board, i - 1, j, word, index + 1)) { // 上
-            return true;
+        if (i >= 0 && i < board.length && j >= 0 && j < board[i].length && !visited[i][j] && board[i][j] == word.charAt(index)) {
+            visited[i][j] = true;
+            for (int m = 0; m < 4; m++) {
+                int newx = i + d[m][0];
+                int newy = j + d[m][1];
+                if (help(board, newx, newy, word, index + 1)) {
+                    return true;
+                }
+            }
+            visited[i][j] = false;
         }
-        visited[i][j] = false;
-
         return false;
     }
 }

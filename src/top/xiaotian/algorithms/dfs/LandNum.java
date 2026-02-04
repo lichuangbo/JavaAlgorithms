@@ -25,6 +25,7 @@ import java.util.Queue;
  * @created 2021/1/31
  */
 public class LandNum {
+    private int[][] d = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public int numIslands(char[][] grid) {
         int rows = grid.length;
@@ -47,12 +48,13 @@ public class LandNum {
             return;
         }
 
-        // 可以不用另外的赋新值，改为0已经说明了这个位置被删除掉了
+        // 标记为已访问
         grid[i][j] = '0';
-        dfs(grid, i, j - 1);
-        dfs(grid, i + 1, j);
-        dfs(grid, i, j + 1);
-        dfs(grid, i - 1, j);
+        for (int m = 0; m < 4; m++) {
+            int newx = i + d[m][0];
+            int newy = j + d[m][1];
+            dfs(grid, newx, newy);
+        }
     }
 
     private void bfs(char[][] grid, int i, int j) {

@@ -298,7 +298,12 @@
 
 * [322. 零钱兑换/518. 零钱兑换 II](src/top/xiaotian/algorithms/dp/knapsacktotal/CoinChange.java)
 
+* [377. 组合总和 Ⅳ](src/top/xiaotian/algorithms/dp/knapsacktotal/CombinationSumIV.java)
+
 #### 回溯
+* [51. N 皇后](src/top/xiaotian/algorithms/backtrack/NQueens.java)
+
+* [37. 解数独](src/top/xiaotian/algorithms/backtrack/SudokuSolver.java)
 
 ##### 组合问题
 * [77. 组合](src/top/xiaotian/algorithms/backtrack/combination/Combination.java)
@@ -325,6 +330,9 @@
 * [131. 分割回文串](src/top/xiaotian/algorithms/backtrack/split/Partition.java)
 
 * [93. 复原IP地址](src/top/xiaotian/algorithms/backtrack/split/RestoreIPAddress.java)
+
+##### 二维平面应用
+* [79. 单词搜索](src/top/xiaotian/algorithms/backtrack/WordSearch.java)
 
 #### 贪心
 * [121. 买卖股票的最佳时机](src/top/xiaotian/algorithms/dp/stock/StockSell.java)
@@ -436,8 +444,6 @@
 
 #### DFS深度优先遍历
 * [200. 岛屿数量](src/top/xiaotian/algorithms/dfs/LandNum.java)
-
-* [377. 组合总和 Ⅳ](src/top/xiaotian/algorithms/backtrack/combination_sum/CombinationSumIV.java)
 
 
 #### BFS广度优先遍历
