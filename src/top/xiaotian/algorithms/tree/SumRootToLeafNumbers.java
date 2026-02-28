@@ -17,6 +17,9 @@ import java.util.*;
  * <p>
  * <p>
  * 示例 1：
+ *     1
+ *   /  \
+ *  2    3
  * <p>
  * <p>
  * 输入：root = [1,2,3]
@@ -26,8 +29,11 @@ import java.util.*;
  * 从根到叶子节点路径 1->3 代表数字 13
  * 因此，数字总和 = 12 + 13 = 25
  * 示例 2：
- * <p>
- * <p>
+ *      4
+ *     / \
+ *    9   0
+ *   / \
+ *  5  1
  * 输入：root = [4,9,0,5,1]
  * 输出：1026
  * 解释：
@@ -44,91 +50,94 @@ import java.util.*;
  * 树的深度不超过 10
  */
 public class SumRootToLeafNumbers {
-  // 基于252二叉树的所有路径题目思想，先遍历出所有的路径，然后集中求和
-  public int sumNumbers(TreeNode root) {
-    List<String> paths = help(root);
-    int res = 0;
-    for (String path : paths) {
-      char[] chars = path.toCharArray();
-      int k = 0;
-      for (int i = chars.length - 1; i >= 0; i--) {
-        res += (chars[i] - '0') * Math.pow(10, k++);
-      }
-    }
-    return res;
-  }
-
-  private List<String> help(TreeNode root) {
-    List<String> paths = new ArrayList<>();
-    if (root == null) {
-      return paths;
-    }
-
-    if (root.left == null && root.right == null) {
-      paths.add(root.val + "");
-      return paths;
-    }
-    List<String> leftPaths = help(root.left);
-    for (String leftPath : leftPaths) {
-      paths.add(root.val + leftPath);
-    }
-    List<String> rightPaths = help(root.right);
-    for (String rightPath : rightPaths) {
-      paths.add(root.val + rightPath);
-    }
-    return paths;
-  }
-
-  // 递归
-  public int sumNumbers2(TreeNode root) {
-    return dfs(root, 0);
-  }
-
-  // 方法语义：返回以root为根的二叉树的路径总和
-  public int dfs(TreeNode root, int prevSum) {
-    if (root == null) {
-      return 0;
-    }
-
-    int sum = prevSum * 10 + root.val;
-    if (root.left == null && root.right == null) {
-      return sum;
-    }
-    return dfs(root.left, sum) + dfs(root.right, sum);
-  }
-
-  // 层序遍历
-  public int sumNumbers3(TreeNode root) {
-    if (root == null) {
-      return 0;
-    }
-
-    Deque<TreeNode> nodeQueue = new LinkedList<>();
-    Deque<Integer> sumQueue = new LinkedList<>();
-    int res = 0;
-    nodeQueue.addLast(root);
-    sumQueue.addLast(root.val);
-    while (!nodeQueue.isEmpty()) {
-      TreeNode tmpNode = nodeQueue.pollLast();
-      Integer tmpSum = sumQueue.pollLast();
-      if (tmpNode.left == null && tmpNode.right == null) {
-        res += tmpSum;
-      } else {
-        if (tmpNode.left != null) {
-          nodeQueue.addLast(tmpNode.left);
-          sumQueue.addLast(tmpSum * 10 + tmpNode.left.val);
+    public int sumNumbers(TreeNode root) {
+        List<String> paths = help(root);
+        int res = 0;
+        for (String path : paths) {
+            char[] chars = path.toCharArray();
+            int sum = 0;
+            for (char ch : chars) {
+                sum = (sum * 10) + (ch - '0');
+            }
+            res += sum;
         }
-        if (tmpNode.right != null) {
-          nodeQueue.addLast(tmpNode.right);
-          sumQueue.addLast(tmpSum * 10 + tmpNode.right.val);
-        }
-      }
+        return res;
     }
-    return res;
-  }
 
-  public static void main(String[] args) {
-    TreeNode treeNode = new TreeNode(new String[]{"4", "9", "0", "5", "1"});
-    int i = new SumRootToLeafNumbers().sumNumbers2(treeNode);
-  }
+    /**
+     * 基于二叉树的所有路径题目思想，先遍历出所有的路径
+     * @see BinaryTreePaths
+     */
+    private List<String> help(TreeNode root) {
+        List<String> paths = new ArrayList<>();
+        if (root == null) {
+            return paths;
+        }
+
+        if (root.left == null && root.right == null) {
+            paths.add(String.valueOf(root.val));
+            return paths;
+        }
+        List<String> leftPaths = help(root.left);
+        for (String leftPath : leftPaths) {
+            paths.add(root.val + leftPath);
+        }
+        List<String> rightPaths = help(root.right);
+        for (String rightPath : rightPaths) {
+            paths.add(root.val + rightPath);
+        }
+        return paths;
+    }
+
+    // 递归
+    public int sumNumbers2(TreeNode root) {
+        return dfs(root, 0);
+    }
+
+    /**
+     * 左右子树的数字并不是直接从它们的根开始算，而是要带上从整棵树根到它们父节点的前缀
+     * 所以递归函数，需要接收一个节点和当前从根到该节点父节点所形成的数字前缀，然后返回从这个节点出发的所有叶子路径代表的数字之和
+     * 方法含义：给定节点 node 以及从根到 node 的父节点所构成的数字 currSum，返回从 node 出发（包括 node）到所有叶子节点的路径数字之和
+     */
+    public int dfs(TreeNode root, int currSum) {
+        if (root == null) {
+            return 0;
+        }
+
+        int sum = currSum * 10 + root.val;
+        if (root.left == null && root.right == null) {
+            return sum;
+        }
+        return dfs(root.left, sum) + dfs(root.right, sum);
+    }
+
+    // 层序遍历
+    public int sumNumbers3(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        Deque<TreeNode> nodeQueue = new LinkedList<>();
+        Deque<Integer> sumQueue = new LinkedList<>();
+        int res = 0;
+        nodeQueue.addLast(root);
+        sumQueue.addLast(root.val);
+        while (!nodeQueue.isEmpty()) {
+            TreeNode tmpNode = nodeQueue.pollLast();
+            Integer tmpSum = sumQueue.pollLast();
+            if (tmpNode.left == null && tmpNode.right == null) {
+                res += tmpSum;
+            } else {
+                if (tmpNode.left != null) {
+                    nodeQueue.addLast(tmpNode.left);
+                    sumQueue.addLast(tmpSum * 10 + tmpNode.left.val);
+                }
+                if (tmpNode.right != null) {
+                    nodeQueue.addLast(tmpNode.right);
+                    sumQueue.addLast(tmpSum * 10 + tmpNode.right.val);
+                }
+            }
+        }
+        return res;
+    }
 }

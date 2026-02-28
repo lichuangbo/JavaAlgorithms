@@ -5,18 +5,19 @@ import java.util.Arrays;
 /**
  * 435. 无重叠区间
  * 给定一个区间的集合，找到需要移除区间的最小数量，使剩余区间互不重叠。
- *
+ * <p>
  * 注意:
- *
+ * <p>
  * 可以认为区间的终点总是大于它的起点。
  * 区间 [1,2] 和 [2,3] 的边界相互“接触”，但没有相互重叠。
  * 示例 1:
- *
+ * <p>
  * 输入: [ [1,2], [2,3], [3,4], [1,3] ]
- *
+ * <p>
  * 输出: 1
- *
+ * <p>
  * 解释: 移除 [1,3] 后，剩下的区间没有重叠。
+ *
  * @author lichuangbo
  * @email lichuangbo@smtp.telek.com.cn
  * @time 2021/3/18 14:58
@@ -29,7 +30,7 @@ public class NonOverlappingIntervals {
         }
 
         // 从区间的开头开始排序
-        Arrays.sort(intervals, (int[] a, int[]b) -> {
+        Arrays.sort(intervals, (int[] a, int[] b) -> {
             if (a[0] != b[0]) {
                 return a[0] - b[0];
             } else {
@@ -64,7 +65,7 @@ public class NonOverlappingIntervals {
         }
 
         // 从区间的结尾开始排序
-        Arrays.sort(intervals, (int[] a, int[]b) -> {
+        Arrays.sort(intervals, (int[] a, int[] b) -> {
             if (a[a.length - 1] != b[b.length - 1]) {
                 return a[a.length - 1] - b[b.length - 1];
             } else {
