@@ -57,7 +57,8 @@ public class MaxHeap<E extends Comparable<E>> {
     }
 
     /***
-     * 完全二叉树结构，稳定   时间O(logn)
+     * 完全二叉树结构，稳定
+     * 时间 O(logn)
      * @param e 元素e
      */
     public void add(E e) {
@@ -65,13 +66,18 @@ public class MaxHeap<E extends Comparable<E>> {
         siftUp(data.getSize() - 1);
     }
 
+    // 上浮操作，从节点k开始从底至顶堆化
     private void siftUp(int k) {
-        // 父亲元素<当前元素，进行上浮
-        while (k > 0 && data.get(parent(k)).compareTo(data.get(k)) < 0) {
+        while (true) {
+            int p = parent(k);
+            // 父亲元素大于当前元素，无需上浮
+            if (p < 0 || data.get(k).compareTo(data.get(p)) < 0) {
+                break;
+            }
             // 父亲元素与当前元素位置进行交换
-            data.swap(k, parent(k));
-            // 索引移动到父亲元素上，判断父亲元素是否要发生交换
-            k = parent(k);
+            data.swap(k, p);
+            // 索引移动，循环向上堆化
+            k = p;
         }
     }
 
@@ -94,24 +100,27 @@ public class MaxHeap<E extends Comparable<E>> {
         return ret;
     }
 
+    // 下沉操作，从节点k开始从顶至底堆化
     private void siftDown(int k) {
-        // k下沉到叶子节点终止循环（计算得到的索引大于了数组容量）
-        while (leftChild(k) < data.getSize()) {
-            // 从左右节点中找到比索引k代表节点大的索引（j）
-            int j = leftChild(k);
-            if (j + 1 < data.getSize() && data.get(j + 1).compareTo(data.get(j)) > 0) {
-                j = rightChild(k);
+        while (true) {
+            // 从左右节点中找到比索引k代表节点大的索引下标
+            int l = leftChild(k), r = rightChild(k), maxIndex = k;
+            if (l < size() && data.get(l).compareTo(data.get(maxIndex)) > 0) {
+                maxIndex = l;
+            }
+            if (r < size() && data.get(r).compareTo(data.get(maxIndex)) > 0) {
+                maxIndex = r;
             }
 
             // 当前索引元素比左右字数都大，说明已经符合最大堆性质了，终止
-            if (data.get(k).compareTo(data.get(j)) >= 0) {
+            if (maxIndex == k) {
                 break;
             }
 
-            // 不符合，进行交换（该元素下沉到下层）
-            data.swap(k, j);
+            // 不符合，进行交换
+            data.swap(k, maxIndex);
             // 循环继续，因为下沉完可能仍不满足最大堆性质
-            k = j;
+            k = maxIndex;
         }
     }
 
@@ -123,7 +132,12 @@ public class MaxHeap<E extends Comparable<E>> {
         return ret;
     }
 
-    // 从最后一个非叶子节点开始，开始siftDown操作  时间复杂度O(n)
+    /**
+     * 堆化
+     * 时间 O(n)
+     * 倒序遍历堆，依次对每个非叶节点执行“从顶至底堆化”
+     * 倒序遍历是为了保证当前节点之下的子树已经是合法的子堆，这样堆化当前节点才是有效的
+     */
     private void heapify(E[] arr) {
         for (int i = parent(arr.length - 1); i >= 0; i--) {
             siftDown(i);
