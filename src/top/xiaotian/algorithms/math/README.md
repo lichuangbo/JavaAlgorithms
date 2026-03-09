@@ -87,3 +87,26 @@
 5	0000 0101	0000 0101	0000 0101
 -3	1000 0011	1111 1100	1111 1101
 ```
+
+
+#### 二进制转十进制
++ 方法一：二进制按权展开
+```java
+// 1*2^3+1*2^2+0*2^1+1*2^0=13
+String s = "1101";
+int len = s.length();
+int res = 0;
+for (int i = 0; i < len; i++) {
+   int power = len - 1 - i;
+   res += ((s.charAt(i) - '0') * (int) Math.pow(2, power));
+}
+```
+
++ 方法二：位运算，把已有的数字整体左移，然后拼上新的一位
+```java
+String s = "1101";
+long decimal = 0;
+for (char ch : s.toCharArray()) {
+    decimal = decimal * 2 + (ch - '0');
+}
+```

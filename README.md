@@ -192,6 +192,10 @@
 
 * [257. 二叉树的所有路径](src/top/xiaotian/algorithms/tree/BinaryTreePaths.java)
 
+* [129. 求根节点到叶节点数字之和](src/top/xiaotian/algorithms/tree/SumRootToLeafNumbers.java)
+
+* [1022. 从根到叶的二进制数之和](src/top/xiaotian/algorithms/tree/SumRootToLeaf.java)
+
 * [404. 左叶子之和](src/top/xiaotian/algorithms/tree/SumOfLeftLeaves.java)
 
 * [112. 路径总和/113. 路径总和 II](src/top/xiaotian/algorithms/tree/PathSum.java)
@@ -336,6 +340,8 @@
 
 #### 贪心
 * [121. 买卖股票的最佳时机](src/top/xiaotian/algorithms/dp/stock/StockSell.java)
+
+* [455. 分发饼干](src/top/xiaotian/algorithms/greedy/AssignCookies.java)
 
 * [406. 根据身高重建队列](src/top/xiaotian/algorithms/greedy/ReconstructQueue.java)
 

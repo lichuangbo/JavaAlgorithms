@@ -1,7 +1,6 @@
 package top.xiaotian.algorithms.greedy;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 /**
  * 455. 分发饼干
@@ -25,11 +24,14 @@ import java.util.Comparator;
  */
 public class AssignCookies {
 
+    /**
+     * 贪心法：
+     * 使用最大的饼干 分给 最贪心的小孩， 次大的饼干 分给 次贪心的小孩 。。。
+     * 如果最大的饼干仍无法满足最贪心的小孩，那这个小孩无论如何都开心不了，跳过这个小孩
+     * 时间 排序O(nlogn) 循环O(n)
+     * 空间 O(1)
+     */
     public int findContentChildren(int[] g, int[] s) {
-        /**
-         * 使用最大的饼干 分给 最贪心的小孩， 次大的饼干 分给 次贪心的小孩 。。。
-         * 如果最大的饼干仍无法满足最贪心的小孩，那这个小孩无论如何都开心不了，跳过这个小孩
-         */
         Arrays.sort(g);
         Arrays.sort(s);
         int res = 0;
@@ -44,18 +46,5 @@ public class AssignCookies {
             }
         }
         return res;
-    }
-
-    public static void main(String[] args) {
-        int[] nums = {3, 4, 1, 9, 5};
-        Arrays.sort(nums);
-
-        // int型数组从大到小排序 需要转化为Integer
-        Integer[] nums1 = new Integer[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            nums1[i] = nums[i];
-        }
-        Arrays.sort(nums1, (o1, o2) -> o2 - o1);
-        System.out.println(Arrays.toString(nums1));
     }
 }

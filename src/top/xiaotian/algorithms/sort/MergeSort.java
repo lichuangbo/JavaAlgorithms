@@ -2,6 +2,7 @@ package top.xiaotian.algorithms.sort;
 
 /**
  * 归并排序
+ * 分治思想，首先递归不断地将数组从中点处分开，将长数组排序转化为短数组排序；当子数组长度为1时开始合并，将两个有序数组合并为一个有序数组
  * @author lichuangbo
  * @email lichuangbo@smtp.telek.com.cn
  * @time
@@ -9,10 +10,9 @@ package top.xiaotian.algorithms.sort;
  */
 public class MergeSort {
     /***
-     * 时间O(nlogn)
-     * 空间O(nlogn)
+     * 时间 O(nlogn)
+     * 空间 O(nlogn)
      * 稳定排序算法
-     * @param arr
      */
     public void mergeSort(int[] arr) {
         mergeSort(arr, 0, arr.length - 1);
@@ -56,18 +56,6 @@ public class MergeSort {
             } else {
                 arr[k] = aux[j - l];
                 j++;
-            }
-        }
-    }
-
-    // 自底向上完成归并排序  由于没有使用数组的随机访问特性，可以应用到链表归并排序中
-    public void mergeSort2(int[] arr) {
-        int len = arr.length;
-        for (int sz = 1; sz <= len; sz += sz) {// 第一轮看一个元素，第二轮看两个元素...
-            for (int i = 0; i + sz < len; i += sz + sz) {// 具体每一轮元素的起始位置
-                // 第一轮[0...size-1],第二轮[size...2*size-1]
-                // 对arr[i...i+size-1]和arr[i+size...i+2*size-1]两个区间进行归并
-                merge(arr, i, i + sz - 1, Math.min(i + sz + sz - 1, len - 1));
             }
         }
     }
