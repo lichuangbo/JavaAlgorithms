@@ -341,6 +341,8 @@
 
 * [621. 任务调度器](src/top/xiaotian/algorithms/greedy/LeastInterval.java)
 
+* [55. 跳跃游戏](src/top/xiaotian/algorithms/greedy/JumpGame.java)
+
 
 #### 双指针
 * [844. 比较含退格的字符串](src/top/xiaotian/algorithms/twoPointer/BackspaceCompare.java)
